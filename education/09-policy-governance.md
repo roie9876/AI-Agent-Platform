@@ -444,4 +444,53 @@ mindmap
 
 ---
 
+### 📝 תשובות
+
+<details>
+<summary>1. מהם 4 הסוגים של Policies?</summary>
+
+1. **Safety Policies** - מניעות תוכן מזיק/אלים/מסוכן.
+2. **Compliance Policies** - עמידה ברגולציה (GDPR, HIPAA).
+3. **Business Policies** - כללי עסקיים (תקציב, עלות מקס).
+4. **Operational Policies** - rate limiting, ניטור משאבים.
+</details>
+
+<details>
+<summary>2. מה ההבדל בין Pre-Execution ל-Post-Execution policy?</summary>
+
+**Pre-Execution** = נבדק **לפני** שהבקשה מגיעה ל-LLM. למשל: סינון prompt injection, בדיקת PII בקלט. אם נכשל → הבקשה נחסמת. **Post-Execution** = נבדק **אחרי** שה-LLM מחזיר תשובה. למשל: בדיקת PII בתשובה, content safety, groundedness check.
+</details>
+
+<details>
+<summary>3. מה זה Guardrails ואילו 3 סוגים יש?</summary>
+
+**Guardrails** = "גדרות בטיחות" שמונעות מה-Agent לסטות מהמסלול. 3 סוגים: (1) **Input Guardrails** - סינון ווידוא של הקלט, (2) **Output Guardrails** - סינון תשובת ה-LLM, (3) **Topical Guardrails** - מניעות מה-Agent לצאת מהתחום ("אל תענה על פוליטיקה").
+</details>
+
+<details>
+<summary>4. מה זה Prompt Injection ואיך מתגוננים?</summary>
+
+**Prompt Injection** = תוקף מזריק הוראות בקלט שמתחזות להיות system prompt ("ignore all previous instructions"). הגנה: (1) **Input Validation** - זיהוי דפוסים, (2) **Prompt Sandboxing** - הפרדה בין system ל-user, (3) **Classifier Models** - מודל נפרד שמזהה injection.
+</details>
+
+<details>
+<summary>5. מה זה DLP ואילו אסטרטגיות טיפול יש?</summary>
+
+**DLP (Data Loss Prevention)** = מניעת דליפת מידע רגיש (PII, סודות, כרטיסי אשראי). אסטרטגיות: (1) **Block** - חוסם לגמרי אם יש PII, (2) **Mask** - מחליף בכוכביות ("***-**-1234"), (3) **Tokenize** - מחליף ב-token ומחזיר אחרי עיבוד, (4) **Log & Alert** - מרשה אבל מתיבות.
+</details>
+
+<details>
+<summary>6. למה Audit Trail חשוב?</summary>
+
+**Audit Trail** = תיעוד מלא של כל פעולה שה-Agent עשה (מי, מה, מתי, תוצאה). חשוב ל: (1) **רגולציה** - GDPR/HIPAA דורשים תיעוד, (2) **Debug** - להבין איפה Agent הגיע להחלטה, (3) **אחריות** - לדעת מי עשה מה, (4) **שיפור** - זיהוי שימוש לרעה.
+</details>
+
+<details>
+<summary>7. מה זה Policy as Code ולמה זה עדיף על הגדרה ידנית?</summary>
+
+**Policy as Code** = הגדרת policies בקוד (YAML/JSON/Rego) במקום UI ידני. עדיף כי: (1) **Version Control** - נשמר ב-Git, יש היסטוריה ו-rollback, (2) **CI/CD** - נבדק אוטומטית ב-pipeline, (3) **Reproducibility** - אותו policy בכל הסביבות, (4) **Automation** - אין טעויות אנוש.
+</details>
+
+---
+
 **[⬅️ חזרה לפרק 8: Tools](08-tools-marketplace.md)** | **[➡️ המשך לפרק 10: Evaluation Engine →](10-evaluation-engine.md)**

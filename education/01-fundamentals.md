@@ -323,4 +323,46 @@ graph TB
 
 ---
 
+### 📝 תשובות
+
+<details>
+<summary>1. מה ההבדל העיקרי בין Chatbot ל-AI Agent?</summary>
+
+**Chatbot** מגיב לשאלות עם תשובות טקסט בלבד - הוא רק "מדבר". **AI Agent** יכול גם **לפעול** - להפעיל כלים (APIs, DBs, שליחת מייל), לקבל החלטות, ולבצע משימות מורכבות באופן אוטונומי. Agent = LLM + Tools + Memory + Reasoning.
+</details>
+
+<details>
+<summary>2. מה זה Token ולמה חשוב לעקוב אחרי צריכת Tokens?</summary>
+
+**Token** הוא יחידת הטקסט הבסיסית שה-LLM מעבד (בערך 0.75 מילה באנגלית). חשוב לעקוב כי: (1) **עלות** - כל token עולה כסף, (2) **Context Window** - יש מגבלה על כמות ה-tokens בבקשה אחת, (3) **ביצועים** - יותר tokens = יותר זמן עיבוד.
+</details>
+
+<details>
+<summary>3. הסבר את לולאת ה-ReAct בשלושה צעדים.</summary>
+
+1. **Think (חשוב)** - ה-Agent מנתח את המשימה ומחליט מה הצעד הבא.
+2. **Act (פעל)** - ה-Agent מפעיל כלי (API call, DB query, חיפוש).
+3. **Observe (צפה)** - ה-Agent קורא את התוצאה ומחליט אם לחזור על הלולאה (צעד נוסף) או לסיים ולתת תשובה סופית.
+</details>
+
+<details>
+<summary>4. למה חברה גדולה תעדיף פלטפורמה על פני שכל צוות יבנה Agent בעצמו?</summary>
+
+בלי פלטפורמה: כל צוות בונה הכל מאפס → כפילויות, אין סטנדרט אבטחה, אין שליטה בעלויות, קשה לתחזק. עם פלטפורמה (PaaS): אבטחה מרכזית, שליטה בעלויות, שיתוף כלים ומודלים, סטנדרטיזציה, Observability אחיד, ו-Time-to-Market מהיר יותר.
+</details>
+
+<details>
+<summary>5. מה ההבדל בין Control Plane ל-Runtime Plane?</summary>
+
+**Control Plane** = שכבת **ניהול** - הגדרת Agents, ניהול הרשאות, policies, registry. עובד לעיתים רחוקות (כשמגדירים/משנים). **Runtime Plane** = שכבת **הרצה** - מעבד בקשות בפועל, מריץ Agents, קורא ל-LLMs ולכלים. עובד כל הזמן עם כל בקשת משתמש.
+</details>
+
+<details>
+<summary>6. מה זה Hallucination ואיך RAG עוזר להתמודד עם זה?</summary>
+
+**Hallucination** = כשה-LLM "ממציא" מידע שנשמע אמין אבל לא נכון. **RAG (Retrieval Augmented Generation)** עוזר על ידי כך שלפני שה-LLM עונה, המערכת **מחפשת מידע רלוונטי ממקורות אמינים** (מסמכים, DB) ומזריקה אותו ל-prompt. כך ה-LLM מבסס את התשובה על עובדות אמיתיות.
+</details>
+
+---
+
 **[➡️ המשך לפרק 2: Control Plane →](02-control-plane.md)**

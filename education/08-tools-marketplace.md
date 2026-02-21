@@ -444,4 +444,59 @@ mindmap
 
 ---
 
+### 📝 תשובות
+
+<details>
+<summary>1. מה ההבדל בין Tool ל-Function Calling?</summary>
+
+**Tool** = יכולת חיצונית שה-Agent יכול להפעיל (API, DB query, calculator). **Function Calling** = המנגנון הטכני שדרכו ה-LLM **מבקש** הפעלת כלי - הוא מחזיר JSON עם שם הפונקציה והפרמטרים. Tool = מה, Function Calling = איך ה-LLM מבקש את זה.
+</details>
+
+<details>
+<summary>2. למה ה-LLM לא מריץ את הכלי בעצמו?</summary>
+
+LLM הוא **מודל שפה** - הוא מייצר טקסט, לא מריץ קוד. הוא **לא מחובר לאינטרנט/DB/APIs**. לכן ה-LLM רק **מחליט** איזה כלי להפעיל, וה-**Platform** (Runtime) מבצע בפועל - הפרדת אחריות לאבטחה.
+</details>
+
+<details>
+<summary>3. מהם ארבעת סוגי הכלים? תן דוגמה לכל אחד.</summary>
+
+1. **API Tools** - קריאה לשירותים חיצוניים (מזג אוויר, הזמנת פגישה).
+2. **Data Tools** - גישה למסדי נתונים (SQL query, vector search).
+3. **Compute Tools** - קוד חישוב (Python sandbox, calculator).
+4. **System Tools** - פעולות מערכת (שליחת מייל, file system).
+</details>
+
+<details>
+<summary>4. מהם 5 השלבים ב-Tool Execution Pipeline?</summary>
+
+1. **Selection** - ה-LLM בוחר איזה כלי להפעיל.
+2. **Validation** - בדיקת פרמטרים, הרשאות, schema.
+3. **Execution** - הרצת הכלי בפועל (ב-sandbox).
+4. **Result Processing** - עיבוד התוצאה (סינון, קיצור).
+5. **Return** - החזרת התוצאה ל-LLM לצעד Observe בלולאת ReAct.
+</details>
+
+<details>
+<summary>5. מה זה Tool Marketplace ולמה הוא חשוב?</summary>
+
+**Tool Marketplace** = קטלוג מרכזי של כלים מוכנים לשימוש, כמו App Store לכלים. חשוב כי: (1) **שימוש חוזר** - לא ממציאים הגלגל, (2) **תקינה** - כלים נבדקים ל-security ו-quality, (3) **תיעוד** - schema אחיד שה-LLM מבין, (4) **גילוי** - גרסאות discovery.
+</details>
+
+<details>
+<summary>6. מהו Principle of Least Privilege בהקשר של Tools?</summary>
+
+תת לכלי רק את ההרשאות ה**מינימליות** שהוא צריך. למשל: כלי שקורא מ-DB מקבל רק read, לא write/delete. כלי ששולח מייל יכול רק לשלוח, לא לקרוא את כל inbox. מצמצם את "blast radius" אם משהו לא בסדר.
+</details>
+
+<details>
+<summary>7. מהם 3 סיכוני אבטחה בשימוש בכלים ואיך מתגוננים?</summary>
+
+1. **Injection** - תוקף מזריק קלט זדוני לכלי (SQL injection דרך ה-agent). הגנה: input validation, parameterized queries.
+2. **Data Exfiltration** - ה-Agent שולח מידע רגיש דרך כלי. הגנה: סינון output, DLP.
+3. **Excessive Permissions** - כלי עם הרשאות רחבות מדי עושה נזק. הגנה: Least Privilege, ביקורת הרשאות קבועה.
+</details>
+
+---
+
 **[⬅️ חזרה לפרק 7: Orchestration](07-orchestration.md)** | **[➡️ המשך לפרק 9: Policy & Governance →](09-policy-governance.md)**

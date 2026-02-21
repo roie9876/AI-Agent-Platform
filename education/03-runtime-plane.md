@@ -498,4 +498,57 @@ mindmap
 
 ---
 
+### 📝 תשובות
+
+<details>
+<summary>1. מה ההבדל העיקרי בין Control Plane ל-Runtime Plane?</summary>
+
+**Control Plane** = שכבת ניהול (Management) - הגדרת agents, policies, configs. פעיל רק כשמשנים הגדרות. **Runtime Plane** = שכבת הרצה (Execution) - מעבד בקשות, מריץ agents, קורא ל-LLMs ולכלים. פעיל עם כל בקשת משתמש. בדומה לרשת: Control Plane = ניהול routing tables, Runtime = העברת packets.
+</details>
+
+<details>
+<summary>2. תתאר את 6 השלבים במחזור חיים של בקשה.</summary>
+
+1. **Ingress** - בקשה נכנסת דרך API Gateway (auth, rate limit).
+2. **Routing** - הבקשה מנותבת ל-Agent המתאים.
+3. **Context Loading** - טעינת thread, history, memory, RAG context.
+4. **Execution** - לולאת ReAct: LLM calls + tool calls.
+5. **Post-processing** - PII scan, content safety, cost logging.
+6. **Response** - תשובה חוזרת למשתמש + שמירת state.
+</details>
+
+<details>
+<summary>3. מה תפקיד ה-Orchestrator?</summary>
+
+ה-**Orchestrator** הוא "המנצח" של ה-Runtime. הוא מנהל את לולאת ה-ReAct: מחליט מתי לקרוא ל-LLM, מתי להפעיל כלי, מנהל את ה-state בין צעדים, מטפל ב-errors ו-retries, ועוצר כשהמשימה הושלמה או שהגיע ל-max steps.
+</details>
+
+<details>
+<summary>4. למה צריך Circuit Breaker ומה הוא עושה?</summary>
+
+**Circuit Breaker** מגן מפני כשלון מדורג (cascading failure). כשה-LLM provider לא זמין, במקום לשלוח בקשות שייכשלו (ולצרוך resources), ה-CB "נפתח" וחוסם בקשות מיד. אחרי timeout, הוא נכנס ל-**Half-Open** - שולח בקשה אחת לבדיקה. אם הצליחה → חוזר ל-Closed (רגיל). אם נכשלה → חוזר ל-Open.
+</details>
+
+<details>
+<summary>5. מה ההבדל בין Sync, Async, ו-Streaming execution?</summary>
+
+- **Sync** - הלקוח מחכה עד שהתשובה מוכנה. פשוט, אבל חוסם.
+- **Async** - הלקוח מקבל מיד task_id ובודק אחר כך (polling/webhook). טוב למשימות ארוכות.
+- **Streaming** - הלקוח מקבל את התשובה טיפה-טיפה בזמן אמת (SSE/WebSocket). UX טוב - המשתמש רואה טקסט "נכתב".
+</details>
+
+<details>
+<summary>6. למה Agent צריך Sandbox וכמה רמות בידוד יש?</summary>
+
+Agent מריץ קוד ומפעיל כלים - בלי Sandbox הוא יכול לגשת לכל המערכת. **4 רמות**: (1) **Process** - הפרדה ברמת process, (2) **Container** - Docker/Podman, (3) **MicroVM** - VM קל (Firecracker), (4) **Hardware** - Confidential Computing. ככל שעולים → יותר אבטחה, פחות ביצועים.
+</details>
+
+<details>
+<summary>7. מה הבעיה עם Stateful components ב-Scaling ומה הפתרון?</summary>
+
+Stateful components (כמו Agent עם thread ב-memory) לא ניתנים ל-scale בקלות כי כל instance מחזיק state שונה - בקשה חייבת להגיע לאותו instance. **פתרון**: **Externalize State** - להוציא את ה-state ל-DB חיצוני (Redis, Cosmos DB), כך שכל instance הוא stateless ויכול לטפל בכל בקשה.
+</details>
+
+---
+
 **[⬅️ חזרה לפרק 2: Control Plane](02-control-plane.md)** | **[➡️ המשך לפרק 4: Model Abstraction & Routing →](04-model-abstraction-routing.md)**

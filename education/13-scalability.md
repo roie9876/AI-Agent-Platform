@@ -517,4 +517,60 @@ mindmap
 
 ---
 
+### 📝 תשובות
+
+<details>
+<summary>1. מה ההבדל בין Horizontal ל-Vertical scaling?</summary>
+
+**Vertical (Scale Up)** = להגדיל את המכונה הקיימת (יותר CPU, RAM). פשוט אבל יש תקרה. **Horizontal (Scale Out)** = להוסיף עוד מכונות (עוד instances). ללא תקרה תיאורטית, אבל דורש התמודדות עם state ו-load balancing.
+</details>
+
+<details>
+<summary>2. למה Agents קשים ל-scale (5 סיבות)?</summary>
+
+1. **Stateful** - כל agent מחזיק state (thread, memory).
+2. **Long-Running** - בקשות נמשכות שניות (לולאות ארוכות).
+3. **Unpredictable Cost** - כל בקשה צורכת מספר tokens שונה.
+4. **External Dependencies** - LLM APIs עם rate limits ו-latency משתנה.
+5. **Fan-Out** - agent אחד יכול להפעיל מספר כלים/sub-agents במקביל.
+</details>
+
+<details>
+<summary>3. מה זה Externalize State ולמה זה חשוב?</summary>
+
+**Externalize State** = הוצאת ה-state מה-instance ל-DB חיצוני (Redis, Cosmos DB). חשוב כי: אם ה-state בתוך ה-instance, אי אפשר לעשות scale out (בקשה חייבת להגיע לאותו instance). עם state חיצוני: כל instance הוא stateless → כל instance יכול לטפל בכל בקשה.
+</details>
+
+<details>
+<summary>4. מה היתרון של Queue-Based Architecture?</summary>
+
+במקום שהבקשות הולכות ישירות ל-Agent, הן נכנסות **לתור** (queue). יתרונות: (1) **החלקת עומס** - spike לא מפיל את המערכת, (2) **Decoupling** - producer ו-consumer עצמאיים, (3) **Retry** - הודעה שנכשלה חוזרת לתור, (4) **Scale** - מוסיפים consumers לפי עומק התור.
+</details>
+
+<details>
+<summary>5. מה זה Auto-Scaling ואילו metrics משתמשים?</summary>
+
+**Auto-Scaling** = המערכת מוסיפה/מורידה instances אוטומטית. Metrics: (1) **Queue depth** - כמה הודעות מחכות בתור, (2) **Active requests** - כמה בקשות בעיבוד, (3) **CPU/Memory** - ניצולת משאבים, (4) **Latency** - זמן תגובה. ב-Agents: queue depth הוא לרוב ה-metric הטוב ביותר.
+</details>
+
+<details>
+<summary>6. מה ההבדל בין Active-Active ל-Active-Passive?</summary>
+
+**Active-Active** = שני regions פעילים במקביל, תעבורה מתחלקת. RTO ≈ 0, אבל צריך data sync מורכב, יקר יותר. **Active-Passive** = region אחד פעיל, השני בהמתנה (standby). כשהראשון נופל → failover לשני. RTO > 0 (יש השבתה), אבל זול יותר.
+</details>
+
+<details>
+<summary>7. מה זה Semantic Cache ואיך זה עוזר?</summary>
+
+**Semantic Cache** = שמירת תשובות LLM והחזרתן לשאלות **דומות משמעותית** (לא זהות). עוזר ל-**scalability** ב: (1) חוסך LLM calls → פחות עומס על APIs, (2) חוסך tokens → חוסך עלות, (3) latency נמוך יותר על cache hit (מילישניות במקום שניות).
+</details>
+
+<details>
+<summary>8. מה ה-tradeoff של Circuit Breaker?</summary>
+
+**יתרון**: מגן מפני cascading failure - כששירות לא זמין, לא שולחים עוד בקשות שייכשלו → חוסכים משאבים. **חיסרון**: בקשות לגיטימיות נדחות בזמן שה-CB פתוח - אי אפשר לטפל בהן. צריך לכוון נכון את ה-thresholds וה-timeout period.
+</details>
+
+---
+
 **[⬅️ חזרה לפרק 12: Security](12-security-isolation.md)** | **[➡️ המשך לפרק 14: HLD Architecture →](14-hld-architecture.md)**

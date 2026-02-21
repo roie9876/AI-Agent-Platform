@@ -482,4 +482,53 @@ mindmap
 
 ---
 
+### 📝 תשובות
+
+<details>
+<summary>1. מה ההבדל בין Thread ל-State?</summary>
+
+**Thread** = שיחה שלמה (conversation) - מכיל רצף של הודעות מסודרות. ל-thread יש thread_id והוא מייצג את **מה נאמר**. **State** = המצב הנוכחי של ה-Agent ברגע מסוים (איפה הוא בלולאת ReAct, אילו כלים הופעלו, משתנים). הוא מייצג **איפה עובדים**.
+</details>
+
+<details>
+<summary>2. מהו Thread Lifecycle (ציין 4 מצבים)?</summary>
+
+1. **Created** - thread נוצר, עדיין ריק.
+2. **Active** - שיחה פעילה, הודעות נשלחות/מתקבלות.
+3. **Suspended** - מוקפא זמנית (מחכה ל-HITL, timeout).
+4. **Closed/Archived** - השיחה נגמרה, נשמרת לארכיון.
+</details>
+
+<details>
+<summary>3. למה צריך Checkpointing ואילו אסטרטגיות יש?</summary>
+
+**Checkpointing** = שמירת תמונת state בנקודות זמן קבועות. צריך כי: אם המערכת קורסת, אפשר לחזור לנקודה האחרונה במקום להתחיל מאפס. אסטרטגיות: (1) **Every Step** - שומר אחרי כל צעד (reliable אבל איטי), (2) **Periodic** - כל N שניות (trade-off), (3) **On-Demand** - רק בנקודות קריטיות.
+</details>
+
+<details>
+<summary>4. מהו HITL ואילו סוגים שלו קיימים?</summary>
+
+**HITL (Human-in-the-Loop)** = אדם נכנס ללולאה לאשר/לתקן/לדחות. סוגים: (1) **Approval** - Agent מבקש אישור לפני פעולה קריטית ("לשלוח הזמנה של $5000?"), (2) **Review** - Agent מציג תוצאה והאדם מאשר/דוחה, (3) **Escalation** - Agent מעביר לאדם כשאין לו confidence מספיק.
+</details>
+
+<details>
+<summary>5. מהו Saga Pattern ומתי משתמשים בו?</summary>
+
+**Saga Pattern** = דפוס לניהול טרנזקציות מרובות שלבים. במקום טרנזקציה אחת גדולה, מפרקים לצעדים קטנים, ולכל צעד יש **compensating action** (פעולת ביטול). אם צעד 3 נכשל → מבטלים צעדים 2 ו-1. משתמשים כשיש רצף פעולות שמערבות מספר מערכות (booking + payment + notification).
+</details>
+
+<details>
+<summary>6. מה הפתרון לבעיית Long-Running Workflows?</summary>
+
+**Durable Execution** - שימוש בפריימוורק כמו Durable Functions / Temporal. הרעיון: workflow שומר את ה-state שלו ב-storage עמיד, יכול להמתין ימים (למשל חיכוי ל-HITL), ואם קורס - ממשיך מאיפה שעצר. לא תופס timeout רגיל.
+</details>
+
+<details>
+<summary>7. מה קורה כשמשתמש שולח הודעה בזמן שה-Agent עדיין מעבד?</summary>
+
+זה **Concurrent Message Handling**. אפשרויות: (1) **Queue** - ההודעה נכנסת לתור ומטופלת אחרי סיום העיבוד הנוכחי. (2) **Reject** - החזרת שגיאה "ה-Agent עסוק, נסה שוב מאוחר יותר". (3) **Cancel & Replace** - ביטול העיבוד הנוכחי והתחלה עם ההודעה החדשה.
+</details>
+
+---
+
 **[⬅️ חזרה לפרק 5: Memory Management](05-memory-management.md)** | **[➡️ המשך לפרק 7: Orchestration Patterns →](07-orchestration.md)**

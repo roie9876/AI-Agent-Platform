@@ -556,4 +556,74 @@ mindmap
 
 ---
 
+### 📝 תשובות
+
+<details>
+<summary>1. מהן 7 סוגי ה-Attack Vectors ל-Agent Platform?</summary>
+
+1. **Prompt Injection** - הזרקת הוראות זדוניות.
+2. **Data Exfiltration** - חילוץ מידע דרך ה-Agent.
+3. **Tool Misuse** - שימוש לרעה בכלים.
+4. **Denial of Service/Wallet** - שימוש יתר להצפה/הרס.
+5. **Model Theft** - גניבת system prompts/fine-tuned models.
+6. **Cross-Tenant Data Leakage** - tenant A רואה data של B.
+7. **Supply Chain** - כלים/dependencies זדוניים.
+</details>
+
+<details>
+<summary>2. מה ההבדל בין Authentication ל-Authorization?</summary>
+
+**Authentication (AuthN)** = "מי אתה?" - אימות זהות המשתמש (JWT, OAuth, Managed Identity). **Authorization (AuthZ)** = "מה מותר לך?" - בדיקת הרשאות לפעולות ספציפיות (RBAC, ABAC). AuthN תמיד קודם, AuthZ אחרי כן.
+</details>
+
+<details>
+<summary>3. מהם 4 העקרונות של Zero Trust?</summary>
+
+1. **Never Trust, Always Verify** - כל בקשה נבדקת, גם מתוך הרשת.
+2. **Least Privilege** - מינימום הרשאות לכל user/agent/tool.
+3. **Assume Breach** - מתכננים כאילו כבר פרצו. מגבילים blast radius.
+4. **Explicit Verification** - אימות בכל שכבה (בין שירותים, לא רק בכניסה).
+</details>
+
+<details>
+<summary>4. מהן 4 רמות ה-Isolation והמתחם ביניהן?</summary>
+
+1. **Process** - הפרדה ברמת OS process. מהיר, בידוד נמוך.
+2. **Container** - Docker, namespace isolation. איזון טוב-עלות.
+3. **MicroVM** - VM קל (Firecracker). בידוד חזק עם startup מהיר.
+4. **Hardware** - Confidential Computing, TEE. איזון מקסימלי אבל יקר ומורכב.
+
+**Trade-off**: ככל שהבידוד גבוה יותר → אבטחה טובה יותר, אבל ביצועים גרועים יותר.
+</details>
+
+<details>
+<summary>5. מה זה Prompt Injection (Direct vs Indirect)?</summary>
+
+**Direct** = המשתמש עצמו כותב הוראות זדוניות בקלט ("ignore instructions and..."). **Indirect** = ההוראות הזדוניות מוחבאות בתוך **מסמך שה-Agent קורא** (דף אינטרנט, מייל, PDF). יותר מסוכן כי קשה לזהות.
+</details>
+
+<details>
+<summary>6. מהם 5 הדרכים להתמודד עם Prompt Injection?</summary>
+
+1. **Input Validation** - סינון וזיהוי דפוסים ידועים.
+2. **Prompt Sandboxing** - הפרדה בין system prompt ל-user input.
+3. **Classifier Models** - מודל ML שמזהה injection לפני ששולחים ל-LLM.
+4. **Output Validation** - בדיקת התשובה שלא חרגה מהגבולות.
+5. **Least Privilege** - גם אם injection הצליח, הנזק מוגבל.
+</details>
+
+<details>
+<summary>7. מה זה Denial of Wallet ואיך מתגוננים?</summary>
+
+**Denial of Wallet** = תוקף גורם למערכת לצרוך הרבה tokens (לולאות ארוכות, שאלות מורכבות), מה שיוצר **חשבונות ענקיות** מה-LLM provider. הגנה: (1) **Token budgets** per user/agent, (2) **Rate limiting**, (3) **Max steps** ללולאת ReAct, (4) **אלרטים** על חריגות.
+</details>
+
+<details>
+<summary>8. למה Secrets Management חשוב ומה ה-best practices?</summary>
+
+חשוב כי Agents משתמשים ב-API keys, DB passwords, tokens - דליפה = גישה לכל. Best practices: (1) **לעולם לא בקוד** - לא hardcode secrets, (2) **Vault** - שימוש ב-Key Vault/HashiCorp, (3) **Rotation** - סיבוב קבוע, (4) **Managed Identity** - ללא secrets בכלל, (5) **לא ל-LLM** - לעולם לא לשלוח secrets כחלק מה-prompt.
+</details>
+
+---
+
 **[⬅️ חזרה לפרק 11: Observability](11-observability-cost.md)** | **[➡️ המשך לפרק 13: Scalability →](13-scalability.md)**

@@ -491,4 +491,58 @@ mindmap
 
 ---
 
+### 📝 תשובות
+
+<details>
+<summary>1. מה ההבדל בין Sequential ל-Parallel execution?</summary>
+
+**Sequential** = צעדים רצים אחד אחרי השני. הפלט של צעד 1 מזין את צעד 2. פשוט, אבל איטי. **Parallel** = צעדים רצים בו זמנית. מהיר, אבל דורש ניהול תלויות ו-fan-out/fan-in.
+</details>
+
+<details>
+<summary>2. מה זה ReAct Pattern? תתאר את הלולאה.</summary>
+
+**ReAct (Reason + Act)** = לולאה של: **Think** (ה-LLM מנתח מה לעשות) → **Act** (מפעיל כלי / עושה פעולה) → **Observe** (רואה את התוצאה) → חוזר ל-Think עד סיום. ה-Agent עוצר כשאין לו עוד פעולות לבצע או הגיע ל-max steps.
+</details>
+
+<details>
+<summary>3. מה היתרון של Plan-and-Execute על פני ReAct?</summary>
+
+**ReAct** מחליט צעד אחר צעד - לא רואה את התמונה המלאה. **Plan-and-Execute** קודם יוצר **תוכנית מלאה** ואז מבצע צעד אחר צעד. יתרונות: (1) יעילות גבוהה יותר, (2) פחות LLM calls (תכנון רק 1, כל הרצה נפרדת), (3) ניתן להקביל כל executor.
+</details>
+
+<details>
+<summary>4. מתי כדאי להשתמש ב-Sub-Agents?</summary>
+
+כשהמשימה **מורכבת ממספר תחומים שונים** (חיפוש + כתיבה + אנליזה). כל sub-agent הוא מומחה בתחום אחד עם system prompt, כלים, ומודל מותאמים. Agent ראשי (Supervisor) מנתב ל-sub-agents ומשלב תוצאות.
+</details>
+
+<details>
+<summary>5. מה זה DAG ולמה הוא עדיף על רשימה?</summary>
+
+**DAG (Directed Acyclic Graph)** = גרף מכוון ללא מעגלים. עדיף על רשימה כי: (1) מאפשר **parallelism** - צעדים ללא תלות רצים במקביל, (2) מאפשר **תלויות מורכבות** - A → B וגם A → C במקביל, (3) מבטיח שלא יהיו **לולאות אינסופיות**.
+</details>
+
+<details>
+<summary>6. מה זה Map-Reduce Pattern ומתי משתמשים בו?</summary>
+
+**Map** = פיצול משימה גדולה להרבה תת-משימות שרצות במקביל. **Reduce** = איחוד כל התוצאות לתשובה אחת. מתאים ל: סיכום 100 מסמכים (Map: סכם כל אחד | Reduce: אחד לסיכום אחד), אנליזה של טבלאות מרובות.
+</details>
+
+<details>
+<summary>7. מה תפקיד ה-Supervisor Agent?</summary>
+
+**Supervisor Agent** = Agent ראשי שמנהל צוות Sub-Agents. הוא: (1) מקבל את המשימה מהמשתמש, (2) מחליט לאיזה sub-agent להעביר, (3) עוקב אחרי תוצאות, (4) משלב ומחזיר תשובה סופית. הוא אחראי ל-routing ואיכות.
+</details>
+
+<details>
+<summary>8. איזה Pattern מתאים לכל סיטואציה?</summary>
+
+- **סיכום 100 מסמכים** → **Map-Reduce**: Map מסכם כל אחד, Reduce מאחד.
+- **חיפוש ב-3 מקורות** → **Parallel + Fan-In**: 3 חיפושים במקביל, איחוד תוצאות.
+- **כתיבת מאמר** → **Plan-and-Execute**: קודם תוכנית (outline, research, draft, review) ואז ביצוע sequential.
+</details>
+
+---
+
 **[⬅️ חזרה לפרק 6: Thread & State](06-thread-state-management.md)** | **[➡️ המשך לפרק 8: Tools & Marketplace →](08-tools-marketplace.md)**

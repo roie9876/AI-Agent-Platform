@@ -496,4 +496,52 @@ mindmap
 
 ---
 
+### 📝 תשובות
+
+<details>
+<summary>1. מה ההבדל בין Monitoring ל-Observability?</summary>
+
+**Monitoring** = מעקב אחרי מדדים ידועים מראש ("CPU > 80%? תתריע"). תגובתי - מגיב למה שידוע שקורה. **Observability** = יכולת להבין **למה** משהו קורה מתוך הנתונים. חקירתית - עונה לשאלות שלא צפיתי מראש. Monitoring ⊂ Observability.
+</details>
+
+<details>
+<summary>2. מהם 3 עמודי ה-Observability?</summary>
+
+1. **Logs** - תיעוד טקסטואלי של אירועים ("מה קרה").
+2. **Metrics** - מדדים מספריים לאורך זמן (latency, throughput, errors).
+3. **Traces** - מעקב מסע בקשה דרך כל השירותים ("איפה זה קרה"). כולם יחד = תמונה מלאה.
+</details>
+
+<details>
+<summary>3. מה זה Trace, Span, Trace ID?</summary>
+
+**Trace** = מסע שלם של בקשה אחת דרך כל המערכת. **Span** = קטע אחד בתוך ה-trace (למשל: LLM call, tool execution, DB query). לכל span יש start time, duration, metadata. **Trace ID** = מזהה ייחודי שמקשר את כל ה-spans לאותה בקשה. מאפשר לעקוב אחרי בקשה אחת דרך כל השכבות.
+</details>
+
+<details>
+<summary>4. למה Token Tracking חשוב?</summary>
+
+כי **tokens = כסף**. בלי מעקב: (1) לא יודעים כמה עולה כל agent, (2) agent אחד יכול לצרוך הרבה (לולאות ארוכות), (3) לא ניתן לזהות חריגות. Token Tracking מאפשר: ניראות עלות, זיהוי אנומליות, חיוב per tenant, בחירת מודל חסכוני יותר.
+</details>
+
+<details>
+<summary>5. אילו חיתוכים יש ב-Cost Dashboard?</summary>
+
+Cost Dashboard מראה עלות בחיתוכים: (1) **Per Agent** - איזה agent עולה הכי יותר, (2) **Per Tenant** - חיוב לכל לקוח, (3) **Per Model** - GPT-4o vs GPT-4o-mini, (4) **Per Tool** - כלים יקרים, (5) **Over Time** - מגמות לאורך זמן.
+</details>
+
+<details>
+<summary>6. מה זה OpenTelemetry ולמה הוא חשוב?</summary>
+
+**OpenTelemetry (OTel)** = סטנדרט פתוח (לא של vendor) לאיסוף logs, metrics, traces מאפליקציות. חשוב כי: (1) **לא vendor lock-in** - עובד עם Jaeger, Prometheus, Azure Monitor, Datadog, (2) **סטנדרטי** - auto-instrumentation להרבה שפות, (3) **קהילתי** - מתוחזק ונתמך על ידי CNCF.
+</details>
+
+<details>
+<summary>7. מה זו Alert Fatigue ואיך מתמודדים?</summary>
+
+**Alert Fatigue** = כשיש יותר מדי התראות, הצוות מתחיל להתעלם מהן ולפספס גם את הקריטיות. התמודדות: (1) **Severity levels** - Critical/Warning/Info, (2) **איחוד** - alert אחד לבעיה, לא 20, (3) **Actionable** - כל alert חייב להיות עם פעולה ברורה, (4) **Cooldown** - לא לשלוח אותו alert שוב ושוב.
+</details>
+
+---
+
 **[⬅️ חזרה לפרק 10: Evaluation](10-evaluation-engine.md)** | **[➡️ המשך לפרק 12: Security & Isolation →](12-security-isolation.md)**

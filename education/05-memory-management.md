@@ -510,4 +510,64 @@ mindmap
 
 ---
 
+### 📝 תשובות
+
+<details>
+<summary>1. למה LLM לבד לא "זוכר" שיחות קודמות?</summary>
+
+LLM הוא **Stateless** - כל בקשה היא עצמאית. הוא לא שומר מידע בין קריאות. כדי "לזכור" שיחה, צריך **לשלוח את כל ההיסטוריה** מחדש בכל בקשה כחלק מה-prompt. זו האחריות של המערכת מסביב, לא של המודל עצמו.
+</details>
+
+<details>
+<summary>2. מה ההבדל בין Short-Term ל-Long-Term memory?</summary>
+
+**Short-Term** = זיכרון של השיחה הנוכחית (הודעות, context). נמחק כשהשיחה נגמרת. שמור ב-RAM/Cache. **Long-Term** = זיכרון שנשמר לאורך זמן (עובדות על המשתמש, מסמכים, ידע). שמור ב-Vector DB. נישאר גם אחרי שהשיחה נגמרת.
+</details>
+
+<details>
+<summary>3. מה הבעיה עם Context Window ואיך Sliding Window פותר אותה?</summary>
+
+Context Window מוגבל (למשל 128K tokens). שיחה ארוכה חורגת מהגבול. **Sliding Window** = שומרים רק את ה-N הודעות האחרונות ומשמיטים ישנות. כך תמיד נשארים בגבול, אבל מאבדים הקשר ישן. אלטרנטיבות: Summarization (סיכום ההיסטוריה) או Hybrid (סיכום ישן + הודעות אחרונות).
+</details>
+
+<details>
+<summary>4. הסבר את שלושת השלבים של RAG.</summary>
+
+1. **Retrieve (אחזר)** - חפש מסמכים רלוונטיים ב-Vector DB לפי דמיון סמנטי לשאלה.
+2. **Augment (הרחב)** - הכנס את המסמכים שנמצאו לתוך ה-prompt כ-context.
+3. **Generate (צור)** - ה-LLM מייצר תשובה מבוססת על ה-context שניתן לו (grounded).
+</details>
+
+<details>
+<summary>5. מה זה Embedding ואיך Cosine Similarity עובד?</summary>
+
+**Embedding** = המרת טקסט לווקטור של מספרים (למשל 1536 ממדים) שמייצג את ה**משמעות** של הטקסט. **Cosine Similarity** = מדד דמיון בין שני ווקטורים, מחשב את הזווית ביניהם. ערך 1.0 = זהים, 0 = לא קשורים, -1 = הפוכים. משמש למציאת טקסטים דומים משמעותית.
+</details>
+
+<details>
+<summary>6. למה צריך Chunking ומה הטכניקה של Overlap?</summary>
+
+**Chunking** = חלוקת מסמך ארוך לחתיכות קטנות. למה: (1) Embedding עובד טוב יותר על טקסטים קצרים, (2) מאפשר אחזור מדויק (חלקים ספציפיים). **Overlap** = חפיפה בין chunks (למשל 50 tokens). מונע אובדן מידע שנמצא בגבול בין שני chunks.
+</details>
+
+<details>
+<summary>7. מה ההבדל בין Semantic Search ל-Keyword Search?</summary>
+
+**Keyword Search** = חיפוש לפי מילים מדויקות (BM25). "car" לא מוצא "automobile". **Semantic Search** = חיפוש לפי משמעות באמצעות embeddings. "car" כן מוצא "automobile" כי הם קרובים סמנטית. Keyword מדויק אבל מפספס. Semantic מבין משמעות אבל עלול להיות פחות מדויק.
+</details>
+
+<details>
+<summary>8. מה זה Hybrid Search ולמה הוא עדיף?</summary>
+
+**Hybrid Search** = שילוב של Keyword Search + Semantic Search. מריצים את שניהם, ואז משלבים תוצאות עם **Reciprocal Rank Fusion (RRF)**. עדיף כי מקבלים את היתרונות של שניהם: דיוק מילולי (keyword) + הבנת משמעות (semantic).
+</details>
+
+<details>
+<summary>9. מה זה Memory Scoping ולמה הוא חשוב?</summary>
+
+**Memory Scoping** = הגדרה של מי יכול לגשת לאיזה זיכרון. רמות: **User** (פרטי למשתמש), **Agent** (משותף לכל המשתמשים של agent), **Tenant** (משותף לארגון), **Global** (משותף לכולם). חשוב ל: (1) **אבטחה** - user A לא רואה data של user B, (2) **פרטיות** - tenant isolation, (3) **רלוונטיות** - context מדויק יותר.
+</details>
+
+---
+
 **[⬅️ חזרה לפרק 4: Model Abstraction](04-model-abstraction-routing.md)** | **[➡️ המשך לפרק 6: Thread & State Management →](06-thread-state-management.md)**

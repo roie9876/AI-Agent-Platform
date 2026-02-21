@@ -470,4 +470,61 @@ mindmap
 
 ---
 
+### 📝 תשובות
+
+<details>
+<summary>1. מהם שני התפקידים העיקריים של ה-Control Plane?</summary>
+
+1. **ניהול (Management)** - הגדרת Agents, רישום כלים ומודלים, ניהול policies והרשאות.
+2. **תצורה (Configuration)** - שמירת הגדרות, versioning, ניהול tenants וקביעת כללי השימוש בפלטפורמה.
+</details>
+
+<details>
+<summary>2. מה ההבדל בין Authentication ל-Authorization? תן דוגמה.</summary>
+
+**Authentication (AuthN)** = "מי אתה?" - אימות זהות (login, token). **Authorization (AuthZ)** = "מה מותר לך?" - בדיקת הרשאות. דוגמה: roi@company.com מתחבר עם סיסמה (AuthN ✅), אבל לא מורשה למחוק Agents כי הוא בתפקיד viewer (AuthZ ❌).
+</details>
+
+<details>
+<summary>3. למה צריך API Gateway? מה קורה בלעדיו?</summary>
+
+API Gateway מספק: rate limiting, authentication, routing, logging, TLS termination, ו-versioning. **בלעדיו**: כל שירות חייב לממש את כל אלה בעצמו → כפילויות, חורי אבטחה, אין שליטה מרכזית בתעבורה, קשה לעקוב ולהגביל שימוש.
+</details>
+
+<details>
+<summary>4. מהו RBAC ואיך הוא עובד?</summary>
+
+**RBAC (Role-Based Access Control)** = מערכת הרשאות מבוססת תפקידים. כל משתמש מקבל **Role** (admin, developer, viewer), וכל Role מגדיר אילו **Permissions** יש (create agent, read data, delete). במקום להגדיר הרשאות per user, מגדירים per role → פשוט יותר לנהל.
+</details>
+
+<details>
+<summary>5. למה חשוב Versioning של Agent Configuration?</summary>
+
+1. **Rollback** - אם עדכון שבר משהו, אפשר לחזור לגרסה קודמת.
+2. **Audit** - לדעת מי שינה מה ומתי.
+3. **A/B Testing** - להשוות ביצועים בין גרסאות.
+4. **Reproducibility** - לשחזר בדיוק את ההתנהגות של Agent בזמן מסוים.
+</details>
+
+<details>
+<summary>6. תתאר את הזרימה של יצירת Agent חדש.</summary>
+
+1. **Developer** שולח בקשת POST /agents ל-**API Gateway**.
+2. Gateway מבצע **Authentication** (מי זה?) ו-**Authorization** (מורשה ליצור?).
+3. הבקשה מגיעה ל-**Agent Registry** שמאמת את ה-schema.
+4. **Config Manager** שומר את ההגדרות.
+5. **Policy Engine** מוודא שה-Agent עומד בכללים.
+6. Agent נרשם ומוכן לשימוש ב-Runtime Plane.
+</details>
+
+<details>
+<summary>7. מהם שלושת מודלי ה-Multi-Tenancy ומה היתרון של כל אחד?</summary>
+
+1. **Shared Everything** - כל ה-tenants חולקים הכל (DB, compute). יתרון: **עלות נמוכה**. חיסרון: Noisy Neighbor.
+2. **Shared Infra, Isolated Data** - compute משותף אבל DB/namespace נפרד per tenant. יתרון: **איזון עלות-אבטחה**.
+3. **Fully Isolated** - כל tenant בסביבה נפרדת לחלוטין. יתרון: **אבטחה מקסימלית**. חיסרון: יקר מאוד.
+</details>
+
+---
+
 **[⬅️ חזרה לפרק 1: מושגי יסוד](01-fundamentals.md)** | **[➡️ המשך לפרק 3: Runtime Plane →](03-runtime-plane.md)**

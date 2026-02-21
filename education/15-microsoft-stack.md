@@ -625,4 +625,64 @@ mindmap
 
 ---
 
+### 📝 תשובות
+
+<details>
+<summary>1. מפה כל רכיב גנרי ל-Azure service.</summary>
+
+LLM Gateway → **Azure OpenAI**, Vector DB → **Azure AI Search**, State Store → **Cosmos DB**, Cache → **Azure Cache for Redis**, Compute → **Azure Container Apps (ACA)**, Queue → **Azure Service Bus**, Identity → **Microsoft Entra ID**, Secrets → **Azure Key Vault**, Monitoring → **Azure Monitor + App Insights**, Storage → **Azure Blob Storage**, Config → **Azure App Configuration**, Orchestration SDK → **Semantic Kernel**, CI/CD → **Azure DevOps / GitHub Actions**, Evaluation → **Azure AI Foundry**, Content Safety → **Azure AI Content Safety**.
+</details>
+
+<details>
+<summary>2. למה Azure OpenAI ולא OpenAI ישירות?</summary>
+
+1. **נתונים נשארים ב-Azure** - לא יוצאים ל-OpenAI, עומדים ב-compliance (GDPR, SOC2).
+2. **Managed Identity** - ללא API keys.
+3. **Private Endpoints** - תעבורה ברשת פרטית.
+4. **Content Filtering** - מובנה.
+5. **PTU (Provisioned Throughput)** - קפסיטי מובטח ל-enterprise.
+6. **SLA** - 99.9% uptime עם תמיכה.
+</details>
+
+<details>
+<summary>3. מה היתרון של Hybrid Search ב-Azure AI Search?</summary>
+
+**Hybrid Search** משלב **Keyword (BM25) + Semantic (Vector)** ומאחד תוצאות עם RRF (Reciprocal Rank Fusion). יתרון: (1) מקבל את הדיוק של keyword (מונחים, שמות) + הבנה סמנטית (משמעות דומה), (2) תוצאות מדויקות יותר עם כל שיטה לבדה, (3) ב-Azure AI Search זה מובנה וקל להפעיל.
+</details>
+
+<details>
+<summary>4. למה Cosmos DB מתאים ל-Agent Platform (4 סיבות)?</summary>
+
+1. **Low Latency** - single-digit ms reads/writes, קריטי ל-real-time agents.
+2. **Multi-Model** - תומך ב-JSON, Key-Value, Graph → מתאים לשמירת config, state, threads.
+3. **Global Distribution** - multi-region writes → Active-Active.
+4. **Elastic Scale** - auto scale RU/s לפי עומס, לא צריך provision מראש.
+</details>
+
+<details>
+<summary>5. מה ההבדל בין ACA ל-AKS?</summary>
+
+**ACA (Azure Container Apps)** = PaaS ל-containers. לא צריך לנהל K8s, auto-scaling מובנה, scale to zero. מתאים: רוב המקרים (80%), פשוט ומהיר. **AKS (Azure Kubernetes Service)** = IaaS+, שליטה מלאה על K8s. מתאים: מקרים מורכבים, custom networking, service mesh, GPU nodes.
+</details>
+
+<details>
+<summary>6. מה זה Managed Identity ולמה זה עדיף על API keys?</summary>
+
+**Managed Identity** = זהות ש-Azure מנהל אוטומטית ל-service. ה-service מתחבר לשירותים אחרים בלי API key בקוד. עדיף כי: (1) **אין secrets לנהל** - אין מה לדלוף/לסובב/לשכוח, (2) **רוטציה אוטומטית**, (3) **RBAC** - משתלב עם Entra ID.
+</details>
+
+<details>
+<summary>7. מה Semantic Kernel ואיך הוא שונה מ-LangChain?</summary>
+
+**Semantic Kernel** = SDK של Microsoft לבניית אפליקציות AI. **הבדלים מ-LangChain**: (1) **Enterprise-first** - אופטימיזציה ל-Azure, (2) **C# + Python + Java** (לא רק Python), (3) **Plugins** architecture (מודולרי), (4) **פחות abstractions** - פשוט להבנה. LangChain: פופולרי יותר ב-community, עשיר יותר ב-integrations צד שלישי.
+</details>
+
+<details>
+<summary>8. מה Azure AI Foundry Agent Service מספק?</summary>
+
+**Azure AI Foundry Agent Service** = שירות managed של Azure לבניית AI Agents. מספק: (1) **Managed Runtime** - לא צריך לנהל infra, (2) **אינטגרציה מובנית** עם Azure OpenAI, AI Search, Bing, (3) **Thread/State management** מובנה, (4) **Code Interpreter** ו-File tools מוכנים, (5) **Enterprise features** - אבטחה, compliance, monitoring. בעצם PaaS ל-Agent Platform.
+</details>
+
+---
+
 **[⬅️ חזרה לפרק 14: HLD Architecture](14-hld-architecture.md)** | **[🏠 חזרה ל-README](README.md)**

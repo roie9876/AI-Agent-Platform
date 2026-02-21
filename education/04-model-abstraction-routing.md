@@ -473,4 +473,64 @@ mindmap
 
 ---
 
+### 📝 תשובות
+
+<details>
+<summary>1. למה צריך שכבת הפשטה מעל ה-LLMs?</summary>
+
+בלי הפשטה, הקוד צמוד לספק אחד (OpenAI/Anthropic). שכבת הפשטה מאפשרת: (1) **החלפת ספק** בלי לשנות קוד, (2) **routing חכם** בין מודלים, (3) **fallback** אוטומטי אם ספק לא זמין, (4) **ממשק אחיד** לכל המודלים.
+</details>
+
+<details>
+<summary>2. מהו ה-Adapter Pattern ואיך הוא עוזר כאן?</summary>
+
+**Adapter Pattern** = Design Pattern שמתרגם ממשק אחד לאחר. כאן: כל LLM provider יש לו API שונה, אז יוצרים **Adapter** לכל ספק (OpenAIAdapter, AnthropicAdapter) שממיר את הבקשה לפורמט של אותו ספק. האפליקציה מדברת עם ממשק אחד אחיד → ה-Adapter מתרגם.
+</details>
+
+<details>
+<summary>3. תתאר 3 אסטרטגיות Routing שונות.</summary>
+
+1. **Content-Based** - לפי סוג המשימה: קוד → Claude, שיחה → GPT-4o-mini.
+2. **Cost-Based** - מנסה קודם מודל זול, ואם לא מצליח → מודל יקר.
+3. **Latency-Based** - בוחר את המודל עם זמן התגובה הנמוך ביותר כרגע.
+</details>
+
+<details>
+<summary>4. מה ההבדל בין Fallback ל-Retry?</summary>
+
+**Retry** = ניסיון חוזר **לאותו** ספק/מודל (אולי היתה בעיה זמנית). **Fallback** = מעבר ל**ספק/מודל אחר** (כי הספק הראשי לא זמין או נכשל ה-retry). Retry → אותו מודל שוב. Fallback → מודל אחר.
+</details>
+
+<details>
+<summary>5. מה זה Exponential Backoff עם Jitter ולמה זה חשוב?</summary>
+
+**Exponential Backoff** = ההמתנה בין retries גדלה: 1s → 2s → 4s → 8s. מונע הצפה של ספק שכבר עמוס. **Jitter** = הוספת רנדומיות קטנה לזמן ההמתנה. מונע מצב שהרבה clients עושים retry בדיוק באותו רגע ("thundering herd").
+</details>
+
+<details>
+<summary>6. מה ההבדל בין Exact Match Cache ל-Semantic Cache?</summary>
+
+**Exact Match** = Cache hit רק אם הפרומפט **זהה לחלוטין** (character by character). הרבה misses. **Semantic Cache** = Cache hit אם הפרומפט **דומה משמעותית** (embedding similarity > threshold). "What are Q3 sales?" ≈ "Q3 sales numbers?" → cache hit. יותר hits, אבל דורש חישוב embedding.
+</details>
+
+<details>
+<summary>7. מתי לא כדאי לעשות Cache?</summary>
+
+- כשהתשובה צריכה להיות **עדכנית** (real-time data).
+- כש-**temperature > 0** ורוצים תשובות מגוונות.
+- כשיש **PII** בתשובה (סיכון אבטחה).
+- כשהקלט **ייחודי מאוד** (cache hit rate נמוך).
+</details>
+
+<details>
+<summary>8. איזה מודל תבחר לכל משימה?</summary>
+
+- **סיכום דוח** → GPT-4o-mini (פשוט, זול, מהיר).
+- **פתרון בעיית קוד** → Claude 3.5 Sonnet / GPT-4o (דורש reasoning חזק).
+- **תרגום** → GPT-4o-mini (משימה סטנדרטית, חסכוני).
+- **שיחת חולין** → GPT-4o-mini (לא צריך מודל חזק, חשוב שיהיה מהיר וזול).
+</details>
+
+---
+
 **[⬅️ חזרה לפרק 3: Runtime Plane](03-runtime-plane.md)** | **[➡️ המשך לפרק 5: Memory Management & RAG →](05-memory-management.md)**

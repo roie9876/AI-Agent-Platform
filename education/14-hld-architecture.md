@@ -489,4 +489,68 @@ mindmap
 
 ---
 
+### 📝 תשובות
+
+<details>
+<summary>1. מה ההבדל בין Control Plane ל-Runtime Plane?</summary>
+
+**Control Plane** מנהל את "מה" - הגדרות, פוליסיות, רישום, גרסאות. פעיל כשמנהלים משנים. **Runtime Plane** מבצע את "איך" - עיבוד בקשות, LLM calls, tool execution, orchestration. פעיל עם כל בקשת משתמש. ההפרדה הזו מאפשרת scale נפרד לכל שכבה.
+</details>
+
+<details>
+<summary>2. מהם 7 הרכיבים של ה-Control Plane?</summary>
+
+1. **API Gateway** - נקודת כניסה, auth, rate limiting.
+2. **Agent Registry** - קטלוג של כל ה-agents.
+3. **Config Manager** - ניהול הגדרות ו-versioning.
+4. **Policy Engine** - אכיפת כללים.
+5. **Identity & Access** - AuthN + AuthZ.
+6. **Tenant Manager** - ניהול multi-tenancy.
+7. **Admin Portal** - UI למנהלים.
+</details>
+
+<details>
+<summary>3. מה עושה ה-Orchestrator ומה ה-state machine שלו?</summary>
+
+ה-Orchestrator מנהל את לולאת ReAct ואת המעבר בין צעדים. State machine: **Init** → **Planning** (ה-LLM מחליט מה לעשות) → **Executing** (מריץ כלי/LLM) → **Waiting** (מחכה ל-HITL או external) → **Completed** / **Failed** / **Cancelled**. Max steps guard מונע לולאות אינסופיות.
+</details>
+
+<details>
+<summary>4. מהם 7 סוגי ה-Data Stores ומה כל אחד שומר?</summary>
+
+1. **Config Store** - הגדרות agents, tools, policies.
+2. **Thread/State Store** - שיחות ו-state.
+3. **Vector Store** - embeddings ל-RAG.
+4. **Cache** - semantic/exact cache לתשובות LLM.
+5. **Audit Log** - תיעוד כל פעולה.
+6. **Metrics Store** - מדדים ו-telemetry.
+7. **Blob/File Store** - מסמכים, קבצים, artifacts.
+</details>
+
+<details>
+<summary>5. מה זה Cross-Cutting Concerns ותן 5 דוגמאות?</summary>
+
+**Cross-Cutting Concerns** = נושאים שנוגעים ב**כל** השכבות, לא שייכים לשכבה אחת. 5 דוגמאות: (1) **Observability** - logs/metrics/traces בכל מקום, (2) **Security** - AuthN/AuthZ/encryption, (3) **Error Handling** - retry/fallback/circuit breaker, (4) **Cost Management** - token tracking/budgets, (5) **Compliance** - audit trail/DLP.
+</details>
+
+<details>
+<summary>6. מה ההבדל בין Vendor Agnostic ל-Vendor Specific?</summary>
+
+**Vendor Agnostic** = ארכיטקטורה גנרית שלא תלות בספק ("Model Gateway" במקום "Azure OpenAI"). יתרון: גמישות, ניידות. חיסרון: לא מנצל יתרונות ספציפיים. **Vendor Specific** = מיפוי לשירותים קונקרטיים ("Azure OpenAI"). יתרון: managed, אופטימלי. חיסרון: vendor lock-in.
+</details>
+
+<details>
+<summary>7. מהם ה-Non-Functional Requirements העיקריים?</summary>
+
+1. **Scalability** - תמיכה בגדילה (1K → 100K users).
+2. **Availability** - 99.9%+ uptime.
+3. **Latency** - זמן תגובה נמוך (P95 < 2s לרוב הבקשות).
+4. **Security** - Zero Trust, encryption at rest+transit.
+5. **Observability** - full tracing, monitoring, alerts.
+6. **Cost Efficiency** - בקרה על עלויות.
+7. **Extensibility** - קל להוסיף כלים/מודלים.
+</details>
+
+---
+
 **[⬅️ חזרה לפרק 13: Scalability](13-scalability.md)** | **[➡️ המשך לפרק 15: Microsoft Stack →](15-microsoft-stack.md)**

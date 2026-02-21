@@ -477,4 +477,55 @@ mindmap
 
 ---
 
+### 📝 תשובות
+
+<details>
+<summary>1. מהם 4 הקטגוריות של מדדי הערכה?</summary>
+
+1. **Quality** - איכות התשובה (relevance, coherence, groundedness).
+2. **Safety** - האם התשובה בטוחה (toxicity, bias, PII leak).
+3. **Performance** - ביצועים (latency, tokens, cost per request).
+4. **Task Completion** - האם ה-Agent באמת השלים את המשימה (success rate, steps taken).
+</details>
+
+<details>
+<summary>2. מה זה Groundedness ואיך מודדים אותו?</summary>
+
+**Groundedness** = האם התשובה מבוססת על ה-**context** שניתן ל-LLM (ולא המציא). מודדים על ידי: (1) LLM-as-Judge - LLM נוסף מעריך אם כל claim בתשובה נתמך ב-context, (2) NLI models - מודלים שבודקים entailment, (3) חיפוש השוואתי בין תשובה ל-source documents.
+</details>
+
+<details>
+<summary>3. מה ההבדל בין Intrinsic ל-Extrinsic Hallucination?</summary>
+
+**Intrinsic** = ה-LLM **סותר** את ה-context שניתן לו. למשל: המסמך אומר "2023" וה-LLM עונה "2024". **Extrinsic** = ה-LLM מוסיף מידע ש**לא נמצא** ב-context כלל. ממציא מהאימון שלו. Intrinsic = שינה, Extrinsic = הוספה.
+</details>
+
+<details>
+<summary>4. מהם 3 שיטות ההערכה ומתי משתמשים בכל אחת?</summary>
+
+1. **Human Evaluation** - אנשים מדרגים. הכי מדויק אבל איטי ויקר. מתאים ל-gold standard.
+2. **LLM-as-Judge** - LLM נוסף מעריך תשובות. מהיר וזול. מתאים ל-CI/CD.
+3. **Automated Metrics** - נוסחאות קבועות (BLEU, ROUGE, F1). הכי זול ומהיר, פחות נואנסי.
+</details>
+
+<details>
+<summary>5. איך LLM-as-Judge עובד?</summary>
+
+שולחים ל-LLM חזק (GPT-4o) את: (1) השאלה המקורית, (2) התשובה שניתנה, (3) ה-context שסופק, (4) רובריקה עם קריטריונים ("score 1-5 for relevance, groundedness..."). ה-LLM מחזיר ציון + נימוק. יתרון: סקיילבילי וזול. חיסרון: LLM bias.
+</details>
+
+<details>
+<summary>6. מה זה A/B Testing ב-context של Agents?</summary>
+
+מריצים **שתי גרסאות** של Agent במקביל: גרסה A (נוכחית) וגרסה B (חדשה - prompt/model/tools שונים). מנתבים חלק מהתעבורה לכל גרסה ומשווים מדדים (איכות, latency, עלות). מאפשר להחליט מבוסס-data איזה גרסה עדיפה.
+</details>
+
+<details>
+<summary>7. למה חשוב לשלב Evaluation ב-CI/CD?</summary>
+
+כי Agents הם **לא-דטרמיניסטיים** - שינוי prompt קטן יכול לשבור הכל. unit tests לא מספיקים. לכן: בכל שינוי (prompt, model, tools) מריצים eval suite אוטומטי שבודק: האם האיכות נשמרה? האם יש regression? רק אם pass → deploy.
+</details>
+
+---
+
 **[⬅️ חזרה לפרק 9: Policy](09-policy-governance.md)** | **[➡️ המשך לפרק 11: Observability & Cost →](11-observability-cost.md)**
