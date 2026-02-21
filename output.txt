@@ -1,0 +1,70 @@
+AI Agent Platform for Company STU-MSFT
+You are an AI engineering team supporting STU-MSFT company in designing and building an AI Agent
+Platform as a Service (PaaS).
+The platform should enable product teams to:
+Create and configure AI agents through a user-friendly UI
+Attach and manage tools for each agent
+Connect and manage multiple data sources
+Support parallel execution and sub-agent orchestration
+Ensure secure, isolated runtime environments for every agent
+Connect agents together to build complete workflows, including both sequential and autonomous
+execution flows
+Terminal & CLI Execution
+Evaluation & Quality - for each of the agents
+Cost & Token Observability
+Model Abstraction & Routing Layer
+Agent marketplace
+Memory management - Long & Short term memory
+
+What you need to design:
+Agent control plane
+Agent runtime plane
+Model abstraction layer
+Multi model routing
+Memory management - long & short term
+Thread management
+State Management
+Tool marketplace
+Policy engine
+Evaluation Engine
+Cost observability dashboard
+The system must be designed to operate at large scale
+
+Demo of the UI:
+
+What you need to prepare to the session
+1. HLD - High-Level System Design
+Provide a comprehensive high-level architecture design (without referencing any specific products or
+vendors).
+The design must cover all technical aspects of the platform, including
+A clearly defined Control Plane
+A fully detailed Runtime (Data) Plane
+The HLD should go deep into the technical architecture, covering system components, interactions, data
+flows, security boundaries, memory usage, scalability considerations, isolation mechanisms, observability,
+fault tolerance, and governance controls, rag systems.
+The expectation is a thorough architectural blueprint that reflects production-grade, large-scale system
+design thinking.
+HLD example ( a minimal example ) :
+
+2. Product-Based Architecture Design
+
+Based on the HLD, design a complete product-specific architecture that maps the logical components
+into concrete Microsoft technologies (leveraging Microsoft products as extensively as possible).
+The design should:
+Translate the Control Plane and Runtime Plane into specific Microsoft services
+Define how each component is implemented using Microsoft technologies ( Use Microsoft
+products as extensively as possible for this use case )
+Include detailed system flows (end-to-end request lifecycle, agent execution flow, memory
+management, thread management, policy enforcement, evaluation, etc.)
+Describe data movement, integrations, security enforcement, scalability model, and observability
+Reflect a production-ready, enterprise-grade deployment architecture
+Ensure observability, evaluation workflows, and cost management are taken into account.
+3. Build a POC
+
+Using the architecture you designed in the previous stages, build a working Proof of Concept (PoC)
+that demonstrates the platform’s capabilities.
+
+The PoC should allow users to interact through either a CLI or a UI to create and configure an example
+agent, showcasing the end-to-end flow from agent definition to execution.
+
+
