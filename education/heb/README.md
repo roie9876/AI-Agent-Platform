@@ -26,6 +26,7 @@
 | 13 | **Scalability Patterns** | [13-scalability.md](13-scalability.md) | Horizontal Scaling, Multi-tenancy, Partitioning, Edge Cases |
 | 14 | **HLD - Full Architecture** | [14-hld-architecture.md](14-hld-architecture.md) | איך הכל מתחבר - תרשים ארכיטקטורה מלא |
 | 15 | **Microsoft Stack Mapping** | [15-microsoft-stack.md](15-microsoft-stack.md) | מיפוי כל רכיב לשירותי Azure ספציפיים |
+| 16 | **Agent Development Frameworks & Ecosystem** | [16-agent-frameworks.md](16-agent-frameworks.md) | LangChain, LangGraph, Semantic Kernel, AutoGen, CrewAI, MCP, פרוטוקולי A2A |
 
 ---
 

@@ -685,4 +685,4 @@ LLM Gateway → **Azure OpenAI**, Vector DB → **Azure AI Search**, State Store
 
 ---
 
-**[⬅️ חזרה לפרק 14: HLD Architecture](14-hld-architecture.md)** | **[🏠 חזרה ל-README](README.md)**
+**[⬅️ חזרה לפרק 14: HLD Architecture](14-hld-architecture.md)** | **[➡️ המשך לפרק 16: פריימוורקים לפיתוח סוכנים →](16-agent-frameworks.md)**

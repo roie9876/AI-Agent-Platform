@@ -26,6 +26,7 @@ Each chapter is self-contained, but together they form a complete picture of a P
 | 13 | **Scalability Patterns** | [13-scalability.md](13-scalability.md) | Horizontal Scaling, Multi-tenancy, Partitioning, Edge Cases |
 | 14 | **HLD - Full Architecture** | [14-hld-architecture.md](14-hld-architecture.md) | How everything connects - complete architecture diagram |
 | 15 | **Microsoft Stack Mapping** | [15-microsoft-stack.md](15-microsoft-stack.md) | Mapping each component to specific Azure services |
+| 16 | **Agent Development Frameworks & Ecosystem** | [16-agent-frameworks.md](16-agent-frameworks.md) | LangChain, LangGraph, Semantic Kernel, AutoGen, CrewAI, MCP, A2A protocols |
 
 ---
 
