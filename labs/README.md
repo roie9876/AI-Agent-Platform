@@ -89,7 +89,7 @@ flowchart TB
 
 > 🆕 **New to these tools?** See [lab-00-setup/PREREQUISITES.md](lab-00-setup/PREREQUISITES.md) for step-by-step installation.
 
-> 💡 **All AI models run in Azure** (Azure OpenAI with GPT-5.2). The notebooks run on your local machine.
+> 💡 **All AI models run in Azure** (Azure OpenAI with GPT-4.1). The notebooks run on your local machine.
 
 ### Quick Setup
 

@@ -1262,4 +1262,4 @@ For a RAG-heavy application with complex document processing, the best choice is
 
 ---
 
-**[⬅️ Back to Chapter 15: Microsoft Stack Mapping](15-microsoft-stack.md)** | **[🏠 Back to README](README.md)**
+**[⬅️ Back to Chapter 15: Microsoft Stack Mapping](15-microsoft-stack.md)** | **[➡️ Continue to Chapter 17: Azure AI Foundry →](17-azure-ai-foundry.md)**

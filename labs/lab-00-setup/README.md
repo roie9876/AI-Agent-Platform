@@ -20,9 +20,14 @@ One Bicep template deploys everything all labs need:
 │                                                                      │
 │   ┌──────────────────────────────────────────────────────────────┐  │
 │   │  🧠 Azure OpenAI (AI Services)                               │  │
-│   │     • gpt-52          (primary model)        Labs 01-07     │  │
+│   │     • gpt-41          (primary model)        Labs 01-07     │  │
 │   │     • gpt-4o-mini     (cheap model)          Lab 02, 04     │  │
 │   │     • text-embedding-3-large (embeddings)    Lab 03         │  │
+│   └──────────────────────────────────────────────────────────────┘  │
+│                                                                      │
+│   ┌──────────────────────────────────────────────────────────────┐  │
+│   │  🏗️ Azure AI Foundry Project                                 │  │
+│   │   Agents, Evaluations, Tracing                               │  │
 │   └──────────────────────────────────────────────────────────────┘  │
 │                                                                      │
 │   ┌────────────────────┐  ┌────────────────────────────────────┐   │
@@ -45,7 +50,7 @@ One Bicep template deploys everything all labs need:
 
 | Resource | Lab 01 | Lab 02 | Lab 03 | Lab 04 | Lab 05 | Lab 06 | Lab 07 |
 |----------|--------|--------|--------|--------|--------|--------|--------|
-| Azure OpenAI GPT-5.2 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Azure OpenAI GPT-4.1 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Azure OpenAI GPT-4o-mini | | ✅ | | ✅ | | | |
 | Azure OpenAI Embeddings | | | ✅ | | | | |
 | Azure AI Search | | | ✅ | | | | |
@@ -144,7 +149,7 @@ Open labs/lab-00-setup/health-check.ipynb and run all cells
 |---------|----------|
 | `az login` fails | Try `az login --use-device-code` for remote terminals |
 | Deployment fails with quota error | Try a different region: `LOCATION=eastus2 ./deploy.sh` |
-| GPT-5.2 not available | Check region availability; may need to request quota |
+| GPT-4.1 not available | Check region availability; may need to request quota |
 | Cosmos DB creation fails | Ensure subscription has Cosmos DB provider registered |
 | `.env` file not generated | Check that `jq` is installed: `brew install jq` (macOS) |
 

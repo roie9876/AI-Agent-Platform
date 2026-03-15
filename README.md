@@ -32,6 +32,7 @@ Each chapter is self-contained, but together they form a complete picture of a P
 | 14 | **HLD - Full Architecture** | [14-hld-architecture.md](education/en/14-hld-architecture.md) | How everything connects - complete architecture diagram |
 | 15 | **Microsoft Stack Mapping** | [15-microsoft-stack.md](education/en/15-microsoft-stack.md) | Mapping each component to specific Azure services |
 | 16 | **Agent Development Frameworks & Ecosystem** | [16-agent-frameworks.md](education/en/16-agent-frameworks.md) | LangChain, LangGraph, Semantic Kernel, AutoGen, Microsoft Agent Framework, CrewAI, MCP, A2A protocols |
+| 17 | **Azure AI Foundry** | [17-azure-ai-foundry.md](education/en/17-azure-ai-foundry.md) | Managed agent platform: Model Catalog, Agents Service, Evaluations, Tracing |
 
 ---
 

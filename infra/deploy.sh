@@ -36,7 +36,7 @@ echo "✅ Resource group created"
 echo ""
 echo "🔧 Deploying Azure resources..."
 echo "   This will deploy:"
-echo "   • Azure OpenAI (GPT-5.2, GPT-4o-mini, text-embedding-3-large)"
+echo "   • Azure OpenAI (GPT-4.1, GPT-4o-mini, text-embedding-3-large)"
 echo "   • Azure AI Search (for RAG lab)"
 echo "   • Azure Cosmos DB Serverless (for memory/state lab)"
 echo "   • Azure AI Content Safety (for guardrails lab)"
@@ -78,9 +78,13 @@ AZURE_OPENAI_API_KEY=$(echo $DEPLOYMENT_OUTPUT | jq -r '.aiServicesKey.value')
 AZURE_OPENAI_API_VERSION=2024-12-01-preview
 
 # Model deployments
-AZURE_OPENAI_DEPLOYMENT_GPT52=gpt-52
+AZURE_OPENAI_DEPLOYMENT_GPT41=gpt-41
 AZURE_OPENAI_DEPLOYMENT_GPT4O_MINI=gpt-4o-mini
 AZURE_OPENAI_DEPLOYMENT_EMBEDDING=text-embedding-3-large
+
+# ── Azure AI Foundry (Agents, Evaluations, Tracing) ──
+AZURE_AI_FOUNDRY_PROJECT=$(echo $DEPLOYMENT_OUTPUT | jq -r '.foundryProjectName.value')
+AZURE_AI_FOUNDRY_RESOURCE=$(echo $DEPLOYMENT_OUTPUT | jq -r '.aiServicesName.value')
 
 # ── Azure AI Search (Lab 03 - RAG) ───────────────────
 AZURE_SEARCH_ENDPOINT=$(echo $DEPLOYMENT_OUTPUT | jq -r '.searchServiceEndpoint.value')

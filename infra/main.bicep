@@ -2,7 +2,8 @@
 // Deploy all required Azure resources with one command
 //
 // Resources deployed:
-//   - Azure OpenAI (GPT-5.2, GPT-4o-mini, text-embedding-3-large)
+//   - Azure OpenAI (GPT-4o, GPT-4o-mini, text-embedding-3-large)
+//   - Azure AI Foundry Project (Agents, Evaluations, Tracing)
 //   - Azure AI Search (vector + semantic search for RAG labs)
 //   - Azure Cosmos DB (thread/state storage for memory labs)
 //   - Azure AI Content Safety (guardrails for tools & safety lab)
@@ -27,6 +28,7 @@ param location string = 'swedencentral'
 param tags object = {
   project: 'AI-Agent-Platform-Labs'
   environment: 'development'
+  SecurityControl: 'Ignore'
 }
 
 // ============================================================================
@@ -59,10 +61,10 @@ resource aiServices 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = 
   }
 }
 
-// GPT-5.2 deployment (primary model for labs)
-resource gpt52Deployment 'Microsoft.CognitiveServices/accounts/deployments@2023-10-01-preview' = {
+// GPT-4.1 deployment (primary model for labs)
+resource gpt41Deployment 'Microsoft.CognitiveServices/accounts/deployments@2023-10-01-preview' = {
   parent: aiServices
-  name: 'gpt-52'
+  name: 'gpt-41'
   sku: {
     name: 'Standard'
     capacity: 30
@@ -70,8 +72,8 @@ resource gpt52Deployment 'Microsoft.CognitiveServices/accounts/deployments@2023-
   properties: {
     model: {
       format: 'OpenAI'
-      name: 'gpt-5.2'
-      version: '2025-10-01'
+      name: 'gpt-4.1'
+      version: '2025-04-14'
     }
     raiPolicyName: 'Microsoft.DefaultV2'
   }
@@ -93,7 +95,7 @@ resource gpt4oMiniDeployment 'Microsoft.CognitiveServices/accounts/deployments@2
     }
     raiPolicyName: 'Microsoft.DefaultV2'
   }
-  dependsOn: [gpt52Deployment]
+  dependsOn: [gpt41Deployment]
 }
 
 // Embedding deployment (for RAG lab)
@@ -250,11 +252,28 @@ resource documentsContainer 'Microsoft.Storage/storageAccounts/blobServices/cont
 }
 
 // ============================================================================
+// AZURE AI FOUNDRY PROJECT (New Foundry - not classic Hub)
+// The AIServices resource above IS the Foundry resource.
+// This creates a project under it for Agents, Evaluations, Tracing, etc.
+// ============================================================================
+
+resource foundryProject 'Microsoft.CognitiveServices/accounts/projects@2025-04-01-preview' = {
+  parent: aiServices
+  name: '${baseName}-project'
+  location: location
+  tags: tags
+  properties: {}
+}
+
+// ============================================================================
 // OUTPUTS (used by deploy.sh to generate .env)
 // ============================================================================
 
 output aiServicesEndpoint string = aiServices.properties.endpoint
 output aiServicesKey string = aiServices.listKeys().key1
+output aiServicesName string = aiServices.name
+
+output foundryProjectName string = foundryProject.name
 
 output searchServiceEndpoint string = 'https://${searchService.name}.search.windows.net'
 output searchServiceAdminKey string = searchService.listAdminKeys().primaryKey
