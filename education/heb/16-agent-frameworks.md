@@ -642,71 +642,328 @@ graph LR
 
 ### Model Context Protocol (MCP)
 
+#### מה זה MCP?
+
+**MCP (Model Context Protocol)** הוא סטנדרט פתוח שיצרה **Anthropic** שמספק דרך אוניברסלית לסוכני AI להתחבר לכלים חיצוניים ומקורות נתונים. חשבו על זה כמו **USB ל-AI** — לפני USB, לכל מכשיר היה מחבר משלו. MCP יוצר ממשק סטנדרטי אחד שכל הסוכנים והכלים יכולים להשתמש בו.
+
+#### הבעיה ש-MCP פותר
+
 ```mermaid
 graph TB
-    subgraph "🔗 MCP: ממשק כלים סטנדרטי"
-        Agent1["🦜 LangChain Agent"] --> MCP_Client["🔌 MCP Client"]
-        Agent2["🔮 SK Agent"] --> MCP_Client2["🔌 MCP Client"]
-        Agent3["🤖 AutoGen Agent"] --> MCP_Client3["🔌 MCP Client"]
-        
-        MCP_Client & MCP_Client2 & MCP_Client3 --> MCP_Server["🖥️ MCP Server"]
-        
-        MCP_Server --> Tool1["🗄️ בסיס נתונים"]
-        MCP_Server --> Tool2["📁 מערכת קבצים"]
-        MCP_Server --> Tool3["🌐 Web API"]
-        MCP_Server --> Tool4["📧 אימייל"]
+    subgraph "❌ בלי MCP: N×M אינטגרציות"
+        A1["🦜 LangChain"] -->|"קוד מותאם"| T1["🗄️ PostgreSQL"]
+        A1 -->|"קוד מותאם"| T2["📁 GitHub"]
+        A1 -->|"קוד מותאם"| T3["📧 Slack"]
+        A2["🔮 SK"] -->|"קוד מותאם"| T1
+        A2 -->|"קוד מותאם"| T2
+        A2 -->|"קוד מותאם"| T3
+        A3["🤖 AutoGen"] -->|"קוד מותאם"| T1
+        A3 -->|"קוד מותאם"| T2
+        A3 -->|"קוד מותאם"| T3
     end
 ```
 
-**מה זה MCP?**
-- נוצר על ידי **Anthropic** (סטנדרט פתוח)
-- פרוטוקול שמאפשר ל**כל סוכן** להתחבר ל**כל שרת כלים**
-- חשבו על זה כמו **USB לכלי AI** — תקע סטנדרטי אחד שעובד בכל מקום
-- שרתי MCP חושפים כלים; לקוחות MCP (סוכנים) צורכים אותם
+```mermaid
+graph TB
+    subgraph "✅ עם MCP: N+M אינטגרציות"
+        A1["🦜 LangChain"] --> MC["🔌 פרוטוקול MCP"]
+        A2["🔮 SK"] --> MC
+        A3["🤖 AutoGen"] --> MC
+        MC --> S1["🖥️ PostgreSQL<br/>MCP Server"]
+        MC --> S2["🖥️ GitHub<br/>MCP Server"]
+        MC --> S3["🖥️ Slack<br/>MCP Server"]
+    end
+```
 
-**יתרונות עיקריים:**
-- כותבים שרת כלים **פעם אחת**, משתמשים בו מכל פריימוורק
-- פורמט סטנדרטי לגילוי כלים, הפעלה ותשובה
-- אקוסיסטם הולך וגדל: GitHub, Slack, בסיסי נתונים, מערכות קבצים ועוד
+#### ארכיטקטורת MCP
+
+MCP עוקב אחר **ארכיטקטורת client-server**:
+
+```mermaid
+graph LR
+    subgraph "Host Application"
+        App["🖥️ האפליקציה שלך<br/>(IDE, Chat, Agent)"]
+        Client["🔌 MCP Client"]
+    end
+    
+    subgraph "MCP Server A"
+        ServerA["🖥️ תהליך שרת"]
+        ToolsA["🔧 Tools<br/>list_files, read_file,<br/>search_code"]
+        ResourcesA["📄 Resources<br/>תכני קבצים,<br/>עצי תיקיות"]
+        PromptsA["💬 Prompts<br/>תבנית code review,<br/>תבנית refactor"]
+    end
+    
+    subgraph "MCP Server B"
+        ServerB["🖥️ תהליך שרת"]
+        ToolsB["🔧 Tools<br/>query_db, insert_row"]
+        ResourcesB["📄 Resources<br/>Schema, Tables"]
+    end
+    
+    App --> Client
+    Client -->|"JSON-RPC over stdio/SSE"| ServerA
+    Client -->|"JSON-RPC over stdio/SSE"| ServerB
+    ServerA --> ToolsA & ResourcesA & PromptsA
+    ServerB --> ToolsB & ResourcesB
+```
+
+#### הפרימיטיבים המרכזיים של MCP
+
+שרתי MCP יכולים לחשוף שלושה סוגי יכולות:
+
+| פרימיטיב | מה הוא עושה | דוגמה | מי שולט |
+|----------|------------|-------|---------|
+| **Tools** | פונקציות שה-AI יכול להפעיל | `query_database`, `send_email`, `create_file` | המודל מחליט מתי להשתמש |
+| **Resources** | נתונים שה-AI יכול לקרוא | תכני קבצים, סכמות DB, תיעוד API | האפליקציה מחליטה מה להציג |
+| **Prompts** | תבניות prompt לשימוש חוזר | "סכם את ה-PR הזה", "צ'קליסט code review" | המשתמש בוחר באיזה להשתמש |
+
+#### זרימת תקשורת MCP
+
+```mermaid
+sequenceDiagram
+    participant App as 🖥️ Host App
+    participant Client as 🔌 MCP Client
+    participant Server as 🖥️ MCP Server
+    
+    Note over Client, Server: 1. אתחול
+    Client->>Server: initialize (גרסת פרוטוקול, יכולות)
+    Server-->>Client: פרטי שרת + יכולות
+    Client->>Server: initialized (אישור)
+    
+    Note over Client, Server: 2. גילוי
+    Client->>Server: tools/list
+    Server-->>Client: [{name: "query_db", description: "...", inputSchema: {...}}]
+    
+    Note over Client, Server: 3. הפעלת כלי
+    App->>Client: המשתמש שואל "מה היו מכירות Q3?"
+    Client->>Server: tools/call {name: "query_db", arguments: {sql: "SELECT..."}}
+    Server-->>Client: {result: [{quarter: "Q3", revenue: 5000000}]}
+    Client-->>App: "מכירות Q3 היו 5M"
+```
+
+#### דוגמת שרת MCP (Python)
+
+הנה שרת MCP פשוט שחושף כלי מזג אוויר:
+
+```python
+from mcp.server import Server
+from mcp.types import Tool, TextContent
+
+server = Server("weather-server")
+
+@server.list_tools()
+async def list_tools():
+    return [
+        Tool(
+            name="get_weather",
+            description="Get current weather for a city",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "city": {"type": "string", "description": "City name"}
+                },
+                "required": ["city"]
+            }
+        )
+    ]
+
+@server.call_tool()
+async def call_tool(name: str, arguments: dict):
+    if name == "get_weather":
+        city = arguments["city"]
+        # במימוש אמיתי, קריאה ל-API מזג אוויר
+        return [TextContent(type="text", text=f"Weather in {city}: 22°C, sunny")]
+
+# הרצת השרת
+if __name__ == "__main__":
+    import mcp.server.stdio
+    mcp.server.stdio.run(server)
+```
+
+#### אפשרויות Transport ב-MCP
+
+| Transport | איך עובד | מתאים ל |
+|-----------|----------|---------|
+| **stdio** | השרת רץ כתהליך-בן, מתקשר דרך stdin/stdout | כלים מקומיים, אינטגרציות IDE |
+| **SSE (Server-Sent Events)** | מבוסס HTTP, השרת שולח אירועים דרך HTTP | שרתים מרוחקים, דיפלויים לווב |
+| **Streamable HTTP** | Transport חדש מבוסס HTTP עם תמיכה ב-streaming | APIs בפרודקשן, דיפלויים סקיילביליים |
+
+#### אקוסיסטם MCP בעולם האמיתי
+
+אקוסיסטם ה-MCP גדל במהירות. שרתים בולטים:
+
+| שרת MCP | מה הוא עושה | כלים לדוגמה |
+|---------|------------|-------------|
+| **GitHub** | פעולות repository | `create_issue`, `search_repos`, `push_files` |
+| **PostgreSQL** | שאילתות בסיס נתונים | `query`, `list_tables`, `describe_table` |
+| **Filesystem** | פעולות קבצים | `read_file`, `write_file`, `list_directory` |
+| **Slack** | הודעות | `send_message`, `search_messages`, `list_channels` |
+| **Google Drive** | גישה למסמכים | `search_files`, `read_document`, `create_doc` |
+| **Puppeteer** | אוטומציית דפדפן | `navigate`, `screenshot`, `click`, `fill_form` |
+| **Memory** | אחסון פרסיסטנטי | `store_memory`, `retrieve_memory`, `search` |
+
+---
 
 ### Agent-to-Agent Protocol (A2A)
 
+#### מה זה A2A?
+
+**A2A (Agent-to-Agent Protocol)** הוא סטנדרט פתוח שיצרה **Google** שמאפשר לסוכנים שנבנו עם **פריימוורקים שונים** לתקשר, לנהל משא ומתן ולהאציל משימות זה לזה. בעוד MCP מחבר סוכנים לכלים פסיביים, A2A מחבר סוכנים ל**סוכנים אינטליגנטיים** אחרים.
+
+#### הבעיה ש-A2A פותר
+
 ```mermaid
-graph LR
-    subgraph "🤝 A2A: סטנדרט תקשורת בין סוכנים"
-        AgentA["🦜 LangGraph Agent<br/>(מחקר)"] -->|"A2A Protocol"| AgentB["🔮 SK Agent<br/>(ניתוח)"]
-        AgentB -->|"A2A Protocol"| AgentC["👥 CrewAI Agent<br/>(כתיבת דוח)"]
+graph TB
+    subgraph "❌ בלי A2A: סוכנים מבודדים"
+        LG_Agent["🦜 LangGraph Agent<br/>(מחקר)"]
+        SK_Agent["🔮 SK Agent<br/>(ניתוח)"]
+        CR_Agent["👥 CrewAI Agent<br/>(כתיבה)"]
+        Note1["כל סוכן הוא אי בודד.<br/>אין דרך לגלות או<br/>לתקשר חוצה-פריימוורקים."]
     end
-    
-    Card["📋 Agent Card<br/>- שם, תיאור<br/>- יכולות<br/>- Endpoint<br/>- שיטת אימות"] -.-> AgentA & AgentB & AgentC
 ```
 
-**מה זה A2A?**
-- נוצר על ידי **Google** (סטנדרט פתוח)
-- פרוטוקול לסוכנים שנבנו עם **פריימוורקים שונים** לתקשר
-- כל סוכן מפרסם **Agent Card** שמתאר את היכולות שלו
-- סוכנים יכולים לגלות, לנהל משא ומתן ולהאציל משימות זה לזה
+```mermaid
+graph LR
+    subgraph "✅ עם A2A: רשת סוכנים מחוברת"
+        LG_Agent2["🦜 LangGraph Agent"] -->|"A2A"| SK_Agent2["🔮 SK Agent"]
+        SK_Agent2 -->|"A2A"| CR_Agent2["👥 CrewAI Agent"]
+        LG_Agent2 -->|"A2A"| CR_Agent2
+    end
+```
 
-**מושגים מרכזיים:**
+#### ארכיטקטורת A2A
 
-| מושג | הסבר |
-|------|-------|
-| **Agent Card** | מטאדאטה JSON שמתאר את יכולות הסוכן והנקודת-קצה שלו |
-| **Task** | יחידת עבודה שנשלחת מסוכן אחד לאחר |
-| **Message** | תקשורת בין סוכנים (טקסט, קבצים, מידע מובנה) |
-| **Artifact** | פלט שנוצר על ידי סוכן (דוח, קובץ, נתונים) |
-| **Push Notifications** | סוכן יכול לעדכן את הקורא כשמשימה אסינכרונית מסתיימת |
+```mermaid
+graph TB
+    subgraph "Agent A (Client)"
+        ClientApp["🖥️ אפליקציה"]
+        A2AClient["🔌 A2A Client"]
+    end
+    
+    subgraph "Agent B (Server)"
+        A2AServer["🖥️ A2A Server"]
+        AgentLogic["🧠 לוגיקת סוכן"]
+        LLM["🤖 LLM"]
+    end
+    
+    subgraph "Discovery"
+        Card["📋 Agent Card<br/>/.well-known/agent.json"]
+    end
+    
+    ClientApp --> A2AClient
+    A2AClient -->|"1. גילוי"| Card
+    A2AClient -->|"2. שליחת משימה"| A2AServer
+    A2AServer --> AgentLogic --> LLM
+    A2AServer -->|"3. Streaming עדכונים"| A2AClient
+    A2AServer -->|"4. החזרת תוצרים"| A2AClient
+```
 
-### MCP מול A2A
+#### Agent Card: הזהות של סוכן
+
+כל סוכן A2A מפרסם **Agent Card** בכתובת `/.well-known/agent.json`:
+
+```json
+{
+  "name": "Financial Analyst Agent",
+  "description": "Analyzes financial data, creates reports and forecasts",
+  "url": "https://analyst.example.com",
+  "version": "1.0.0",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": true
+  },
+  "skills": [
+    {
+      "id": "financial_analysis",
+      "name": "Financial Data Analysis",
+      "description": "Analyzes revenue, costs, and trends from financial datasets",
+      "inputModes": ["text", "file"],
+      "outputModes": ["text", "file"]
+    },
+    {
+      "id": "forecast",
+      "name": "Revenue Forecasting",
+      "description": "Creates revenue forecasts based on historical data",
+      "inputModes": ["text"],
+      "outputModes": ["text", "file"]
+    }
+  ],
+  "authentication": {
+    "schemes": ["bearer"]
+  }
+}
+```
+
+#### זרימת תקשורת A2A
+
+```mermaid
+sequenceDiagram
+    participant ClientAgent as 🤖 סוכן לקוח
+    participant A2A as 🔌 פרוטוקול A2A
+    participant ServerAgent as 🤖 סוכן שרת
+    
+    Note over ClientAgent, ServerAgent: 1. גילוי
+    ClientAgent->>A2A: GET /.well-known/agent.json
+    A2A-->>ClientAgent: Agent Card (יכולות, אימות, endpoint)
+    
+    Note over ClientAgent, ServerAgent: 2. הגשת משימה
+    ClientAgent->>ServerAgent: tasks/send {message: "Analyze Q3 sales data"}
+    ServerAgent-->>ClientAgent: {taskId: "task-123", status: "working"}
+    
+    Note over ClientAgent, ServerAgent: 3. עדכוני Streaming
+    ServerAgent-->>ClientAgent: status: "מנתח מגמות הכנסות..."
+    ServerAgent-->>ClientAgent: status: "יוצר מודל תחזית..."
+    
+    Note over ClientAgent, ServerAgent: 4. השלמה עם תוצרים
+    ServerAgent-->>ClientAgent: status: "completed", artifacts: [{type: "report", data: "..."}]
+```
+
+#### מחזור חיי משימה ב-A2A
+
+```mermaid
+stateDiagram-v2
+    [*] --> Submitted: לקוח שולח משימה
+    Submitted --> Working: סוכן מתחיל עיבוד
+    Working --> Working: עדכוני התקדמות
+    Working --> InputRequired: סוכן צריך מידע נוסף
+    InputRequired --> Working: לקוח מספק קלט
+    Working --> Completed: משימה הושלמה
+    Working --> Failed: שגיאה
+    Completed --> [*]
+    Failed --> [*]
+```
+
+#### מושגים מרכזיים ב-A2A
+
+| מושג | הסבר | דוגמה |
+|------|-------|-------|
+| **Agent Card** | JSON שמתאר יכולות הסוכן, מפורסם בכתובת well-known | ראו דוגמת JSON למעלה |
+| **Task** | יחידת עבודה עם מחזור חיים משלה (submitted → working → completed) | "נתח את הדאטהסט הזה" |
+| **Message** | תקשורת בין סוכנים, תומכת בטקסט, קבצים ומידע מובנה | הודעת משתמש, תשובת סוכן |
+| **Part** | פיסת תוכן בודדת בתוך הודעה (טקסט, קובץ, נתונים) | פסקת טקסט, קובץ CSV |
+| **Artifact** | פלט סופי שנוצר על ידי הסוכן | דוח שנוצר, תמונת תרשים |
+| **Push Notifications** | שרת מעדכן לקוח כשסטטוס משימה אסינכרונית משתנה | Webhook callback לסיום משימה |
+
+#### מתי להשתמש ב-A2A
+
+| תרחיש | למה A2A |
+|--------|---------|
+| סוכן המחקר שלך (LangGraph) צריך ניתוח מסוכן Semantic Kernel | פריימוורקים שונים, צריכים פרוטוקול סטנדרטי |
+| שותף חיצוני מספק סוכן כשירות | מגלים יכולות דרך Agent Card |
+| למערכת יש סוכנים מתמחים שמתפתחים באופן עצמאי | צימוד רופף דרך A2A מונע תלות בפריימוורק |
+| משימה לוקחת שעות וצריכה התראת סיום אסינכרונית | Push notifications מטפלים במשימות ארוכות-טווח |
+
+---
+
+### MCP מול A2A: מתי להשתמש בכל אחד
 
 ```mermaid
 graph LR
-    subgraph "🔗 MCP"
-        MCPA["סוכן"] -->|"קורא ל"| MCPT["כלי<br/>(פסיבי, בלי אינטליגנציה)"]
+    subgraph "🔗 MCP: סוכן → כלי"
+        MCPA["🤖 סוכן"] -->|"קורא ל"| MCPT["🔧 כלי<br/>(פסיבי, בלי אינטליגנציה)"]
     end
     
-    subgraph "🤝 A2A"
-        A2AA["סוכן"] -->|"מאציל ל"| A2AB["סוכן<br/>(אוטונומי, אינטליגנטי)"]
+    subgraph "🤝 A2A: סוכן → סוכן"
+        A2AA["🤖 סוכן"] -->|"מאציל ל"| A2AB["🤖 סוכן<br/>(אוטונומי, אינטליגנטי)"]
     end
 ```
 
@@ -714,10 +971,34 @@ graph LR
 |--|-----|-----|
 | **מטרה** | חיבור סוכנים ל**כלים** | חיבור סוכנים ל**סוכנים** |
 | **אנלוגיה** | חיבור התקן USB | להתקשר לעמית |
-| **יעד** | כלים "טיפשים" (DB, API, מערכת קבצים) | סוכנים "חכמים" (עם חשיבה) |
+| **יעד** | כלים פסיביים (DB, API, מערכת קבצים) | סוכנים חכמים (עם חשיבה) |
 | **נוצר על ידי** | Anthropic | Google |
 | **תקשורת** | בקשה → תשובה | בקשה → משא ומתן → streaming → השלמה |
-| **גילוי** | סכמת כלי | Agent Card |
+| **גילוי** | סכמת כלי (list_tools) | Agent Card (/.well-known/agent.json) |
+| **Statefulness** | Stateless (לכל קריאה) | Stateful (מחזור חיי משימה) |
+| **משימות ארוכות** | לא מתוכנן לזה | מובנה (push notifications) |
+
+#### שימוש ב-MCP + A2A יחד
+
+במערכות פרודקשן, MCP ו-A2A **משלימים זה את זה**:
+
+```mermaid
+graph TB
+    User["👤 משתמש"] --> OrcAgent["🤖 סוכן מתזמר"]
+    
+    OrcAgent -->|"A2A"| ResearchAgent["🤖 סוכן מחקר"]
+    OrcAgent -->|"A2A"| AnalystAgent["🤖 סוכן ניתוח"]
+    
+    ResearchAgent -->|"MCP"| WebSearch["🔧 Web Search<br/>MCP Server"]
+    ResearchAgent -->|"MCP"| GitHub["🔧 GitHub<br/>MCP Server"]
+    
+    AnalystAgent -->|"MCP"| Database["🔧 Database<br/>MCP Server"]
+    AnalystAgent -->|"MCP"| Charts["🔧 Chart Gen<br/>MCP Server"]
+```
+
+- **A2A** מחבר סוכנים ברמה גבוהה שיכולים לחשוב ולשתף פעולה
+- **MCP** מחבר כל סוכן לכלים הספציפיים שהוא צריך
+- יחד, הם יוצרים **רשת סוכנים קומפוזבילית**
 
 ---
 

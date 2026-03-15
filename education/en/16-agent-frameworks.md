@@ -642,71 +642,328 @@ As the framework ecosystem grows, two critical protocols have emerged to ensure 
 
 ### Model Context Protocol (MCP)
 
+#### What is MCP?
+
+**MCP (Model Context Protocol)** is an open standard created by **Anthropic** that provides a universal way for AI agents to connect to external tools and data sources. Think of it as **USB for AI** — before USB, every device had its own connector. MCP creates one standard interface that all agents and tools can use.
+
+#### The Problem MCP Solves
+
 ```mermaid
 graph TB
-    subgraph "🔗 MCP: Standardized Tool Interface"
-        Agent1["🦜 LangChain Agent"] --> MCP_Client["🔌 MCP Client"]
-        Agent2["🔮 SK Agent"] --> MCP_Client2["🔌 MCP Client"]
-        Agent3["🤖 AutoGen Agent"] --> MCP_Client3["🔌 MCP Client"]
-        
-        MCP_Client & MCP_Client2 & MCP_Client3 --> MCP_Server["🖥️ MCP Server"]
-        
-        MCP_Server --> Tool1["🗄️ Database"]
-        MCP_Server --> Tool2["📁 File System"]
-        MCP_Server --> Tool3["🌐 Web API"]
-        MCP_Server --> Tool4["📧 Email"]
+    subgraph "❌ Without MCP: N×M Integrations"
+        A1["🦜 LangChain"] -->|"Custom code"| T1["🗄️ PostgreSQL"]
+        A1 -->|"Custom code"| T2["📁 GitHub"]
+        A1 -->|"Custom code"| T3["📧 Slack"]
+        A2["🔮 SK"] -->|"Custom code"| T1
+        A2 -->|"Custom code"| T2
+        A2 -->|"Custom code"| T3
+        A3["🤖 AutoGen"] -->|"Custom code"| T1
+        A3 -->|"Custom code"| T2
+        A3 -->|"Custom code"| T3
     end
 ```
 
-**What is MCP?**
-- Created by **Anthropic** (open standard)
-- A protocol that lets **any agent** connect to **any tool server**
-- Think of it like **USB for AI tools** — one standard plug that works everywhere
-- MCP Servers expose tools; MCP Clients (agents) consume them
+```mermaid
+graph TB
+    subgraph "✅ With MCP: N+M Integrations"
+        A1["🦜 LangChain"] --> MC["🔌 MCP Protocol"]
+        A2["🔮 SK"] --> MC
+        A3["🤖 AutoGen"] --> MC
+        MC --> S1["🖥️ PostgreSQL<br/>MCP Server"]
+        MC --> S2["🖥️ GitHub<br/>MCP Server"]
+        MC --> S3["🖥️ Slack<br/>MCP Server"]
+    end
+```
 
-**Key Benefits:**
-- Write a tool server **once**, use it from any framework
-- Standardized tool discovery, invocation, and response format
-- Growing ecosystem: GitHub, Slack, databases, file systems, etc.
+#### MCP Architecture
+
+MCP follows a **client-server architecture**:
+
+```mermaid
+graph LR
+    subgraph "Host Application"
+        App["🖥️ Your App<br/>(IDE, Chat, Agent)"]
+        Client["🔌 MCP Client"]
+    end
+    
+    subgraph "MCP Server A"
+        ServerA["🖥️ Server Process"]
+        ToolsA["🔧 Tools<br/>list_files, read_file,<br/>search_code"]
+        ResourcesA["📄 Resources<br/>File contents,<br/>Directory trees"]
+        PromptsA["💬 Prompts<br/>Code review template,<br/>Refactor template"]
+    end
+    
+    subgraph "MCP Server B"
+        ServerB["🖥️ Server Process"]
+        ToolsB["🔧 Tools<br/>query_db, insert_row"]
+        ResourcesB["📄 Resources<br/>Schema, Tables"]
+    end
+    
+    App --> Client
+    Client -->|"JSON-RPC over stdio/SSE"| ServerA
+    Client -->|"JSON-RPC over stdio/SSE"| ServerB
+    ServerA --> ToolsA & ResourcesA & PromptsA
+    ServerB --> ToolsB & ResourcesB
+```
+
+#### MCP Core Primitives
+
+MCP servers can expose three types of capabilities:
+
+| Primitive | What It Does | Example | Who Controls |
+|-----------|-------------|---------|--------------|
+| **Tools** | Functions the AI can call | `query_database`, `send_email`, `create_file` | Model decides when to use |
+| **Resources** | Data the AI can read | File contents, DB schemas, API docs | Application decides what to show |
+| **Prompts** | Reusable prompt templates | "Summarize this PR", "Code review checklist" | User selects which to use |
+
+#### MCP Communication Flow
+
+```mermaid
+sequenceDiagram
+    participant App as 🖥️ Host App
+    participant Client as 🔌 MCP Client
+    participant Server as 🖥️ MCP Server
+    
+    Note over Client, Server: 1. Initialization
+    Client->>Server: initialize (protocol version, capabilities)
+    Server-->>Client: server info + capabilities
+    Client->>Server: initialized (confirmation)
+    
+    Note over Client, Server: 2. Discovery
+    Client->>Server: tools/list
+    Server-->>Client: [{name: "query_db", description: "...", inputSchema: {...}}]
+    
+    Note over Client, Server: 3. Tool Invocation
+    App->>Client: User asks "What were Q3 sales?"
+    Client->>Server: tools/call {name: "query_db", arguments: {sql: "SELECT..."}}
+    Server-->>Client: {result: [{quarter: "Q3", revenue: 5000000}]}
+    Client-->>App: "Q3 sales were 5M"
+```
+
+#### MCP Server Example (Python)
+
+Here's a simple MCP server that exposes a weather tool:
+
+```python
+from mcp.server import Server
+from mcp.types import Tool, TextContent
+
+server = Server("weather-server")
+
+@server.list_tools()
+async def list_tools():
+    return [
+        Tool(
+            name="get_weather",
+            description="Get current weather for a city",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "city": {"type": "string", "description": "City name"}
+                },
+                "required": ["city"]
+            }
+        )
+    ]
+
+@server.call_tool()
+async def call_tool(name: str, arguments: dict):
+    if name == "get_weather":
+        city = arguments["city"]
+        # In real implementation, call weather API
+        return [TextContent(type="text", text=f"Weather in {city}: 22°C, sunny")]
+
+# Run the server
+if __name__ == "__main__":
+    import mcp.server.stdio
+    mcp.server.stdio.run(server)
+```
+
+#### MCP Transport Options
+
+| Transport | How It Works | Best For |
+|-----------|-------------|----------|
+| **stdio** | Server runs as a child process, communicates via stdin/stdout | Local tools, IDE integrations |
+| **SSE (Server-Sent Events)** | HTTP-based, server sends events over HTTP | Remote servers, web deployments |
+| **Streamable HTTP** | Newer HTTP-based transport with streaming support | Production APIs, scalable deployments |
+
+#### Real-World MCP Ecosystem
+
+The MCP ecosystem is growing rapidly. Notable servers include:
+
+| MCP Server | What It Does | Example Tools |
+|------------|-------------|---------------|
+| **GitHub** | Repository operations | `create_issue`, `search_repos`, `push_files` |
+| **PostgreSQL** | Database queries | `query`, `list_tables`, `describe_table` |
+| **Filesystem** | File operations | `read_file`, `write_file`, `list_directory` |
+| **Slack** | Messaging | `send_message`, `search_messages`, `list_channels` |
+| **Google Drive** | Document access | `search_files`, `read_document`, `create_doc` |
+| **Puppeteer** | Browser automation | `navigate`, `screenshot`, `click`, `fill_form` |
+| **Memory** | Persistent storage | `store_memory`, `retrieve_memory`, `search` |
+
+---
 
 ### Agent-to-Agent Protocol (A2A)
 
+#### What is A2A?
+
+**A2A (Agent-to-Agent Protocol)** is an open standard created by **Google** that enables agents built with **different frameworks** to communicate, negotiate, and delegate tasks to each other. While MCP connects agents to passive tools, A2A connects agents to other **intelligent agents**.
+
+#### The Problem A2A Solves
+
 ```mermaid
-graph LR
-    subgraph "🤝 A2A: Agent Communication Standard"
-        AgentA["🦜 LangGraph Agent<br/>(Research)"] -->|"A2A Protocol"| AgentB["🔮 SK Agent<br/>(Analysis)"]
-        AgentB -->|"A2A Protocol"| AgentC["👥 CrewAI Agent<br/>(Report Writing)"]
+graph TB
+    subgraph "❌ Without A2A: Siloed Agents"
+        LG_Agent["🦜 LangGraph Agent<br/>(Research)"]
+        SK_Agent["🔮 SK Agent<br/>(Analysis)"]
+        CR_Agent["👥 CrewAI Agent<br/>(Writing)"]
+        Note1["Each agent is an island.<br/>No way to discover or<br/>communicate across frameworks."]
     end
-    
-    Card["📋 Agent Card<br/>- Name, description<br/>- Capabilities<br/>- Endpoint<br/>- Auth method"] -.-> AgentA & AgentB & AgentC
 ```
 
-**What is A2A?**
-- Created by **Google** (open standard)
-- A protocol for agents built with **different frameworks** to communicate
-- Each agent publishes an **Agent Card** describing its capabilities
-- Agents can discover, negotiate, and delegate tasks to each other
+```mermaid
+graph LR
+    subgraph "✅ With A2A: Connected Agent Network"
+        LG_Agent2["🦜 LangGraph Agent"] -->|"A2A"| SK_Agent2["🔮 SK Agent"]
+        SK_Agent2 -->|"A2A"| CR_Agent2["👥 CrewAI Agent"]
+        LG_Agent2 -->|"A2A"| CR_Agent2
+    end
+```
 
-**Key Concepts:**
+#### A2A Architecture
 
-| Concept | Explanation |
-|---------|-------------|
-| **Agent Card** | JSON metadata describing an agent's capabilities and endpoint |
-| **Task** | A unit of work sent from one agent to another |
-| **Message** | Communication between agents (text, files, structured data) |
-| **Artifact** | Output produced by an agent (report, file, data) |
-| **Push Notifications** | Agent can notify caller when async task completes |
+```mermaid
+graph TB
+    subgraph "Agent A (Client)"
+        ClientApp["🖥️ Application"]
+        A2AClient["🔌 A2A Client"]
+    end
+    
+    subgraph "Agent B (Server)"
+        A2AServer["🖥️ A2A Server"]
+        AgentLogic["🧠 Agent Logic"]
+        LLM["🤖 LLM"]
+    end
+    
+    subgraph "Discovery"
+        Card["📋 Agent Card<br/>/.well-known/agent.json"]
+    end
+    
+    ClientApp --> A2AClient
+    A2AClient -->|"1. Discover"| Card
+    A2AClient -->|"2. Send Task"| A2AServer
+    A2AServer --> AgentLogic --> LLM
+    A2AServer -->|"3. Stream Updates"| A2AClient
+    A2AServer -->|"4. Return Artifacts"| A2AClient
+```
 
-### MCP vs A2A
+#### Agent Card: The Identity of an Agent
+
+Every A2A agent publishes an **Agent Card** at `/.well-known/agent.json`:
+
+```json
+{
+  "name": "Financial Analyst Agent",
+  "description": "Analyzes financial data, creates reports and forecasts",
+  "url": "https://analyst.example.com",
+  "version": "1.0.0",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": true
+  },
+  "skills": [
+    {
+      "id": "financial_analysis",
+      "name": "Financial Data Analysis",
+      "description": "Analyzes revenue, costs, and trends from financial datasets",
+      "inputModes": ["text", "file"],
+      "outputModes": ["text", "file"]
+    },
+    {
+      "id": "forecast",
+      "name": "Revenue Forecasting",
+      "description": "Creates revenue forecasts based on historical data",
+      "inputModes": ["text"],
+      "outputModes": ["text", "file"]
+    }
+  ],
+  "authentication": {
+    "schemes": ["bearer"]
+  }
+}
+```
+
+#### A2A Communication Flow
+
+```mermaid
+sequenceDiagram
+    participant ClientAgent as 🤖 Client Agent
+    participant A2A as 🔌 A2A Protocol
+    participant ServerAgent as 🤖 Server Agent
+    
+    Note over ClientAgent, ServerAgent: 1. Discovery
+    ClientAgent->>A2A: GET /.well-known/agent.json
+    A2A-->>ClientAgent: Agent Card (skills, auth, endpoint)
+    
+    Note over ClientAgent, ServerAgent: 2. Task Submission
+    ClientAgent->>ServerAgent: tasks/send {message: "Analyze Q3 sales data"}
+    ServerAgent-->>ClientAgent: {taskId: "task-123", status: "working"}
+    
+    Note over ClientAgent, ServerAgent: 3. Streaming Updates
+    ServerAgent-->>ClientAgent: status: "Analyzing revenue trends..."
+    ServerAgent-->>ClientAgent: status: "Creating forecast model..."
+    
+    Note over ClientAgent, ServerAgent: 4. Completion with Artifacts
+    ServerAgent-->>ClientAgent: status: "completed", artifacts: [{type: "report", data: "..."}]
+```
+
+#### A2A Task Lifecycle
+
+```mermaid
+stateDiagram-v2
+    [*] --> Submitted: Client sends task
+    Submitted --> Working: Agent starts processing
+    Working --> Working: Progress updates
+    Working --> InputRequired: Agent needs more info
+    InputRequired --> Working: Client provides input
+    Working --> Completed: Task finished
+    Working --> Failed: Error occurred
+    Completed --> [*]
+    Failed --> [*]
+```
+
+#### A2A Key Concepts
+
+| Concept | Explanation | Example |
+|---------|-------------|---------|
+| **Agent Card** | JSON describing agent capabilities, published at a well-known URL | See JSON example above |
+| **Task** | A unit of work with its own lifecycle (submitted → working → completed) | "Analyze this dataset" |
+| **Message** | Communication between agents, supports text, files, and structured data | User message, agent response |
+| **Part** | Individual content piece within a message (text, file, data) | A text paragraph, a CSV file |
+| **Artifact** | Final output produced by the agent | Generated report, chart image |
+| **Push Notifications** | Server notifies client when async task status changes | Webhook callback for task completion |
+
+#### When to Use A2A
+
+| Scenario | Why A2A |
+|----------|---------|
+| Your research agent (LangGraph) needs analysis from a Semantic Kernel agent | Different frameworks, need standard protocol |
+| An external partner provides an agent as a service | You discover capabilities via Agent Card |
+| Your system has specialized agents that evolve independently | Loose coupling via A2A prevents tight framework dependency |
+| A task takes hours and needs async completion notification | Push notifications handle long-running tasks |
+
+---
+
+### MCP vs A2A: When to Use Each
 
 ```mermaid
 graph LR
-    subgraph "🔗 MCP"
-        MCPA["Agent"] -->|"calls"| MCPT["Tool<br/>(passive, no intelligence)"]
+    subgraph "🔗 MCP: Agent → Tool"
+        MCPA["🤖 Agent"] -->|"calls"| MCPT["🔧 Tool<br/>(passive, no intelligence)"]
     end
     
-    subgraph "🤝 A2A"
-        A2AA["Agent"] -->|"delegates to"| A2AB["Agent<br/>(autonomous, intelligent)"]
+    subgraph "🤝 A2A: Agent → Agent"
+        A2AA["🤖 Agent"] -->|"delegates to"| A2AB["🤖 Agent<br/>(autonomous, intelligent)"]
     end
 ```
 
@@ -714,10 +971,34 @@ graph LR
 |--|-----|-----|
 | **Purpose** | Connect agents to **tools** | Connect agents to **agents** |
 | **Analogy** | Plugging in a USB device | Calling a colleague |
-| **Target** | Dumb tools (DB, API, file system) | Smart agents (with reasoning) |
+| **Target** | Passive tools (DB, API, file system) | Smart agents (with reasoning) |
 | **Created by** | Anthropic | Google |
 | **Communication** | Request → Response | Request → Negotiate → Stream → Complete |
-| **Discovery** | Tool schema | Agent Card |
+| **Discovery** | Tool schema (list_tools) | Agent Card (/.well-known/agent.json) |
+| **Statefulness** | Stateless (per-call) | Stateful (task lifecycle) |
+| **Long-running** | Not designed for it | Built-in (push notifications) |
+
+#### Using MCP + A2A Together
+
+In production systems, MCP and A2A **complement each other**:
+
+```mermaid
+graph TB
+    User["👤 User"] --> OrcAgent["🤖 Orchestrator Agent"]
+    
+    OrcAgent -->|"A2A"| ResearchAgent["🤖 Research Agent"]
+    OrcAgent -->|"A2A"| AnalystAgent["🤖 Analyst Agent"]
+    
+    ResearchAgent -->|"MCP"| WebSearch["🔧 Web Search<br/>MCP Server"]
+    ResearchAgent -->|"MCP"| GitHub["🔧 GitHub<br/>MCP Server"]
+    
+    AnalystAgent -->|"MCP"| Database["🔧 Database<br/>MCP Server"]
+    AnalystAgent -->|"MCP"| Charts["🔧 Chart Gen<br/>MCP Server"]
+```
+
+- **A2A** connects high-level agents that can reason and collaborate
+- **MCP** connects each agent to the specific tools it needs
+- Together, they create a **composable agent network**
 
 ---
 
