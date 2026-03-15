@@ -74,6 +74,8 @@ flowchart TB
 | **Lab 05** | [Tools & Safety](lab-05-tools-safety/README.md) | Ch 8, 9 | Create custom tools, add input validation, DLP scanning, and budget guardrails. |
 | **Lab 06** | [Agent Evaluation](lab-06-evaluation/README.md) | Ch 10 | Build an eval pipeline that scores groundedness, relevance, and toxicity. |
 | **Lab 07** | [Framework Deep Dive](lab-07-frameworks/README.md) | Ch 16 | Build the same agent in LangChain, LangGraph, and Deep Agents. Compare approaches. |
+| **Lab 08** | [Observability & Monitoring](lab-08-observability/README.md) | Ch 11 | Instrument agents with OpenTelemetry, track costs, build dashboards. |
+| **Lab 09** | [Azure AI Foundry](lab-09-foundry/README.md) | Ch 17 | Build agents with Foundry Agents Service, built-in evals and tracing. |
 
 ---
 

@@ -108,6 +108,8 @@ graph TB
 | **Lab 05** | Tool calling with safety guardrails | ~1h |
 | **Lab 06** | Agent evaluation pipeline | ~1h |
 | **Lab 07** | Framework deep dive (LangGraph vs Deep Agents) | ~1.5h |
+| **Lab 08** | Observability & Monitoring (tracing, costs, dashboards) | ~1.5h |
+| **Lab 09** | Azure AI Foundry (managed agents, evals, tracing) | ~2h |
 
 **[→ Get started with the labs](labs/README.md)**
 
