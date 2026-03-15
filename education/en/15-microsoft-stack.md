@@ -48,28 +48,28 @@
 
 ```mermaid
 graph TB
-    User["👤 Users"] --> FD["🌐 Azure Front Door\n+ WAF"]
+    User["👤 Users"] --> FD["🌐 Azure Front Door<br/>+ WAF"]
     Dev["👨‍💻 Developers"] --> Portal["🌐 Developer Portal"]
     
-    FD --> APIM["🚪 Azure API Management\nAuth, Rate Limit, Policies"]
+    FD --> APIM["🚪 Azure API Management<br/>Auth, Rate Limit, Policies"]
     
     subgraph "📋 Control Plane"
-        Portal --> ACA_CP["☁️ Azure Container Apps\n(Control Plane Services)"]
-        ACA_CP --> CosmosConfig["💾 Cosmos DB\n(Agent Registry, Configs)"]
+        Portal --> ACA_CP["☁️ Azure Container Apps<br/>(Control Plane Services)"]
+        ACA_CP --> CosmosConfig["💾 Cosmos DB<br/>(Agent Registry, Configs)"]
     end
     
     subgraph "⚙️ Runtime Plane"
-        APIM --> ACA_RT["☁️ Azure Container Apps\n(Runtime Services)\nAuto-scale 0-N"]
-        ACA_RT --> AOAI["🧠 Azure OpenAI\nGPT-4o, Embeddings"]
-        ACA_RT --> AIS["🔍 Azure AI Search\nVector + Hybrid Search"]
-        ACA_RT --> Tools["🔧 Tool Execution\n(Sandboxed containers)"]
+        APIM --> ACA_RT["☁️ Azure Container Apps<br/>(Runtime Services)<br/>Auto-scale 0-N"]
+        ACA_RT --> AOAI["🧠 Azure OpenAI<br/>GPT-4o, Embeddings"]
+        ACA_RT --> AIS["🔍 Azure AI Search<br/>Vector + Hybrid Search"]
+        ACA_RT --> Tools["🔧 Tool Execution<br/>(Sandboxed containers)"]
     end
     
     subgraph "💾 Data Layer"
-        ACA_RT --> Cosmos["💾 Azure Cosmos DB\nState, Threads, Memory"]
+        ACA_RT --> Cosmos["💾 Azure Cosmos DB<br/>State, Threads, Memory"]
         ACA_RT --> Redis["📦 Azure Cache for Redis"]
-        ACA_RT --> Blob["📁 Azure Blob Storage\nDocuments"]
-        ACA_RT --> SB["📫 Azure Service Bus\nAsync tasks"]
+        ACA_RT --> Blob["📁 Azure Blob Storage<br/>Documents"]
+        ACA_RT --> SB["📫 Azure Service Bus<br/>Async tasks"]
     end
     
     subgraph "🔐 Security"
@@ -101,10 +101,10 @@ graph TB
 graph LR
     App["🤖 Agent"] --> AOAI["☁️ Azure OpenAI"]
     
-    AOAI --> GPT4o["🧠 GPT-4o\nPowerful, expensive"]
-    AOAI --> GPT4oMini["🧠 GPT-4o-mini\nFast, cheap"]
-    AOAI --> Embeddings["📐 text-embedding-3\nFor RAG"]
-    AOAI --> DALLE["🎨 DALL-E 3\nImage generation"]
+    AOAI --> GPT4o["🧠 GPT-4o<br/>Powerful, expensive"]
+    AOAI --> GPT4oMini["🧠 GPT-4o-mini<br/>Fast, cheap"]
+    AOAI --> Embeddings["📐 text-embedding-3<br/>For RAG"]
+    AOAI --> DALLE["🎨 DALL-E 3<br/>Image generation"]
 ```
 
 ### Why Azure OpenAI and not OpenAI's direct API?
@@ -125,9 +125,9 @@ graph LR
 graph TD
     Account["☁️ Azure OpenAI Resource"]
     
-    Account --> Deploy1["🧠 Deployment: gpt-4o-main\nModel: GPT-4o\nCapacity: 80K TPM"]
-    Account --> Deploy2["🧠 Deployment: gpt-4o-mini-fast\nModel: GPT-4o-mini\nCapacity: 200K TPM"]
-    Account --> Deploy3["📐 Deployment: embeddings\nModel: text-embedding-3-large\nCapacity: 350K TPM"]
+    Account --> Deploy1["🧠 Deployment: gpt-4o-main<br/>Model: GPT-4o<br/>Capacity: 80K TPM"]
+    Account --> Deploy2["🧠 Deployment: gpt-4o-mini-fast<br/>Model: GPT-4o-mini<br/>Capacity: 200K TPM"]
+    Account --> Deploy3["📐 Deployment: embeddings<br/>Model: text-embedding-3-large<br/>Capacity: 350K TPM"]
 ```
 
 | Term | Explanation |
@@ -149,10 +149,10 @@ graph TB
     subgraph "Azure AI Search"
         Index["📋 Search Index"]
         
-        Index --> FT["📝 Full-Text Search\nKeyword matching\nBM25 ranking"]
-        Index --> VS["📐 Vector Search\nSemantic similarity\nCosine distance"]
-        Index --> HS["🔀 Hybrid Search\nFull-text + Vector\nReciprocal Rank Fusion"]
-        Index --> SR["🧠 Semantic Ranking\nAI re-ranking\nBetter results"]
+        Index --> FT["📝 Full-Text Search<br/>Keyword matching<br/>BM25 ranking"]
+        Index --> VS["📐 Vector Search<br/>Semantic similarity<br/>Cosine distance"]
+        Index --> HS["🔀 Hybrid Search<br/>Full-text + Vector<br/>Reciprocal Rank Fusion"]
+        Index --> SR["🧠 Semantic Ranking<br/>AI re-ranking<br/>Better results"]
     end
 ```
 
@@ -193,7 +193,7 @@ sequenceDiagram
 ```mermaid
 graph LR
     subgraph "Cosmos DB APIs"
-        NoSQL["📄 NoSQL API\n(recommended)"]
+        NoSQL["📄 NoSQL API<br/>(recommended)"]
         Mongo["🍃 MongoDB API"]
         Postgres["🐘 PostgreSQL API"]
         Table["📊 Table API"]
@@ -218,11 +218,11 @@ graph LR
 graph TD
     Container["💾 Cosmos Container: threads"]
     
-    Container --> HPK["Hierarchical Partition Key:\n/tenantId → /agentId → /threadId"]
+    Container --> HPK["Hierarchical Partition Key:<br/>/tenantId → /agentId → /threadId"]
     
-    HPK --> Q1["Query: Get thread\n→ Point read (fastest)"]
-    HPK --> Q2["Query: All threads for agent\n→ Within partition"]
-    HPK --> Q3["Query: All agents for tenant\n→ Within partition"]
+    HPK --> Q1["Query: Get thread<br/>→ Point read (fastest)"]
+    HPK --> Q2["Query: All threads for agent<br/>→ Within partition"]
+    HPK --> Q3["Query: All agents for tenant<br/>→ Within partition"]
 ```
 
 ### Best Practices:
@@ -274,8 +274,8 @@ graph TB
 
 ```mermaid
 graph TD
-    Start["🤔 Which compute?"] --> Size{"Team size &\nK8s expertise?"}
-    Size -->|"Small team, no K8s"| ACA["☁️ ACA\n(Recommended for POC)"]
+    Start["🤔 Which compute?"] --> Size{"Team size &<br/>K8s expertise?"}
+    Size -->|"Small team, no K8s"| ACA["☁️ ACA<br/>(Recommended for POC)"]
     Size -->|"Large team, K8s experts"| Scale{"Scale?"}
     Scale -->|"< 1000 RPS"| ACA
     Scale -->|"> 1000 RPS"| GPU{"Need GPU?"}
@@ -337,9 +337,9 @@ graph TD
     App["🤖 Agent App"] --> Entra
     Service["⚙️ Service"] --> Entra
     
-    Entra --> AuthN["✅ Authentication\nWho are you?"]
-    Entra --> AuthZ["✅ Authorization\nWhat can you do?"]
-    Entra --> MI["✅ Managed Identity\nPasswordless auth"]
+    Entra --> AuthN["✅ Authentication<br/>Who are you?"]
+    Entra --> AuthZ["✅ Authorization<br/>What can you do?"]
+    Entra --> MI["✅ Managed Identity<br/>Passwordless auth"]
     Entra --> SSO["✅ Single Sign-On"]
     Entra --> RBAC2["✅ Azure RBAC"]
 ```
@@ -353,7 +353,7 @@ graph LR
     end
     
     subgraph "✅ With Managed Identity"
-        App2["🤖 App\n(has Managed Identity)"] -->|"Auto-auth, no secrets"| Service2["☁️ Azure Service"]
+        App2["🤖 App<br/>(has Managed Identity)"] -->|"Auto-auth, no secrets"| Service2["☁️ Azure Service"]
     end
 ```
 
@@ -379,7 +379,7 @@ graph TD
         S4["🔐 Certificates"]
     end
     
-    ACA2["☁️ Container App\n(Managed Identity)"] -->|"No passwords needed"| S1 & S2 & S3 & S4
+    ACA2["☁️ Container App<br/>(Managed Identity)"] -->|"No passwords needed"| S1 & S2 & S3 & S4
 ```
 
 ---
@@ -396,7 +396,7 @@ graph LR
     SB2 --> Q2["🟡 Standard Queue"]
     SB2 --> Q3["🟢 Batch Queue"]
     
-    Q1 & Q2 & Q3 --> Workers2["⚙️ Agent Workers\n(Container Apps)"]
+    Q1 & Q2 & Q3 --> Workers2["⚙️ Agent Workers<br/>(Container Apps)"]
 ```
 
 | Feature | Benefit |
@@ -416,10 +416,10 @@ graph LR
 ```mermaid
 graph TB
     subgraph "📊 Azure Monitor"
-        AppIns2["📈 Application Insights\nAPM, Traces, Metrics"]
-        LA2["📝 Log Analytics\nKQL queries, Logs"]
-        Alerts2["🚨 Alerts\nReal-time notifications"]
-        Workbooks["📊 Workbooks\nCustom dashboards"]
+        AppIns2["📈 Application Insights<br/>APM, Traces, Metrics"]
+        LA2["📝 Log Analytics<br/>KQL queries, Logs"]
+        Alerts2["🚨 Alerts<br/>Real-time notifications"]
+        Workbooks["📊 Workbooks<br/>Custom dashboards"]
         
         AppIns2 --> LA2
         LA2 --> Alerts2
@@ -475,11 +475,11 @@ graph LR
 ```mermaid
 graph TB
     subgraph "🏭 Azure AI Foundry"
-        F1["🧠 Model Catalog\nGPT, Llama, Mistral, Phi"]
-        F2["🔗 Prompt Flow\nVisual orchestration"]
-        F3["📊 Evaluation\nBuilt-in eval metrics"]
-        F4["🤖 Agent Service\nManaged agent runtime"]
-        F5["🔍 Tracing\nEnd-to-end observability"]
+        F1["🧠 Model Catalog<br/>GPT, Llama, Mistral, Phi"]
+        F2["🔗 Prompt Flow<br/>Visual orchestration"]
+        F3["📊 Evaluation<br/>Built-in eval metrics"]
+        F4["🤖 Agent Service<br/>Managed agent runtime"]
+        F5["🔍 Tracing<br/>End-to-end observability"]
     end
 ```
 
@@ -489,7 +489,7 @@ graph TB
 graph LR
     Foundry["🏭 Azure AI Foundry"] --> AgentSvc["🤖 Agent Service"]
     
-    AgentSvc --> Features["Features:\n- Managed runtime\n- Built-in tools\n- Code Interpreter\n- File Search\n- Function Calling\n- Thread management"]
+    AgentSvc --> Features["Features:<br/>- Managed runtime<br/>- Built-in tools<br/>- Code Interpreter<br/>- File Search<br/>- Function Calling<br/>- Thread management"]
 ```
 
 ---
@@ -504,12 +504,12 @@ graph TB
     subgraph "🧩 Semantic Kernel"
         Kernel["Core: Kernel"]
         
-        Kernel --> Plugins["🔌 Plugins\n(Tools/Functions)"]
-        Kernel --> Planner["📋 Planner\n(Orchestration)"]
-        Kernel --> Memory2["🧠 Memory\n(RAG integration)"]
-        Kernel --> Connectors["🔗 Connectors\n(Azure OpenAI, etc.)"]
-        Kernel --> Process["🔄 Process Framework\n(Multi-step workflows)"]
-        Kernel --> Agents2["🤖 Agent Framework\n(Multi-agent)"]
+        Kernel --> Plugins["🔌 Plugins<br/>(Tools/Functions)"]
+        Kernel --> Planner["📋 Planner<br/>(Orchestration)"]
+        Kernel --> Memory2["🧠 Memory<br/>(RAG integration)"]
+        Kernel --> Connectors["🔗 Connectors<br/>(Azure OpenAI, etc.)"]
+        Kernel --> Process["🔄 Process Framework<br/>(Multi-step workflows)"]
+        Kernel --> Agents2["🤖 Agent Framework<br/>(Multi-agent)"]
     end
 ```
 
@@ -532,16 +532,16 @@ graph TB
 ```mermaid
 graph TB
     Users["👤 Users"] --> FD2["🌐 Azure Front Door + WAF"]
-    FD2 --> APIM2["🚪 Azure APIM\n(Auth, Rate Limit)"]
+    FD2 --> APIM2["🚪 Azure APIM<br/>(Auth, Rate Limit)"]
     
-    APIM2 --> ACA3["☁️ Azure Container Apps\n(Agent Runtime)"]
+    APIM2 --> ACA3["☁️ Azure Container Apps<br/>(Agent Runtime)"]
     
-    ACA3 --> AOAI2["🧠 Azure OpenAI\n(GPT-4o, Embeddings)"]
-    ACA3 --> AIS2["🔍 Azure AI Search\n(RAG)"]
-    ACA3 --> Cosmos2["💾 Azure Cosmos DB\n(State, Threads)"]
+    ACA3 --> AOAI2["🧠 Azure OpenAI<br/>(GPT-4o, Embeddings)"]
+    ACA3 --> AIS2["🔍 Azure AI Search<br/>(RAG)"]
+    ACA3 --> Cosmos2["💾 Azure Cosmos DB<br/>(State, Threads)"]
     ACA3 --> Redis2["📦 Redis Cache"]
-    ACA3 --> SB3["📫 Service Bus\n(Async)"]
-    ACA3 --> Blob2["📁 Blob Storage\n(Docs)"]
+    ACA3 --> SB3["📫 Service Bus<br/>(Async)"]
+    ACA3 --> Blob2["📁 Blob Storage<br/>(Docs)"]
     
     ACA3 -.-> Entra2["🔐 Entra ID"]
     ACA3 -.-> KV2["🔑 Key Vault"]

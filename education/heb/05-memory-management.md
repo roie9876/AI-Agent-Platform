@@ -50,15 +50,15 @@ graph LR
 graph TB
     Memory["💾 Agent Memory"]
     
-    Memory --> STM["🔄 Short-Term Memory\n(זיכרון קצר טווח)"]
-    Memory --> LTM["📚 Long-Term Memory\n(זיכרון ארוך טווח)"]
+    Memory --> STM["🔄 Short-Term Memory<br/>(זיכרון קצר טווח)"]
+    Memory --> LTM["📚 Long-Term Memory<br/>(זיכרון ארוך טווח)"]
     
-    STM --> Conv["💬 Conversation History\nהיסטוריית שיחה"]
-    STM --> Working["🧮 Working Memory\nנתונים זמניים מכלים"]
+    STM --> Conv["💬 Conversation History<br/>היסטוריית שיחה"]
+    STM --> Working["🧮 Working Memory<br/>נתונים זמניים מכלים"]
     
-    LTM --> Vector["🔍 Vector Store (RAG)\nמסמכים, ידע ארגוני"]
-    LTM --> Facts["📋 User Facts\nעובדות על המשתמש"]
-    LTM --> Episodes["📖 Episodic Memory\nשיחות עבר"]
+    LTM --> Vector["🔍 Vector Store (RAG)<br/>מסמכים, ידע ארגוני"]
+    LTM --> Facts["📋 User Facts<br/>עובדות על המשתמש"]
+    LTM --> Episodes["📖 Episodic Memory<br/>שיחות עבר"]
 ```
 
 ### השוואה:
@@ -86,14 +86,14 @@ graph TB
 ```mermaid
 graph TB
     subgraph "Context Window = 128K tokens"
-        System["System Prompt\n~2K tokens"]
-        History["Conversation History\n~???"]
-        Tools["Tool Definitions\n~3K tokens"]
-        UserMsg["Current Message\n~500 tokens"]
-        RAG["RAG Context\n~4K tokens"]
+        System["System Prompt<br/>~2K tokens"]
+        History["Conversation History<br/>~???"]
+        Tools["Tool Definitions<br/>~3K tokens"]
+        UserMsg["Current Message<br/>~500 tokens"]
+        RAG["RAG Context<br/>~4K tokens"]
     end
     
-    Note["🚨 אם ההיסטוריה ארוכה מדי,\nהיא תחרוג מה-Context Window!"]
+    Note["🚨 אם ההיסטוריה ארוכה מדי,<br/>היא תחרוג מה-Context Window!"]
 ```
 
 ### אסטרטגיות לניהול Short-Term Memory:
@@ -171,12 +171,12 @@ Memory Strategy:
 graph TB
     LTM["📚 Long-Term Memory"]
     
-    LTM --> RAG_LTM["📄 Document Memory (RAG)\nמסמכי חברה, ידע ארגוני"]
-    LTM --> User_LTM["👤 User Memory\nעובדות על המשתמש"]
-    LTM --> Episodic["📖 Episodic Memory\nשיחות קודמות ותובנות"]
+    LTM --> RAG_LTM["📄 Document Memory (RAG)<br/>מסמכי חברה, ידע ארגוני"]
+    LTM --> User_LTM["👤 User Memory<br/>עובדות על המשתמש"]
+    LTM --> Episodic["📖 Episodic Memory<br/>שיחות קודמות ותובנות"]
     
-    RAG_LTM --> Ex1["'מה מדיניות ההחזרות?'\n→ חיפוש במסמכים"]
-    User_LTM --> Ex2["'רועי מעדיף תשובות בעברית'\n→ נשמר כ-fact"]
+    RAG_LTM --> Ex1["'מה מדיניות ההחזרות?'<br/>→ חיפוש במסמכים"]
+    User_LTM --> Ex2["'רועי מעדיף תשובות בעברית'<br/>→ נשמר כ-fact"]
     Episodic --> Ex3["'בשיחה אתמול דיברנו על...'"]
 ```
 
@@ -191,7 +191,7 @@ RAG = **שליפה + יצירה**. במקום לסמוך על הידע של ה-L
 graph TB
     subgraph "❌ בלי RAG"
         Q1["'מה מדיניות ההחזרות שלנו?'"] --> LLM1["🧠 LLM"]
-        LLM1 --> A1["'אני חושב שזה 30 יום...'\n(❌ Hallucination!)"]
+        LLM1 --> A1["'אני חושב שזה 30 יום...'<br/>(❌ Hallucination!)"]
     end
 ```
 
@@ -201,7 +201,7 @@ graph TB
         Q2["'מה מדיניות ההחזרות שלנו?'"] --> Search["🔍 חיפוש"]
         Search --> Docs["📄 'מדיניות: החזרה תוך 14 יום...'"]
         Docs --> LLM2["🧠 LLM + מסמך"]
-        LLM2 --> A2["'לפי המדיניות שלנו, ניתן להחזיר תוך 14 יום'\n(✅ Grounded!)"]
+        LLM2 --> A2["'לפי המדיניות שלנו, ניתן להחזיר תוך 14 יום'<br/>(✅ Grounded!)"]
     end
 ```
 
@@ -210,19 +210,19 @@ graph TB
 ```mermaid
 graph TB
     subgraph "Phase 1: Indexing (חד-פעמי)"
-        Docs["📄 מסמכים"] --> Chunk["✂️ Chunking\nפיצול לחלקים"]
-        Chunk --> Embed1["🔢 Embedding\nהמרה לוקטורים"]
-        Embed1 --> Store["💾 Vector DB\nשמירה"]
+        Docs["📄 מסמכים"] --> Chunk["✂️ Chunking<br/>פיצול לחלקים"]
+        Chunk --> Embed1["🔢 Embedding<br/>המרה לוקטורים"]
+        Embed1 --> Store["💾 Vector DB<br/>שמירה"]
     end
     
     subgraph "Phase 2: Retrieval (כל שאילתה)"
-        Query["❓ שאלת המשתמש"] --> Embed2["🔢 Embedding\nהמרה לוקטור"]
-        Embed2 --> Search["🔍 Vector Search\nחיפוש דומים"]
-        Search --> TopK["📋 Top-K Results\n3-5 המסמכים הכי רלוונטיים"]
+        Query["❓ שאלת המשתמש"] --> Embed2["🔢 Embedding<br/>המרה לוקטור"]
+        Embed2 --> Search["🔍 Vector Search<br/>חיפוש דומים"]
+        Search --> TopK["📋 Top-K Results<br/>3-5 המסמכים הכי רלוונטיים"]
     end
     
     subgraph "Phase 3: Generation"
-        TopK --> Prompt["📝 Prompt:\nQuestion + Retrieved Docs"]
+        TopK --> Prompt["📝 Prompt:<br/>Question + Retrieved Docs"]
         Prompt --> LLM["🧠 LLM"]
         LLM --> Answer["✅ תשובה מבוססת מסמכים"]
     end
@@ -234,7 +234,7 @@ graph TB
 
 ```mermaid
 graph LR
-    Doc["📄 מסמך של 50 עמודים"] --> C1["Chunk 1\n(200-500 tokens)"]
+    Doc["📄 מסמך של 50 עמודים"] --> C1["Chunk 1<br/>(200-500 tokens)"]
     Doc --> C2["Chunk 2"]
     Doc --> C3["Chunk 3"]
     Doc --> C4["..."]
@@ -329,13 +329,13 @@ graph TB
 
 ```mermaid
 graph TB
-    Query["🔍 'החזרת מוצר בתוך 14 יום'"] --> Sem["📐 Semantic Search\n(Vector similarity)"]
-    Query --> KW["🔤 Keyword Search\n(BM25 / Full-text)"]
+    Query["🔍 'החזרת מוצר בתוך 14 יום'"] --> Sem["📐 Semantic Search<br/>(Vector similarity)"]
+    Query --> KW["🔤 Keyword Search<br/>(BM25 / Full-text)"]
     
-    Sem --> Merge["🔀 Merge & Rank\n(RRF - Reciprocal Rank Fusion)"]
+    Sem --> Merge["🔀 Merge & Rank<br/>(RRF - Reciprocal Rank Fusion)"]
     KW --> Merge
     
-    Merge --> Results["📋 Combined Results\n(best of both worlds)"]
+    Merge --> Results["📋 Combined Results<br/>(best of both worlds)"]
 ```
 
 | חיפוש | בעד | נגד |
@@ -353,10 +353,10 @@ graph TB
 ```mermaid
 graph TB
     subgraph "Memory Scoping"
-        Agent_Mem["🤖 Agent Memory\n(לכל ה-users)"]
-        User_Mem["👤 User Memory\n(ספציפי למשתמש)"]
-        Thread_Mem["🧵 Thread Memory\n(ספציפי לשיחה)"]
-        Global_Mem["🌐 Global Memory\n(ידע ארגוני)"]
+        Agent_Mem["🤖 Agent Memory<br/>(לכל ה-users)"]
+        User_Mem["👤 User Memory<br/>(ספציפי למשתמש)"]
+        Thread_Mem["🧵 Thread Memory<br/>(ספציפי לשיחה)"]
+        Global_Mem["🌐 Global Memory<br/>(ידע ארגוני)"]
     end
     
     Agent_Mem -->|"System prompt, tools"| All["כל השיחות של Agent הזה"]
@@ -390,9 +390,9 @@ graph LR
 graph TB
     Agent["🤖 Agent"] --> MemMgr["💾 Memory Manager"]
     
-    MemMgr --> Cache["⚡ Cache (Redis)\nShort-term\nFast access"]
-    MemMgr --> VectorDB["🔍 Vector DB\nLong-term (RAG)\nSemantic search"]
-    MemMgr --> StateDB["📌 State DB (Cosmos)\nPersistent state\nDurable"]
+    MemMgr --> Cache["⚡ Cache (Redis)<br/>Short-term<br/>Fast access"]
+    MemMgr --> VectorDB["🔍 Vector DB<br/>Long-term (RAG)<br/>Semantic search"]
+    MemMgr --> StateDB["📌 State DB (Cosmos)<br/>Persistent state<br/>Durable"]
     
     Cache -->|"TTL: hours"| Expire1["🗑️ Auto-expire"]
     VectorDB -->|"TTL: months"| Expire2["🗑️ Manual cleanup"]

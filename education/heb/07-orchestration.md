@@ -53,9 +53,9 @@ graph TB
 
 ```mermaid
 graph LR
-    S1["Step 1:\nשלוף נתונים"] --> S2["Step 2:\nנתח מגמות"]
-    S2 --> S3["Step 3:\nצור גרפים"]
-    S3 --> S4["Step 4:\nכתוב דוח"]
+    S1["Step 1:<br/>שלוף נתונים"] --> S2["Step 2:<br/>נתח מגמות"]
+    S2 --> S3["Step 3:<br/>צור גרפים"]
+    S3 --> S4["Step 4:<br/>כתוב דוח"]
     S4 --> Result["📄 דוח מוכן"]
 ```
 
@@ -90,9 +90,9 @@ graph LR
 graph TB
     Start["📥 משימה: 'בדוק 3 מקורות'"] --> Fork["🔀 Fork"]
     
-    Fork --> A1["Agent 1:\nחפש בוויקיפדיה"]
-    Fork --> A2["Agent 2:\nחפש ב-DB פנימי"]
-    Fork --> A3["Agent 3:\nחפש בחדשות"]
+    Fork --> A1["Agent 1:<br/>חפש בוויקיפדיה"]
+    Fork --> A2["Agent 2:<br/>חפש ב-DB פנימי"]
+    Fork --> A3["Agent 3:<br/>חפש בחדשות"]
     
     A1 --> Join["🔄 Join / Merge"]
     A2 --> Join
@@ -126,10 +126,10 @@ graph TB
 graph TB
     Challenge["⚠️ אתגרים"]
     
-    Challenge --> C1["🕐 Timeout\nמה אם אחד לא מסיים?"]
-    Challenge --> C2["❌ Partial Failure\nמה אם אחד נכשל?"]
-    Challenge --> C3["🔄 Merge Logic\nאיך מאחדים תוצאות?"]
-    Challenge --> C4["💰 Cost\nריבוי LLM calls = יקר"]
+    Challenge --> C1["🕐 Timeout<br/>מה אם אחד לא מסיים?"]
+    Challenge --> C2["❌ Partial Failure<br/>מה אם אחד נכשל?"]
+    Challenge --> C3["🔄 Merge Logic<br/>איך מאחדים תוצאות?"]
+    Challenge --> C4["💰 Cost<br/>ריבוי LLM calls = יקר"]
 ```
 
 | אתגר | פתרון |
@@ -157,13 +157,13 @@ graph TB
 ```mermaid
 graph TD
     Start["📥 'מצא למה המכירות ירדו'"]
-    Start --> Think1["🤔 Think:\n'אני צריך נתוני מכירות'"]
-    Think1 --> Act1["🔧 Act:\nSQL query - get sales data"]
-    Act1 --> Observe1["👀 Observe:\n'ירידה ב-Q3'"]
-    Observe1 --> Think2["🤔 Think:\n'אבדוק מה קרה ב-Q3'"]
-    Think2 --> Act2["🔧 Act:\nSearch news for Q3"]
-    Act2 --> Observe2["👀 Observe:\n'מתחרה חדש נכנס לשוק'"]
-    Observe2 --> Think3["🤔 Think:\n'זה מסביר. יש לי מספיק'"]
+    Start --> Think1["🤔 Think:<br/>'אני צריך נתוני מכירות'"]
+    Think1 --> Act1["🔧 Act:<br/>SQL query - get sales data"]
+    Act1 --> Observe1["👀 Observe:<br/>'ירידה ב-Q3'"]
+    Observe1 --> Think2["🤔 Think:<br/>'אבדוק מה קרה ב-Q3'"]
+    Think2 --> Act2["🔧 Act:<br/>Search news for Q3"]
+    Act2 --> Observe2["👀 Observe:<br/>'מתחרה חדש נכנס לשוק'"]
+    Observe2 --> Think3["🤔 Think:<br/>'זה מסביר. יש לי מספיק'"]
     Think3 --> Answer["📤 'המכירות ירדו בגלל מתחרה חדש...'"]
 ```
 
@@ -174,9 +174,9 @@ graph TD
     Input["📥 Task"] --> Loop
     
     subgraph Loop["🔄 ReAct Loop"]
-        Reason["🤔 Reason\n(LLM decides what to do)"]
-        Act["🔧 Act\n(Execute tool/action)"]
-        Observe["👀 Observe\n(Check result)"]
+        Reason["🤔 Reason<br/>(LLM decides what to do)"]
+        Act["🔧 Act<br/>(Execute tool/action)"]
+        Observe["👀 Observe<br/>(Check result)"]
         
         Reason --> Act
         Act --> Observe
@@ -194,7 +194,7 @@ graph TD
 graph TD
     Task["📥 Task"] --> Planner["📋 Planner Agent"]
     
-    Planner --> Plan["Plan:\n1. Get sales data\n2. Analyze trends\n3. Compare competitors\n4. Write report"]
+    Planner --> Plan["Plan:<br/>1. Get sales data<br/>2. Analyze trends<br/>3. Compare competitors<br/>4. Write report"]
     
     Plan --> E1["Execute Step 1"]
     E1 --> E2["Execute Step 2"]
@@ -224,11 +224,11 @@ Agent ראשי שמאציל משימות ל-**Agents מומחים**:
 
 ```mermaid
 graph TB
-    User["👤 User"] --> Manager["🎩 Manager Agent\n'מנהל'"]
+    User["👤 User"] --> Manager["🎩 Manager Agent<br/>'מנהל'"]
     
-    Manager --> Researcher["🔍 Research Agent\n'חוקר'"]
-    Manager --> Analyst["📊 Analyst Agent\n'מנתח'"]
-    Manager --> Writer["✍️ Writer Agent\n'כותב'"]
+    Manager --> Researcher["🔍 Research Agent<br/>'חוקר'"]
+    Manager --> Analyst["📊 Analyst Agent<br/>'מנתח'"]
+    Manager --> Writer["✍️ Writer Agent<br/>'כותב'"]
     
     Researcher -->|"ממצאים"| Manager
     Analyst -->|"ניתוח"| Manager
@@ -353,14 +353,14 @@ graph TB
 
 ```mermaid
 graph TB
-    Input["📄 100 מסמכים"] --> Map["🗺️ Map:\nסכם כל מסמך בנפרד"]
+    Input["📄 100 מסמכים"] --> Map["🗺️ Map:<br/>סכם כל מסמך בנפרד"]
     
     Map --> S1["Summary 1"]
     Map --> S2["Summary 2"]
     Map --> S3["..."]
     Map --> SN["Summary 100"]
     
-    S1 --> Reduce["📊 Reduce:\nאחד את כל הסיכומים"]
+    S1 --> Reduce["📊 Reduce:<br/>אחד את כל הסיכומים"]
     S2 --> Reduce
     S3 --> Reduce
     SN --> Reduce

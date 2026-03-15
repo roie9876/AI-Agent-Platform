@@ -54,11 +54,11 @@ graph TB
     Memory --> LTM["📚 Long-Term Memory"]
     
     STM --> Conv["💬 Conversation History"]
-    STM --> Working["🧮 Working Memory\nTemporary data from tools"]
+    STM --> Working["🧮 Working Memory<br/>Temporary data from tools"]
     
-    LTM --> Vector["🔍 Vector Store (RAG)\nDocuments, organizational knowledge"]
-    LTM --> Facts["📋 User Facts\nFacts about the user"]
-    LTM --> Episodes["📖 Episodic Memory\nPast conversations"]
+    LTM --> Vector["🔍 Vector Store (RAG)<br/>Documents, organizational knowledge"]
+    LTM --> Facts["📋 User Facts<br/>Facts about the user"]
+    LTM --> Episodes["📖 Episodic Memory<br/>Past conversations"]
 ```
 
 ### Comparison:
@@ -86,14 +86,14 @@ An LLM has a limited **Context Window**. You can't send it the entire conversati
 ```mermaid
 graph TB
     subgraph "Context Window = 128K tokens"
-        System["System Prompt\n~2K tokens"]
-        History["Conversation History\n~???"]
-        Tools["Tool Definitions\n~3K tokens"]
-        UserMsg["Current Message\n~500 tokens"]
-        RAG["RAG Context\n~4K tokens"]
+        System["System Prompt<br/>~2K tokens"]
+        History["Conversation History<br/>~???"]
+        Tools["Tool Definitions<br/>~3K tokens"]
+        UserMsg["Current Message<br/>~500 tokens"]
+        RAG["RAG Context<br/>~4K tokens"]
     end
     
-    Note["🚨 If the history is too long,\nit will exceed the Context Window!"]
+    Note["🚨 If the history is too long,<br/>it will exceed the Context Window!"]
 ```
 
 ### Strategies for Managing Short-Term Memory:
@@ -171,12 +171,12 @@ Memory that persists **beyond the current conversation**. It allows the Agent to
 graph TB
     LTM["📚 Long-Term Memory"]
     
-    LTM --> RAG_LTM["📄 Document Memory (RAG)\nCompany documents, organizational knowledge"]
-    LTM --> User_LTM["👤 User Memory\nFacts about the user"]
-    LTM --> Episodic["📖 Episodic Memory\nPrevious conversations and insights"]
+    LTM --> RAG_LTM["📄 Document Memory (RAG)<br/>Company documents, organizational knowledge"]
+    LTM --> User_LTM["👤 User Memory<br/>Facts about the user"]
+    LTM --> Episodic["📖 Episodic Memory<br/>Previous conversations and insights"]
     
-    RAG_LTM --> Ex1["'What is the return policy?'\n→ Search in documents"]
-    User_LTM --> Ex2["'Roy prefers answers in Hebrew'\n→ Saved as a fact"]
+    RAG_LTM --> Ex1["'What is the return policy?'<br/>→ Search in documents"]
+    User_LTM --> Ex2["'Roy prefers answers in Hebrew'<br/>→ Saved as a fact"]
     Episodic --> Ex3["'In yesterday's conversation we discussed...'"]
 ```
 
@@ -191,7 +191,7 @@ RAG = **Retrieval + Generation**. Instead of relying on the LLM's knowledge (whi
 graph TB
     subgraph "❌ Without RAG"
         Q1["'What is our return policy?'"] --> LLM1["🧠 LLM"]
-        LLM1 --> A1["'I think it's 30 days...'\n(❌ Hallucination!)"]
+        LLM1 --> A1["'I think it's 30 days...'<br/>(❌ Hallucination!)"]
     end
 ```
 
@@ -201,7 +201,7 @@ graph TB
         Q2["'What is our return policy?'"] --> Search["🔍 Search"]
         Search --> Docs["📄 'Policy: Returns within 14 days...'"]
         Docs --> LLM2["🧠 LLM + Document"]
-        LLM2 --> A2["'According to our policy, you can return within 14 days'\n(✅ Grounded!)"]
+        LLM2 --> A2["'According to our policy, you can return within 14 days'<br/>(✅ Grounded!)"]
     end
 ```
 
@@ -210,19 +210,19 @@ graph TB
 ```mermaid
 graph TB
     subgraph "Phase 1: Indexing (one-time)"
-        Docs["📄 Documents"] --> Chunk["✂️ Chunking\nSplit into parts"]
-        Chunk --> Embed1["🔢 Embedding\nConvert to vectors"]
-        Embed1 --> Store["💾 Vector DB\nStorage"]
+        Docs["📄 Documents"] --> Chunk["✂️ Chunking<br/>Split into parts"]
+        Chunk --> Embed1["🔢 Embedding<br/>Convert to vectors"]
+        Embed1 --> Store["💾 Vector DB<br/>Storage"]
     end
     
     subgraph "Phase 2: Retrieval (per query)"
-        Query["❓ User's question"] --> Embed2["🔢 Embedding\nConvert to vector"]
-        Embed2 --> Search["🔍 Vector Search\nFind similar"]
-        Search --> TopK["📋 Top-K Results\n3-5 most relevant documents"]
+        Query["❓ User's question"] --> Embed2["🔢 Embedding<br/>Convert to vector"]
+        Embed2 --> Search["🔍 Vector Search<br/>Find similar"]
+        Search --> TopK["📋 Top-K Results<br/>3-5 most relevant documents"]
     end
     
     subgraph "Phase 3: Generation"
-        TopK --> Prompt["📝 Prompt:\nQuestion + Retrieved Docs"]
+        TopK --> Prompt["📝 Prompt:<br/>Question + Retrieved Docs"]
         Prompt --> LLM["🧠 LLM"]
         LLM --> Answer["✅ Document-based answer"]
     end
@@ -234,7 +234,7 @@ A long document needs to be split into small parts. Why? Because the embedding r
 
 ```mermaid
 graph LR
-    Doc["📄 50-page document"] --> C1["Chunk 1\n(200-500 tokens)"]
+    Doc["📄 50-page document"] --> C1["Chunk 1<br/>(200-500 tokens)"]
     Doc --> C2["Chunk 2"]
     Doc --> C3["Chunk 3"]
     Doc --> C4["..."]
@@ -329,13 +329,13 @@ A combination of **semantic** search (Vector) with **keyword** search (BM25/Full
 
 ```mermaid
 graph TB
-    Query["🔍 'Product return within 14 days'"] --> Sem["📐 Semantic Search\n(Vector similarity)"]
-    Query --> KW["🔤 Keyword Search\n(BM25 / Full-text)"]
+    Query["🔍 'Product return within 14 days'"] --> Sem["📐 Semantic Search<br/>(Vector similarity)"]
+    Query --> KW["🔤 Keyword Search<br/>(BM25 / Full-text)"]
     
-    Sem --> Merge["🔀 Merge & Rank\n(RRF - Reciprocal Rank Fusion)"]
+    Sem --> Merge["🔀 Merge & Rank<br/>(RRF - Reciprocal Rank Fusion)"]
     KW --> Merge
     
-    Merge --> Results["📋 Combined Results\n(best of both worlds)"]
+    Merge --> Results["📋 Combined Results<br/>(best of both worlds)"]
 ```
 
 | Search | Pros | Cons |
@@ -353,10 +353,10 @@ graph TB
 ```mermaid
 graph TB
     subgraph "Memory Scoping"
-        Agent_Mem["🤖 Agent Memory\n(for all users)"]
-        User_Mem["👤 User Memory\n(specific to user)"]
-        Thread_Mem["🧵 Thread Memory\n(specific to conversation)"]
-        Global_Mem["🌐 Global Memory\n(organizational knowledge)"]
+        Agent_Mem["🤖 Agent Memory<br/>(for all users)"]
+        User_Mem["👤 User Memory<br/>(specific to user)"]
+        Thread_Mem["🧵 Thread Memory<br/>(specific to conversation)"]
+        Global_Mem["🌐 Global Memory<br/>(organizational knowledge)"]
     end
     
     Agent_Mem -->|"System prompt, tools"| All["All conversations of this Agent"]
@@ -390,9 +390,9 @@ graph LR
 graph TB
     Agent["🤖 Agent"] --> MemMgr["💾 Memory Manager"]
     
-    MemMgr --> Cache["⚡ Cache (Redis)\nShort-term\nFast access"]
-    MemMgr --> VectorDB["🔍 Vector DB\nLong-term (RAG)\nSemantic search"]
-    MemMgr --> StateDB["📌 State DB (Cosmos)\nPersistent state\nDurable"]
+    MemMgr --> Cache["⚡ Cache (Redis)<br/>Short-term<br/>Fast access"]
+    MemMgr --> VectorDB["🔍 Vector DB<br/>Long-term (RAG)<br/>Semantic search"]
+    MemMgr --> StateDB["📌 State DB (Cosmos)<br/>Persistent state<br/>Durable"]
     
     Cache -->|"TTL: hours"| Expire1["🗑️ Auto-expire"]
     VectorDB -->|"TTL: months"| Expire2["🗑️ Manual cleanup"]

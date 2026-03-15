@@ -152,11 +152,11 @@ graph TB
 
 ```mermaid
 graph LR
-    Request["📨 בקשה נכנסת"] --> Auth["🔐 Authentication\nמי אתה?"]
-    Auth --> Authz["🔑 Authorization\nמה מותר לך?"]
-    Authz --> RL["⏱️ Rate Limiting\nלא יותר מדי מהר"]
-    RL --> Route["🔀 Routing\nלאן לשלוח"]
-    Route --> Log["📝 Logging\nתעד הכל"]
+    Request["📨 בקשה נכנסת"] --> Auth["🔐 Authentication<br/>מי אתה?"]
+    Auth --> Authz["🔑 Authorization<br/>מה מותר לך?"]
+    Authz --> RL["⏱️ Rate Limiting<br/>לא יותר מדי מהר"]
+    RL --> Route["🔀 Routing<br/>לאן לשלוח"]
+    Route --> Log["📝 Logging<br/>תעד הכל"]
     Log --> Service["🎯 Service"]
 ```
 
@@ -196,8 +196,8 @@ IAM = **מי אתה** (Authentication) + **מה מותר לך** (Authorization)
 
 ```mermaid
 graph LR
-    User["👤 משתמש"] -->|"שם + סיסמה"| AuthN["🔐 Authentication\n'מי אתה?'"]
-    AuthN -->|"Token/JWT"| AuthZ["🔑 Authorization\n'מה מותר לך?'"]
+    User["👤 משתמש"] -->|"שם + סיסמה"| AuthN["🔐 Authentication<br/>'מי אתה?'"]
+    AuthN -->|"Token/JWT"| AuthZ["🔑 Authorization<br/>'מה מותר לך?'"]
     AuthZ -->|"Allow/Deny"| Resource["📦 Resource"]
 ```
 
@@ -281,13 +281,13 @@ graph TB
 ```mermaid
 graph TB
     subgraph AgentConfig["📋 Agent Configuration"]
-        Meta["📌 Metadata\nname, description, version, owner"]
-        Model["🧠 Model Settings\nmodel_id, temperature, max_tokens"]
-        Prompt["📝 System Prompt\nההוראות שמגדירות את ה-Agent"]
-        ToolList["🔧 Tools\nרשימת הכלים המותרים"]
-        Memory["💾 Memory Config\ntype, TTL, max_size"]
-        Policy["🛡️ Policy Refs\nאילו Policies חלים"]
-        Limits["⚙️ Limits\nmax_steps, timeout, budget"]
+        Meta["📌 Metadata<br/>name, description, version, owner"]
+        Model["🧠 Model Settings<br/>model_id, temperature, max_tokens"]
+        Prompt["📝 System Prompt<br/>ההוראות שמגדירות את ה-Agent"]
+        ToolList["🔧 Tools<br/>רשימת הכלים המותרים"]
+        Memory["💾 Memory Config<br/>type, TTL, max_size"]
+        Policy["🛡️ Policy Refs<br/>אילו Policies חלים"]
+        Limits["⚙️ Limits<br/>max_steps, timeout, budget"]
     end
 ```
 

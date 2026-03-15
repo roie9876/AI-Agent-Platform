@@ -137,7 +137,7 @@ Request Lifecycle:
 ```mermaid
 graph TB
     subgraph RP["⚙️ Runtime Plane"]
-        Orch["🎭 Orchestrator\n(The Conductor)"]
+        Orch["🎭 Orchestrator<br/>(The Conductor)"]
         
         Orch --> ModelRouter["🧠 Model Router"]
         Orch --> MemMgr["💾 Memory Manager"]
@@ -174,12 +174,12 @@ The Orchestrator is the **heart** of the Runtime Plane. It is the "conductor" th
 graph TB
     Orch["🎭 Orchestrator"]
     
-    Orch --> T1["📋 Plan\nBreak task into steps"]
-    Orch --> T2["🔄 Loop\nManage the Think-Act-Observe loop"]
-    Orch --> T3["🔀 Route\nRoute to tool, LLM, or Sub-Agent"]
-    Orch --> T4["⏱️ Timeout\nEnsure we don't get stuck"]
-    Orch --> T5["🛡️ Guard\nCheck Policies before every action"]
-    Orch --> T6["📊 Track\nDocument every step (Tracing)"]
+    Orch --> T1["📋 Plan<br/>Break task into steps"]
+    Orch --> T2["🔄 Loop<br/>Manage the Think-Act-Observe loop"]
+    Orch --> T3["🔀 Route<br/>Route to tool, LLM, or Sub-Agent"]
+    Orch --> T4["⏱️ Timeout<br/>Ensure we don't get stuck"]
+    Orch --> T5["🛡️ Guard<br/>Check Policies before every action"]
+    Orch --> T6["📊 Track<br/>Document every step (Tracing)"]
 ```
 
 ### The Orchestrator's Internal Loop:
@@ -332,8 +332,8 @@ graph TB
     
     subgraph Sandbox["🔒 Secure Sandbox"]
         Container["📦 Ephemeral Container"]
-        Container --> Allow["✅ Read data\n✅ Run Python\n✅ Generate charts"]
-        Container --> Block["❌ No network access\n❌ No filesystem access\n❌ No system commands"]
+        Container --> Allow["✅ Read data<br/>✅ Run Python<br/>✅ Generate charts"]
+        Container --> Block["❌ No network access<br/>❌ No filesystem access<br/>❌ No system commands"]
     end
     
     Sandbox -->|"result only"| Agent
@@ -394,8 +394,8 @@ graph TB
     
     subgraph "Auto Scaling"
         direction LR
-        Low["📉 Low load\n1-2 instances"] --> Med["📊 Medium load\n5-10 instances"]
-        Med --> High["📈 High load\n50+ instances"]
+        Low["📉 Low load<br/>1-2 instances"] --> Med["📊 Medium load<br/>5-10 instances"]
+        Med --> High["📈 High load<br/>50+ instances"]
     end
 ```
 
@@ -414,7 +414,7 @@ graph TB
     end
     
     subgraph "Stateful - Complex"
-        R2["Request for Thread-123"] --> Specific["Must go to Instance 2\n(has the state)"]
+        R2["Request for Thread-123"] --> Specific["Must go to Instance 2<br/>(has the state)"]
     end
 ```
 

@@ -21,9 +21,9 @@
 graph TB
     User["👤 User: Roy"]
     
-    User --> T1["🧵 Thread 1: 'Analyze sales'\n📅 10:00"]
-    User --> T2["🧵 Thread 2: 'Write code'\n📅 14:00"]
-    User --> T3["🧵 Thread 3: 'Help with contract'\n📅 16:30"]
+    User --> T1["🧵 Thread 1: 'Analyze sales'<br/>📅 10:00"]
+    User --> T2["🧵 Thread 2: 'Write code'<br/>📅 14:00"]
+    User --> T3["🧵 Thread 3: 'Help with contract'<br/>📅 16:30"]
     
     T1 --> M1["Msg 1→ Msg 2 → Msg 3"]
     T2 --> M2["Msg 1 → Msg 2 → ... → Msg 20"]
@@ -77,12 +77,12 @@ Thread: thread-abc-123
 graph TB
     TM["🧵 Thread Manager"]
     
-    TM --> Create["✨ Create\nCreate a new thread"]
-    TM --> Load["📂 Load\nLoad an existing thread"]
-    TM --> Append["➕ Append\nAdd messages"]
-    TM --> Fork["🔀 Fork\nSplit a thread"]
-    TM --> Archive["📦 Archive\nArchive an old thread"]
-    TM --> Delete["🗑️ Delete\nDelete"]
+    TM --> Create["✨ Create<br/>Create a new thread"]
+    TM --> Load["📂 Load<br/>Load an existing thread"]
+    TM --> Append["➕ Append<br/>Add messages"]
+    TM --> Fork["🔀 Fork<br/>Split a thread"]
+    TM --> Archive["📦 Archive<br/>Archive an old thread"]
+    TM --> Delete["🗑️ Delete<br/>Delete"]
 ```
 
 ### Thread Lifecycle:
@@ -150,8 +150,8 @@ A simple Agent finishes with a single response. But a **complex** Agent can:
 
 ```mermaid
 graph LR
-    Simple["🤖 Simple Agent\nQuestion → Answer\n(Stateless)"]
-    Complex["🤖 Complex Agent\nWorkflow with steps\n(Stateful)"]
+    Simple["🤖 Simple Agent<br/>Question → Answer<br/>(Stateless)"]
+    Complex["🤖 Complex Agent<br/>Workflow with steps<br/>(Stateful)"]
 ```
 
 ---
@@ -216,11 +216,11 @@ Agent Run State:
 
 ```mermaid
 graph LR
-    S1["Step 1\n💾 Checkpoint"] --> S2["Step 2\n💾 Checkpoint"]
-    S2 --> S3["Step 3\n💥 CRASH!"]
+    S1["Step 1<br/>💾 Checkpoint"] --> S2["Step 2<br/>💾 Checkpoint"]
+    S2 --> S3["Step 3<br/>💥 CRASH!"]
     S3 -.->|"Recovery"| S2
-    S2 --> S3_retry["Step 3\n(retry)"]
-    S3_retry --> S4["Step 4\n💾 Checkpoint"]
+    S2 --> S3_retry["Step 3<br/>(retry)"]
+    S3_retry --> S4["Step 4<br/>💾 Checkpoint"]
 ```
 
 ### What is Saved in a Checkpoint:
@@ -257,7 +257,7 @@ HITL = the need to stop the Agent and wait for **human approval** before continu
 ```mermaid
 graph TB
     Agent["🤖 Agent"] --> Decision{"Sensitive action?"}
-    Decision -->|"❌ Send email to entire company"| HITL["⏸️ HITL\nWait for approval"]
+    Decision -->|"❌ Send email to entire company"| HITL["⏸️ HITL<br/>Wait for approval"]
     Decision -->|"✅ Search for information"| Auto["▶️ Continue automatically"]
     
     HITL --> Human["👤 Human approves/rejects"]
@@ -304,9 +304,9 @@ When an Agent waits for HITL, it can wait **hours or days**. You can't keep a ru
 
 ```mermaid
 graph LR
-    Running["🟢 Agent Running"] --> Suspend["⏸️ Suspend\n(serialize state to DB)"]
-    Suspend --> Waiting["💤 Waiting\n(no compute used)"]
-    Waiting --> Resume["▶️ Resume\n(deserialize state)"]
+    Running["🟢 Agent Running"] --> Suspend["⏸️ Suspend<br/>(serialize state to DB)"]
+    Suspend --> Waiting["💤 Waiting<br/>(no compute used)"]
+    Waiting --> Resume["▶️ Resume<br/>(deserialize state)"]
     Resume --> Running2["🟢 Agent Running"]
 ```
 
@@ -358,8 +358,8 @@ graph TB
 
 ```mermaid
 graph LR
-    S1["Step 1\n✅ Execute"] --> S2["Step 2\n✅ Execute"]
-    S2 --> S3["Step 3\n❌ Failed!"]
+    S1["Step 1<br/>✅ Execute"] --> S2["Step 2<br/>✅ Execute"]
+    S2 --> S3["Step 3<br/>❌ Failed!"]
     
     S3 -.->|"Compensate"| C2["Undo Step 2"]
     C2 -.->|"Compensate"| C1["Undo Step 1"]

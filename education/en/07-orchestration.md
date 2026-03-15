@@ -53,9 +53,9 @@ Step after step - each step starts only after the previous one finishes.
 
 ```mermaid
 graph LR
-    S1["Step 1:\nFetch data"] --> S2["Step 2:\nAnalyze trends"]
-    S2 --> S3["Step 3:\nCreate graphs"]
-    S3 --> S4["Step 4:\nWrite report"]
+    S1["Step 1:<br/>Fetch data"] --> S2["Step 2:<br/>Analyze trends"]
+    S2 --> S3["Step 3:<br/>Create graphs"]
+    S3 --> S4["Step 4:<br/>Write report"]
     S4 --> Result["📄 Report ready"]
 ```
 
@@ -90,9 +90,9 @@ Multiple actions run **in parallel** - not dependent on each other.
 graph TB
     Start["📥 Task: 'Check 3 sources'"] --> Fork["🔀 Fork"]
     
-    Fork --> A1["Agent 1:\nSearch Wikipedia"]
-    Fork --> A2["Agent 2:\nSearch internal DB"]
-    Fork --> A3["Agent 3:\nSearch news"]
+    Fork --> A1["Agent 1:<br/>Search Wikipedia"]
+    Fork --> A2["Agent 2:<br/>Search internal DB"]
+    Fork --> A3["Agent 3:<br/>Search news"]
     
     A1 --> Join["🔄 Join / Merge"]
     A2 --> Join
@@ -126,10 +126,10 @@ graph TB
 graph TB
     Challenge["⚠️ Challenges"]
     
-    Challenge --> C1["🕐 Timeout\nWhat if one doesn't finish?"]
-    Challenge --> C2["❌ Partial Failure\nWhat if one fails?"]
-    Challenge --> C3["🔄 Merge Logic\nHow to combine results?"]
-    Challenge --> C4["💰 Cost\nMultiple LLM calls = expensive"]
+    Challenge --> C1["🕐 Timeout<br/>What if one doesn't finish?"]
+    Challenge --> C2["❌ Partial Failure<br/>What if one fails?"]
+    Challenge --> C3["🔄 Merge Logic<br/>How to combine results?"]
+    Challenge --> C4["💰 Cost<br/>Multiple LLM calls = expensive"]
 ```
 
 | Challenge | Solution |
@@ -157,13 +157,13 @@ The Agent **decides on its own** what to do next. No predefined workflow - the A
 ```mermaid
 graph TD
     Start["📥 'Find why sales dropped'"]
-    Start --> Think1["🤔 Think:\n'I need sales data'"]
-    Think1 --> Act1["🔧 Act:\nSQL query - get sales data"]
-    Act1 --> Observe1["👀 Observe:\n'Drop in Q3'"]
-    Observe1 --> Think2["🤔 Think:\n'I'll check what happened in Q3'"]
-    Think2 --> Act2["🔧 Act:\nSearch news for Q3"]
-    Act2 --> Observe2["👀 Observe:\n'New competitor entered the market'"]
-    Observe2 --> Think3["🤔 Think:\n'That explains it. I have enough'"]
+    Start --> Think1["🤔 Think:<br/>'I need sales data'"]
+    Think1 --> Act1["🔧 Act:<br/>SQL query - get sales data"]
+    Act1 --> Observe1["👀 Observe:<br/>'Drop in Q3'"]
+    Observe1 --> Think2["🤔 Think:<br/>'I'll check what happened in Q3'"]
+    Think2 --> Act2["🔧 Act:<br/>Search news for Q3"]
+    Act2 --> Observe2["👀 Observe:<br/>'New competitor entered the market'"]
+    Observe2 --> Think3["🤔 Think:<br/>'That explains it. I have enough'"]
     Think3 --> Answer["📤 'Sales dropped due to a new competitor...'"]
 ```
 
@@ -174,9 +174,9 @@ graph TD
     Input["📥 Task"] --> Loop
     
     subgraph Loop["🔄 ReAct Loop"]
-        Reason["🤔 Reason\n(LLM decides what to do)"]
-        Act["🔧 Act\n(Execute tool/action)"]
-        Observe["👀 Observe\n(Check result)"]
+        Reason["🤔 Reason<br/>(LLM decides what to do)"]
+        Act["🔧 Act<br/>(Execute tool/action)"]
+        Observe["👀 Observe<br/>(Check result)"]
         
         Reason --> Act
         Act --> Observe
@@ -194,7 +194,7 @@ An improvement over ReAct: the Agent **plans ahead** and then **executes** the p
 graph TD
     Task["📥 Task"] --> Planner["📋 Planner Agent"]
     
-    Planner --> Plan["Plan:\n1. Get sales data\n2. Analyze trends\n3. Compare competitors\n4. Write report"]
+    Planner --> Plan["Plan:<br/>1. Get sales data<br/>2. Analyze trends<br/>3. Compare competitors<br/>4. Write report"]
     
     Plan --> E1["Execute Step 1"]
     E1 --> E2["Execute Step 2"]
@@ -224,11 +224,11 @@ A main Agent that delegates tasks to **specialist Agents**:
 
 ```mermaid
 graph TB
-    User["👤 User"] --> Manager["🎩 Manager Agent\n'Manager'"]
+    User["👤 User"] --> Manager["🎩 Manager Agent<br/>'Manager'"]
     
-    Manager --> Researcher["🔍 Research Agent\n'Researcher'"]
-    Manager --> Analyst["📊 Analyst Agent\n'Analyst'"]
-    Manager --> Writer["✍️ Writer Agent\n'Writer'"]
+    Manager --> Researcher["🔍 Research Agent<br/>'Researcher'"]
+    Manager --> Analyst["📊 Analyst Agent<br/>'Analyst'"]
+    Manager --> Writer["✍️ Writer Agent<br/>'Writer'"]
     
     Researcher -->|"Findings"| Manager
     Analyst -->|"Analysis"| Manager
@@ -353,14 +353,14 @@ graph TB
 
 ```mermaid
 graph TB
-    Input["📄 100 documents"] --> Map["🗺️ Map:\nSummarize each document separately"]
+    Input["📄 100 documents"] --> Map["🗺️ Map:<br/>Summarize each document separately"]
     
     Map --> S1["Summary 1"]
     Map --> S2["Summary 2"]
     Map --> S3["..."]
     Map --> SN["Summary 100"]
     
-    S1 --> Reduce["📊 Reduce:\nCombine all summaries"]
+    S1 --> Reduce["📊 Reduce:<br/>Combine all summaries"]
     S2 --> Reduce
     S3 --> Reduce
     SN --> Reduce

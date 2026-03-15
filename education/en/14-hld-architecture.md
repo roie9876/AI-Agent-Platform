@@ -21,7 +21,7 @@
 
 ```mermaid
 graph LR
-    HLD["🏗️ HLD\nHigh-Level Design"]
+    HLD["🏗️ HLD<br/>High-Level Design"]
     HLD --> What["What are the components?"]
     HLD --> How["How do they communicate?"]
     HLD --> Why["Why did we choose this way?"]
@@ -46,16 +46,16 @@ graph LR
 
 ```mermaid
 graph TB
-    Dev["👨‍💻 Developer\nBuilds and configures Agents"]
-    User["👤 End User\nUses Agents"]
-    Admin["👑 Admin\nManages the platform"]
+    Dev["👨‍💻 Developer<br/>Builds and configures Agents"]
+    User["👤 End User<br/>Uses Agents"]
+    Admin["👑 Admin<br/>Manages the platform"]
     
-    Dev --> Platform["🏗️ AI Agent\nPlatform"]
+    Dev --> Platform["🏗️ AI Agent<br/>Platform"]
     User --> Platform
     Admin --> Platform
     
-    Platform --> LLM["🧠 LLM Providers\nOpenAI, Anthropic, etc."]
-    Platform --> ExtTools["🔧 External Tools\nAPIs, DBs, etc."]
+    Platform --> LLM["🧠 LLM Providers<br/>OpenAI, Anthropic, etc."]
+    Platform --> ExtTools["🔧 External Tools<br/>APIs, DBs, etc."]
     Platform --> IdP["🔐 Identity Provider"]
 ```
 
@@ -122,19 +122,19 @@ graph TB
 graph TB
     subgraph "📋 Control Plane"
         subgraph "Registry Services"
-            AR["📦 Agent Registry\n- Agent definitions\n- Versions\n- Metadata"]
-            MR["🧠 Model Registry\n- Available models\n- Routing rules\n- Rate limits"]
-            TR["🔧 Tool Registry\n- Tool catalog\n- Permissions\n- Schemas"]
+            AR["📦 Agent Registry<br/>- Agent definitions<br/>- Versions<br/>- Metadata"]
+            MR["🧠 Model Registry<br/>- Available models<br/>- Routing rules<br/>- Rate limits"]
+            TR["🔧 Tool Registry<br/>- Tool catalog<br/>- Permissions<br/>- Schemas"]
         end
         
         subgraph "Management Services"
-            CM["⚙️ Config Manager\n- Agent configs\n- Environment vars\n- Feature flags"]
-            PE["🛡️ Policy Engine\n- Access rules\n- Usage limits\n- Content safety"]
-            TM["👥 Tenant Manager\n- Tenant onboarding\n- Quotas\n- Billing"]
+            CM["⚙️ Config Manager<br/>- Agent configs<br/>- Environment vars<br/>- Feature flags"]
+            PE["🛡️ Policy Engine<br/>- Access rules<br/>- Usage limits<br/>- Content safety"]
+            TM["👥 Tenant Manager<br/>- Tenant onboarding<br/>- Quotas<br/>- Billing"]
         end
         
         subgraph "Quality Services"
-            EE["📊 Evaluation Engine\n- Quality metrics\n- A/B testing\n- Regression detection"]
+            EE["📊 Evaluation Engine<br/>- Quality metrics<br/>- A/B testing<br/>- Regression detection"]
         end
     end
 ```
@@ -313,11 +313,11 @@ graph TB
 ```mermaid
 graph TB
     subgraph "Cross-Cutting Concerns"
-        OBS["📈 Observability\nMetrics, Logs, Traces"]
-        SEC["🔐 Security\nAuthN, AuthZ, Encryption"]
-        POLICY["🛡️ Policy\nGuardrails, DLP, Content Safety"]
-        COST["💰 Cost Tracking\nToken counting, Budget"]
-        AUDIT["📋 Audit\nWho did what when"]
+        OBS["📈 Observability<br/>Metrics, Logs, Traces"]
+        SEC["🔐 Security<br/>AuthN, AuthZ, Encryption"]
+        POLICY["🛡️ Policy<br/>Guardrails, DLP, Content Safety"]
+        COST["💰 Cost Tracking<br/>Token counting, Budget"]
+        AUDIT["📋 Audit<br/>Who did what when"]
     end
     
     GW2["🚪 Gateway"] -.-> OBS & SEC & POLICY & COST & AUDIT
@@ -340,14 +340,14 @@ graph TB
     
     subgraph "☸️ Kubernetes Cluster"
         subgraph "Namespace: control-plane"
-            CP1["📦 Agent Registry\n(2 replicas)"]
-            CP2["⚙️ Config Manager\n(2 replicas)"]
-            CP3["🛡️ Policy Engine\n(3 replicas)"]
+            CP1["📦 Agent Registry<br/>(2 replicas)"]
+            CP2["⚙️ Config Manager<br/>(2 replicas)"]
+            CP3["🛡️ Policy Engine<br/>(3 replicas)"]
         end
         
         subgraph "Namespace: runtime"
-            RT1["🎭 Orchestrator\n(auto-scale 2-20)"]
-            RT2["🔧 Tool Workers\n(auto-scale 1-10)"]
+            RT1["🎭 Orchestrator<br/>(auto-scale 2-20)"]
+            RT2["🔧 Tool Workers<br/>(auto-scale 1-10)"]
         end
         
         subgraph "Namespace: data"

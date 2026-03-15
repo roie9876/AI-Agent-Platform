@@ -137,7 +137,7 @@ Request Lifecycle:
 ```mermaid
 graph TB
     subgraph RP["⚙️ Runtime Plane"]
-        Orch["🎭 Orchestrator\n(מנצח התזמורת)"]
+        Orch["🎭 Orchestrator<br/>(מנצח התזמורת)"]
         
         Orch --> ModelRouter["🧠 Model Router"]
         Orch --> MemMgr["💾 Memory Manager"]
@@ -174,12 +174,12 @@ graph TB
 graph TB
     Orch["🎭 Orchestrator"]
     
-    Orch --> T1["📋 Plan\nלפרק משימה לשלבים"]
-    Orch --> T2["🔄 Loop\nלנהל את לולאת Think-Act-Observe"]
-    Orch --> T3["🔀 Route\nלהפנות לכלי, LLM, או Sub-Agent"]
-    Orch --> T4["⏱️ Timeout\nלוודא שלא נתקעים"]
-    Orch --> T5["🛡️ Guard\nלבדוק Policies לפני כל פעולה"]
-    Orch --> T6["📊 Track\nלתעד כל צעד (Tracing)"]
+    Orch --> T1["📋 Plan<br/>לפרק משימה לשלבים"]
+    Orch --> T2["🔄 Loop<br/>לנהל את לולאת Think-Act-Observe"]
+    Orch --> T3["🔀 Route<br/>להפנות לכלי, LLM, או Sub-Agent"]
+    Orch --> T4["⏱️ Timeout<br/>לוודא שלא נתקעים"]
+    Orch --> T5["🛡️ Guard<br/>לבדוק Policies לפני כל פעולה"]
+    Orch --> T6["📊 Track<br/>לתעד כל צעד (Tracing)"]
 ```
 
 ### הלולאה הפנימית של ה-Orchestrator:
@@ -332,8 +332,8 @@ graph TB
     
     subgraph Sandbox["🔒 Secure Sandbox"]
         Container["📦 Ephemeral Container"]
-        Container --> Allow["✅ Read data\n✅ Run Python\n✅ Generate charts"]
-        Container --> Block["❌ No network access\n❌ No filesystem access\n❌ No system commands"]
+        Container --> Allow["✅ Read data<br/>✅ Run Python<br/>✅ Generate charts"]
+        Container --> Block["❌ No network access<br/>❌ No filesystem access<br/>❌ No system commands"]
     end
     
     Sandbox -->|"result only"| Agent
@@ -394,8 +394,8 @@ graph TB
     
     subgraph "Auto Scaling"
         direction LR
-        Low["📉 עומס נמוך\n1-2 instances"] --> Med["📊 עומס בינוני\n5-10 instances"]
-        Med --> High["📈 עומס גבוה\n50+ instances"]
+        Low["📉 עומס נמוך<br/>1-2 instances"] --> Med["📊 עומס בינוני<br/>5-10 instances"]
+        Med --> High["📈 עומס גבוה<br/>50+ instances"]
     end
 ```
 
@@ -414,7 +414,7 @@ graph TB
     end
     
     subgraph "Stateful - מורכב"
-        R2["Request for Thread-123"] --> Specific["Must go to Instance 2\n(has the state)"]
+        R2["Request for Thread-123"] --> Specific["Must go to Instance 2<br/>(has the state)"]
     end
 ```
 

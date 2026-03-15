@@ -86,10 +86,10 @@ graph TB
 ```mermaid
 graph TB
     subgraph "Access Policies"
-        AP1["🔐 Authentication\nמי אתה?"]
-        AP2["🔑 Authorization\nמה מותר לך?"]
-        AP3["🔧 Tool Permissions\nאילו כלים?"]
-        AP4["🧠 Model Access\nאילו מודלים?"]
+        AP1["🔐 Authentication<br/>מי אתה?"]
+        AP2["🔑 Authorization<br/>מה מותר לך?"]
+        AP3["🔧 Tool Permissions<br/>אילו כלים?"]
+        AP4["🧠 Model Access<br/>אילו מודלים?"]
     end
 ```
 
@@ -105,11 +105,11 @@ graph TB
 ```mermaid
 graph TB
     subgraph "Usage Policies"
-        UP1["⏱️ Rate Limiting\nבקשות/דקה"]
-        UP2["💰 Budget Limits\nתקציב/agent"]
-        UP3["🔢 Token Limits\ntokens/בקשה"]
-        UP4["⏰ Timeout\nזמן מקסימלי"]
-        UP5["🔄 Max Steps\nמקסימום צעדים"]
+        UP1["⏱️ Rate Limiting<br/>בקשות/דקה"]
+        UP2["💰 Budget Limits<br/>תקציב/agent"]
+        UP3["🔢 Token Limits<br/>tokens/בקשה"]
+        UP4["⏰ Timeout<br/>זמן מקסימלי"]
+        UP5["🔄 Max Steps<br/>מקסימום צעדים"]
     end
 ```
 
@@ -126,10 +126,10 @@ graph TB
 ```mermaid
 graph TB
     subgraph "Content Policies"
-        CP1["🚫 Toxicity Filter\nתוכן פוגעני"]
-        CP2["🔒 PII Detection\nמידע אישי"]
-        CP3["📋 Topic Guard\nנושאים אסורים"]
-        CP4["📝 Output Format\nפורמט נדרש"]
+        CP1["🚫 Toxicity Filter<br/>תוכן פוגעני"]
+        CP2["🔒 PII Detection<br/>מידע אישי"]
+        CP3["📋 Topic Guard<br/>נושאים אסורים"]
+        CP4["📝 Output Format<br/>פורמט נדרש"]
     end
 ```
 
@@ -150,13 +150,13 @@ graph TB
 
 ```mermaid
 graph TB
-    User["👤 User"] --> GW["🚪 API Gateway\n⏱️ Rate Limiting\n🔐 Authentication"]
+    User["👤 User"] --> GW["🚪 API Gateway<br/>⏱️ Rate Limiting<br/>🔐 Authentication"]
     
-    GW --> PreExec["🛡️ Pre-Execution\n🔑 Authorization\n💰 Budget Check\n📋 Config Validation"]
+    GW --> PreExec["🛡️ Pre-Execution<br/>🔑 Authorization<br/>💰 Budget Check<br/>📋 Config Validation"]
     
-    PreExec --> Runtime["⚙️ Runtime\n🔧 Tool Permissions\n🔢 Token Counting\n⏰ Timeout"]
+    PreExec --> Runtime["⚙️ Runtime<br/>🔧 Tool Permissions<br/>🔢 Token Counting<br/>⏰ Timeout"]
     
-    Runtime --> PostExec["🛡️ Post-Execution\n🔒 PII Scanning\n📝 Content Safety\n📊 Cost Logging"]
+    Runtime --> PostExec["🛡️ Post-Execution<br/>🔒 PII Scanning<br/>📝 Content Safety<br/>📊 Cost Logging"]
     
     PostExec --> Response["📤 Response"]
 ```
@@ -215,9 +215,9 @@ graph TD
 ```mermaid
 graph TB
     subgraph "🚧 Guardrails"
-        Input_Guard["📥 Input Guardrails\n(על הקלט)"]
-        Output_Guard["📤 Output Guardrails\n(על הפלט)"]
-        Execution_Guard["⚙️ Execution Guardrails\n(על ההרצה)"]
+        Input_Guard["📥 Input Guardrails<br/>(על הקלט)"]
+        Output_Guard["📤 Output Guardrails<br/>(על הפלט)"]
+        Execution_Guard["⚙️ Execution Guardrails<br/>(על ההרצה)"]
     end
     
     User["👤 User Input"] --> Input_Guard
@@ -265,11 +265,11 @@ graph TB
 graph TB
     Content["📝 Agent Output"] --> CS["🛡️ Content Safety"]
     
-    CS --> Cat1["🚫 Violence\nאלימות"]
-    CS --> Cat2["🚫 Hate\nשנאה/גזענות"]
-    CS --> Cat3["🚫 Sexual\nתוכן מיני"]
-    CS --> Cat4["🚫 Self-harm\nפגיעה עצמית"]
-    CS --> Cat5["🚫 Misinformation\nמידע שגוי"]
+    CS --> Cat1["🚫 Violence<br/>אלימות"]
+    CS --> Cat2["🚫 Hate<br/>שנאה/גזענות"]
+    CS --> Cat3["🚫 Sexual<br/>תוכן מיני"]
+    CS --> Cat4["🚫 Self-harm<br/>פגיעה עצמית"]
+    CS --> Cat5["🚫 Misinformation<br/>מידע שגוי"]
     
     Cat1 --> Score["Score: severity 0-7"]
     Score -->|"> threshold"| Block["⛔ Block"]
@@ -280,10 +280,10 @@ graph TB
 
 ```mermaid
 graph LR
-    Layer1["Layer 1:\nSystem Prompt\n'Never generate harmful content'"]
-    Layer1 --> Layer2["Layer 2:\nGuardrail Model\n(lightweight classifier)"]
-    Layer2 --> Layer3["Layer 3:\nPost-processing\n(regex, keyword filter)"]
-    Layer3 --> Layer4["Layer 4:\nContent Safety API\n(Azure Content Safety)"]
+    Layer1["Layer 1:<br/>System Prompt<br/>'Never generate harmful content'"]
+    Layer1 --> Layer2["Layer 2:<br/>Guardrail Model<br/>(lightweight classifier)"]
+    Layer2 --> Layer3["Layer 3:<br/>Post-processing<br/>(regex, keyword filter)"]
+    Layer3 --> Layer4["Layer 4:<br/>Content Safety API<br/>(Azure Content Safety)"]
 ```
 
 ---
@@ -300,15 +300,15 @@ graph LR
 
 ```mermaid
 graph TD
-    Output["Agent Output:\n'The customer John Smith,\nSSN: 123-45-6789,\nlives at...'"]
+    Output["Agent Output:<br/>'The customer John Smith,<br/>SSN: 123-45-6789,<br/>lives at...'"]
     
     Output --> DLP["🔍 DLP Scanner"]
     
-    DLP --> Detect["Detected:\n- Name (PII)\n- SSN (PII)\n- Address (PII)"]
+    DLP --> Detect["Detected:<br/>- Name (PII)<br/>- SSN (PII)<br/>- Address (PII)"]
     
     Detect --> Action{"Action?"}
-    Action -->|"Mask"| Masked["'The customer J*** S****,\nSSN: XXX-XX-6789,\nlives at [REDACTED]'"]
-    Action -->|"Block"| Blocked["⛔ Response blocked:\nContains PII"]
+    Action -->|"Mask"| Masked["'The customer J*** S****,<br/>SSN: XXX-XX-6789,<br/>lives at [REDACTED]'"]
+    Action -->|"Block"| Blocked["⛔ Response blocked:<br/>Contains PII"]
     Action -->|"Log & Alert"| Alert["📢 Alert sent to admin"]
 ```
 
@@ -331,9 +331,9 @@ graph TD
 ```mermaid
 graph TB
     subgraph "📋 Audit Log"
-        E1["2026-02-21 10:00:01\nAgent: data-analyst\nAction: sql_query\nUser: roi\nResult: success"]
-        E2["2026-02-21 10:00:05\nAgent: data-analyst\nAction: llm_call\nModel: gpt-4o\nTokens: 1,523"]
-        E3["2026-02-21 10:00:07\nAgent: data-analyst\nAction: send_email\nStatus: BLOCKED by policy\nReason: missing approval"]
+        E1["2026-02-21 10:00:01<br/>Agent: data-analyst<br/>Action: sql_query<br/>User: roi<br/>Result: success"]
+        E2["2026-02-21 10:00:05<br/>Agent: data-analyst<br/>Action: llm_call<br/>Model: gpt-4o<br/>Tokens: 1,523"]
+        E3["2026-02-21 10:00:07<br/>Agent: data-analyst<br/>Action: send_email<br/>Status: BLOCKED by policy<br/>Reason: missing approval"]
     end
 ```
 

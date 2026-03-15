@@ -23,18 +23,18 @@
 ```mermaid
 graph TB
     subgraph "❌ בלי הפשטה"
-        Agent1["Agent"] --> OpenAI["OpenAI API\n(format A)"]
-        Agent2["Agent"] --> Anthropic["Anthropic API\n(format B)"]
-        Agent3["Agent"] --> Google["Google API\n(format C)"]
+        Agent1["Agent"] --> OpenAI["OpenAI API<br/>(format A)"]
+        Agent2["Agent"] --> Anthropic["Anthropic API<br/>(format B)"]
+        Agent3["Agent"] --> Google["Google API<br/>(format C)"]
         
-        Note1["כל Agent צריך לדעת\nאת כל הפורמטים 😩"]
+        Note1["כל Agent צריך לדעת<br/>את כל הפורמטים 😩"]
     end
 ```
 
 ```mermaid
 graph TB
     subgraph "✅ עם הפשטה"
-        Agent4["Agent"] --> Abstract["🧠 Abstraction Layer\n(unified API)"]
+        Agent4["Agent"] --> Abstract["🧠 Abstraction Layer<br/>(unified API)"]
         Abstract --> OpenAI2["OpenAI"]
         Abstract --> Anthropic2["Anthropic"]
         Abstract --> Google2["Google"]
@@ -139,10 +139,10 @@ classDiagram
 graph TB
     Request["📨 בקשה"] --> Router["🔀 Model Router"]
     
-    Router -->|"משימה פשוטה\n(סיכום, תרגום)"| Small["GPT-3.5 / Llama\n💰 $0.001"]
-    Router -->|"משימה מורכבת\n(reasoning, קוד)"| Large["GPT-4o\n💰 $0.01"]
-    Router -->|"משימת Vision\n(תמונות)"| Vision["GPT-4o Vision\n💰 $0.02"]
-    Router -->|"Embedding\n(חיפוש סמנטי)"| Embed["Ada / text-embedding\n💰 $0.0001"]
+    Router -->|"משימה פשוטה<br/>(סיכום, תרגום)"| Small["GPT-3.5 / Llama<br/>💰 $0.001"]
+    Router -->|"משימה מורכבת<br/>(reasoning, קוד)"| Large["GPT-4o<br/>💰 $0.01"]
+    Router -->|"משימת Vision<br/>(תמונות)"| Vision["GPT-4o Vision<br/>💰 $0.02"]
+    Router -->|"Embedding<br/>(חיפוש סמנטי)"| Embed["Ada / text-embedding<br/>💰 $0.0001"]
 ```
 
 ### למה לא פשוט להשתמש תמיד במודל הכי טוב?
@@ -204,9 +204,9 @@ graph TD
 ```mermaid
 graph TD
     Request["📨 Request"] --> Check{"⏱️ Latency requirement?"}
-    Check -->|"<1 sec (real-time)"| Fast["GPT-3.5\n(fast)"]
+    Check -->|"<1 sec (real-time)"| Fast["GPT-3.5<br/>(fast)"]
     Check -->|"<5 sec (interactive)"| Medium["GPT-4o-mini"]
-    Check -->|"<30 sec (batch)"| Slow["GPT-4o\n(thorough)"]
+    Check -->|"<30 sec (batch)"| Slow["GPT-4o<br/>(thorough)"]
 ```
 
 ### 4. Capability-Based Routing (לפי יכולות)
@@ -269,9 +269,9 @@ sequenceDiagram
 ```mermaid
 graph LR
     subgraph "Exponential Backoff"
-        R1["Attempt 1\n(wait 1s)"] --> R2["Attempt 2\n(wait 2s)"]
-        R2 --> R3["Attempt 3\n(wait 4s)"]
-        R3 --> R4["Attempt 4\n(wait 8s)"]
+        R1["Attempt 1<br/>(wait 1s)"] --> R2["Attempt 2<br/>(wait 2s)"]
+        R2 --> R3["Attempt 3<br/>(wait 4s)"]
+        R3 --> R4["Attempt 4<br/>(wait 8s)"]
         R4 --> Fail["❌ Give up"]
     end
 ```
@@ -307,9 +307,9 @@ Error: "Service temporarily unavailable"
 graph TB
     Router["🔀 Router"] --> LB["⚖️ Load Balancer"]
     
-    LB -->|"33%"| D1["GPT-4o\nDeployment 1\n(East US)"]
-    LB -->|"33%"| D2["GPT-4o\nDeployment 2\n(West EU)"]
-    LB -->|"34%"| D3["GPT-4o\nDeployment 3\n(Japan)"]
+    LB -->|"33%"| D1["GPT-4o<br/>Deployment 1<br/>(East US)"]
+    LB -->|"33%"| D2["GPT-4o<br/>Deployment 2<br/>(West EU)"]
+    LB -->|"34%"| D3["GPT-4o<br/>Deployment 3<br/>(Japan)"]
 ```
 
 ### אלגוריתמי Load Balancing:
@@ -332,8 +332,8 @@ graph TB
 ```mermaid
 graph TD
     Request["📨 'מה שעות הפעילות?'"] --> Cache{"🔍 בCache?"}
-    Cache -->|"Hit ✅"| Return["החזר תשובה שמורה\n⚡ 5ms | 💰 $0"]
-    Cache -->|"Miss ❌"| LLM["קרא ל-LLM\n🐌 500ms | 💰 $0.01"]
+    Cache -->|"Hit ✅"| Return["החזר תשובה שמורה<br/>⚡ 5ms | 💰 $0"]
+    Cache -->|"Miss ❌"| LLM["קרא ל-LLM<br/>🐌 500ms | 💰 $0.01"]
     LLM --> Save["שמור ב-Cache"]
     Save --> Return2["החזר תשובה"]
 ```

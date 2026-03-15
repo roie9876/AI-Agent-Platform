@@ -24,15 +24,15 @@
 ```mermaid
 graph LR
     subgraph "Today"
-        T1["👤 100 users\n⏱️ 2s latency"]
+        T1["👤 100 users<br/>⏱️ 2s latency"]
     end
     
     subgraph "Next Year"
-        T2["👥 10,000 users\n⏱️ 2s latency ✅"]
+        T2["👥 10,000 users<br/>⏱️ 2s latency ✅"]
     end
     
     subgraph "Bad Scaling"
-        T3["👥 10,000 users\n⏱️ 30s latency ❌"]
+        T3["👥 10,000 users<br/>⏱️ 30s latency ❌"]
     end
     
     T1 -->|"Good scaling"| T2
@@ -46,8 +46,8 @@ graph LR
 ```mermaid
 graph TB
     subgraph "⬆️ Vertical Scaling (Scale Up)"
-        VSmall["🖥️ Small\n4 CPU, 8 GB"]
-        VBig["🖥️🖥️ BIG\n64 CPU, 256 GB"]
+        VSmall["🖥️ Small<br/>4 CPU, 8 GB"]
+        VBig["🖥️🖥️ BIG<br/>64 CPU, 256 GB"]
         VSmall -->|"Upgrade"| VBig
     end
     
@@ -87,17 +87,17 @@ graph TB
         S3["🖥️ Instance 3"]
         LB1 --> S1 & S2 & S3
         
-        Note1["כל request הולך\nלכל instance.\nפשוט להוסיף instances."]
+        Note1["כל request הולך<br/>לכל instance.<br/>פשוט להוסיף instances."]
     end
     
     subgraph "⚠️ Stateful Service"
         LB2["⚖️ LB"]
-        SF1["🖥️ Instance 1\n📋 Thread A, B"]
-        SF2["🖥️ Instance 2\n📋 Thread C, D"]
+        SF1["🖥️ Instance 1<br/>📋 Thread A, B"]
+        SF2["🖥️ Instance 2<br/>📋 Thread C, D"]
         LB2 -->|"Thread A"| SF1
         LB2 -->|"Thread C"| SF2
         
-        Note2["Request חייב להגיע\nלנכון. מורכב."]
+        Note2["Request חייב להגיע<br/>לנכון. מורכב."]
     end
 ```
 
@@ -107,11 +107,11 @@ graph TB
 graph TB
     LB["⚖️ Load Balancer"]
     
-    LB --> I1["🖥️ Instance 1\n(Stateless)"]
-    LB --> I2["🖥️ Instance 2\n(Stateless)"]
-    LB --> I3["🖥️ Instance 3\n(Stateless)"]
+    LB --> I1["🖥️ Instance 1<br/>(Stateless)"]
+    LB --> I2["🖥️ Instance 2<br/>(Stateless)"]
+    LB --> I3["🖥️ Instance 3<br/>(Stateless)"]
     
-    I1 & I2 & I3 --> StateStore["💾 External State Store\n(Redis / Cosmos DB)\n📋 All threads & state"]
+    I1 & I2 & I3 --> StateStore["💾 External State Store<br/>(Redis / Cosmos DB)<br/>📋 All threads & state"]
 ```
 
 | Strategy | הסבר | Pros | Cons |
@@ -128,23 +128,23 @@ graph TB
 
 ```mermaid
 graph TD
-    C1["⏱️ Long-running\nAgent task = שניות-דקות\n(לא milliseconds)"]
-    C2["🧠 Memory intensive\nContext window = גדול"]
-    C3["💰 Expensive\nכל LLM call = כסף"]
-    C4["🔄 Variable load\n1 request = 1-20 LLM calls"]
-    C5["📋 Stateful\nThread, memory, history"]
-    C6["⏳ External dependencies\nLLM provider rate limits"]
+    C1["⏱️ Long-running<br/>Agent task = שניות-דקות<br/>(לא milliseconds)"]
+    C2["🧠 Memory intensive<br/>Context window = גדול"]
+    C3["💰 Expensive<br/>כל LLM call = כסף"]
+    C4["🔄 Variable load<br/>1 request = 1-20 LLM calls"]
+    C5["📋 Stateful<br/>Thread, memory, history"]
+    C6["⏳ External dependencies<br/>LLM provider rate limits"]
 ```
 
 ### Resource per Agent Request:
 
 ```mermaid
 graph LR
-    Simple["📨 Simple query\n1 LLM call\n~2s, $0.01"] 
+    Simple["📨 Simple query<br/>1 LLM call<br/>~2s, $0.01"] 
     
-    Complex["📨 Complex task\n10 LLM calls\n5 tool calls\n~30s, $0.50"]
+    Complex["📨 Complex task<br/>10 LLM calls<br/>5 tool calls<br/>~30s, $0.50"]
     
-    HeavyAgent["📨 Research task\n20 LLM calls\n15 tool calls\n~120s, $2.00"]
+    HeavyAgent["📨 Research task<br/>20 LLM calls<br/>15 tool calls<br/>~120s, $2.00"]
 ```
 
 ---
@@ -156,10 +156,10 @@ graph LR
 ```mermaid
 graph TB
     subgraph "Algorithms"
-        RR["🔄 Round Robin\nOne by one, in order"]
-        WRR["⚖️ Weighted Round Robin\nMore to stronger instances"]
-        LC["📊 Least Connections\nRoute to least busy"]
-        RND["🎲 Random\nRandom pick"]
+        RR["🔄 Round Robin<br/>One by one, in order"]
+        WRR["⚖️ Weighted Round Robin<br/>More to stronger instances"]
+        LC["📊 Least Connections<br/>Route to least busy"]
+        RND["🎲 Random<br/>Random pick"]
     end
 ```
 
@@ -167,13 +167,13 @@ graph TB
 
 ```mermaid
 graph TB
-    Request["📨 Request\nAgent: data-analyst\nTenant: acme"]
+    Request["📨 Request<br/>Agent: data-analyst<br/>Tenant: acme"]
     
     Request --> Router["⚖️ Smart Router"]
     
-    Router --> Check1{"Current load\nper instance?"}
-    Check1 --> Check2{"Token budget\nremaining?"}
-    Check2 --> Check3{"Model provider\nrate limits?"}
+    Router --> Check1{"Current load<br/>per instance?"}
+    Check1 --> Check2{"Token budget<br/>remaining?"}
+    Check2 --> Check3{"Model provider<br/>rate limits?"}
     Check3 --> Best["Best instance"]
 ```
 
@@ -190,7 +190,7 @@ Agent requests הם **ארוכים** ו**כבדים**. Queue מאפשר:
 
 ```mermaid
 graph LR
-    Producers["📨 Incoming\nRequests"]
+    Producers["📨 Incoming<br/>Requests"]
     
     Producers --> Queue["📫 Message Queue"]
     
@@ -207,9 +207,9 @@ graph LR
 ```mermaid
 graph LR
     subgraph "Priority Queues"
-        HQ["🔴 High Priority\nSync, urgent"]
-        MQ["🟡 Medium Priority\nNormal requests"]
-        LQ["🟢 Low Priority\nBatch, background"]
+        HQ["🔴 High Priority<br/>Sync, urgent"]
+        MQ["🟡 Medium Priority<br/>Normal requests"]
+        LQ["🟢 Low Priority<br/>Batch, background"]
     end
     
     HQ -->|"Process first"| Workers["⚙️ Workers"]
@@ -254,12 +254,12 @@ sequenceDiagram
 graph TD
     Metrics["📊 Metrics"] --> Rules["📋 Scaling Rules"]
     
-    Rules --> ScaleOut{"CPU > 70%?\nQueue > 100?\nLatency > 5s?"}
+    Rules --> ScaleOut{"CPU > 70%?<br/>Queue > 100?<br/>Latency > 5s?"}
     
-    ScaleOut -->|"Yes"| Add["➕ Add instances\n(Scale Out)"]
-    ScaleOut -->|"No"| ScaleIn{"CPU < 20%?\nQueue = 0?\nInstances > min?"}
+    ScaleOut -->|"Yes"| Add["➕ Add instances<br/>(Scale Out)"]
+    ScaleOut -->|"No"| ScaleIn{"CPU < 20%?<br/>Queue = 0?<br/>Instances > min?"}
     
-    ScaleIn -->|"Yes"| Remove["➖ Remove instances\n(Scale In)"]
+    ScaleIn -->|"Yes"| Remove["➖ Remove instances<br/>(Scale In)"]
     ScaleIn -->|"No"| Keep["= Keep current"]
 ```
 
@@ -277,8 +277,8 @@ graph TD
 
 ```mermaid
 graph TD
-    KEDA["📊 KEDA"] --> Monitor["Monitor:\n- Queue length\n- HTTP requests\n- Custom metrics"]
-    Monitor --> Scale["Scale:\n- Pods 0 → N\n- Based on events\n- Scale to zero!"]
+    KEDA["📊 KEDA"] --> Monitor["Monitor:<br/>- Queue length<br/>- HTTP requests<br/>- Custom metrics"]
+    Monitor --> Scale["Scale:<br/>- Pods 0 → N<br/>- Based on events<br/>- Scale to zero!"]
 ```
 
 ---
@@ -327,9 +327,9 @@ stateDiagram-v2
     HalfOpen --> Closed: Success
     HalfOpen --> Open: Failure
     
-    note right of Closed: Normal operation\nRequests pass through
-    note right of Open: Stop all requests\nReturn error immediately
-    note right of HalfOpen: Try one request\nIf OK → Close\nIf fail → Open
+    note right of Closed: Normal operation<br/>Requests pass through
+    note right of Open: Stop all requests<br/>Return error immediately
+    note right of HalfOpen: Try one request<br/>If OK → Close<br/>If fail → Open
 ```
 
 ---
@@ -341,9 +341,9 @@ stateDiagram-v2
 ```mermaid
 graph TB
     subgraph "🌍 Multi-Region Benefits"
-        B1["⚡ Low latency\nClose to users"]
-        B2["🛡️ Disaster recovery\nRegion fails = another takes over"]
-        B3["📋 Compliance\nData stays in region"]
+        B1["⚡ Low latency<br/>Close to users"]
+        B2["🛡️ Disaster recovery<br/>Region fails = another takes over"]
+        B3["📋 Compliance<br/>Data stays in region"]
     end
 ```
 
@@ -353,16 +353,16 @@ graph TB
 graph TB
     subgraph "Active-Active"
         AA_LB["🌐 Global LB"]
-        AA_R1["🏢 Region 1\n(Active ✅)"]
-        AA_R2["🏢 Region 2\n(Active ✅)"]
+        AA_R1["🏢 Region 1<br/>(Active ✅)"]
+        AA_R2["🏢 Region 2<br/>(Active ✅)"]
         AA_LB --> AA_R1 & AA_R2
         AA_R1 <-->|"Sync"| AA_R2
     end
     
     subgraph "Active-Passive"
         AP_LB["🌐 Global LB"]
-        AP_R1["🏢 Region 1\n(Active ✅)"]
-        AP_R2["🏢 Region 2\n(Standby ⏸️)"]
+        AP_R1["🏢 Region 1<br/>(Active ✅)"]
+        AP_R2["🏢 Region 2<br/>(Standby ⏸️)"]
         AP_LB --> AP_R1
         AP_R1 -->|"Replicate"| AP_R2
         AP_LB -.->|"Failover"| AP_R2
@@ -386,10 +386,10 @@ graph TB
 ```mermaid
 graph TD
     subgraph "🗄️ Caching Layers"
-        C1["🧠 LLM Response Cache\nExact same query → cached response"]
-        C2["📄 RAG Cache\nDocument embeddings cached"]
-        C3["🔧 Tool Result Cache\nSame SQL query → cached result"]
-        C4["📋 Config Cache\nAgent configs cached"]
+        C1["🧠 LLM Response Cache<br/>Exact same query → cached response"]
+        C2["📄 RAG Cache<br/>Document embeddings cached"]
+        C3["🔧 Tool Result Cache<br/>Same SQL query → cached result"]
+        C4["📋 Config Cache<br/>Agent configs cached"]
     end
 ```
 
@@ -398,9 +398,9 @@ graph TD
 ```mermaid
 graph LR
     Q1["❓ 'What are sales for Q3?'"] --> Cache["🗄️ Semantic Cache"]
-    Cache --> Search["🔍 Similar query exists?\n'Q3 sales numbers?'\nSimilarity: 0.95"]
-    Search -->|"> threshold"| Hit["✅ Cache Hit\nReturn cached response"]
-    Search -->|"< threshold"| Miss["❌ Cache Miss\nCall LLM"]
+    Cache --> Search["🔍 Similar query exists?<br/>'Q3 sales numbers?'<br/>Similarity: 0.95"]
+    Search -->|"> threshold"| Hit["✅ Cache Hit<br/>Return cached response"]
+    Search -->|"< threshold"| Miss["❌ Cache Miss<br/>Call LLM"]
 ```
 
 | Cache Type | Hit Rate | Savings |

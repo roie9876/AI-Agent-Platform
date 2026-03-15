@@ -152,11 +152,11 @@ graph TB
 
 ```mermaid
 graph LR
-    Request["📨 Incoming request"] --> Auth["🔐 Authentication\nWho are you?"]
-    Auth --> Authz["🔑 Authorization\nWhat are you allowed to do?"]
-    Authz --> RL["⏱️ Rate Limiting\nNot too fast"]
-    RL --> Route["🔀 Routing\nWhere to send"]
-    Route --> Log["📝 Logging\nRecord everything"]
+    Request["📨 Incoming request"] --> Auth["🔐 Authentication<br/>Who are you?"]
+    Auth --> Authz["🔑 Authorization<br/>What are you allowed to do?"]
+    Authz --> RL["⏱️ Rate Limiting<br/>Not too fast"]
+    RL --> Route["🔀 Routing<br/>Where to send"]
+    Route --> Log["📝 Logging<br/>Record everything"]
     Log --> Service["🎯 Service"]
 ```
 
@@ -196,8 +196,8 @@ IAM = **Who are you** (Authentication) + **What are you allowed to do** (Authori
 
 ```mermaid
 graph LR
-    User["👤 User"] -->|"Username + Password"| AuthN["🔐 Authentication\n'Who are you?'"]
-    AuthN -->|"Token/JWT"| AuthZ["🔑 Authorization\n'What are you allowed to do?'"]
+    User["👤 User"] -->|"Username + Password"| AuthN["🔐 Authentication<br/>'Who are you?'"]
+    AuthN -->|"Token/JWT"| AuthZ["🔑 Authorization<br/>'What are you allowed to do?'"]
     AuthZ -->|"Allow/Deny"| Resource["📦 Resource"]
 ```
 
@@ -281,13 +281,13 @@ The Agent Registry is the **central repository** where all Agent definitions are
 ```mermaid
 graph TB
     subgraph AgentConfig["📋 Agent Configuration"]
-        Meta["📌 Metadata\nname, description, version, owner"]
-        Model["🧠 Model Settings\nmodel_id, temperature, max_tokens"]
-        Prompt["📝 System Prompt\nInstructions that define the Agent"]
-        ToolList["🔧 Tools\nList of allowed tools"]
-        Memory["💾 Memory Config\ntype, TTL, max_size"]
-        Policy["🛡️ Policy Refs\nWhich Policies apply"]
-        Limits["⚙️ Limits\nmax_steps, timeout, budget"]
+        Meta["📌 Metadata<br/>name, description, version, owner"]
+        Model["🧠 Model Settings<br/>model_id, temperature, max_tokens"]
+        Prompt["📝 System Prompt<br/>Instructions that define the Agent"]
+        ToolList["🔧 Tools<br/>List of allowed tools"]
+        Memory["💾 Memory Config<br/>type, TTL, max_size"]
+        Policy["🛡️ Policy Refs<br/>Which Policies apply"]
+        Limits["⚙️ Limits<br/>max_steps, timeout, budget"]
     end
 ```
 

@@ -22,8 +22,8 @@
 
 ```mermaid
 graph LR
-    Agent["🤖 Agent\nOutput"] --> Eval["📊 Evaluation\nEngine"]
-    Eval --> Report["📋 Quality Report\n- Accuracy: 92%\n- Relevance: 87%\n- Safety: 100%"]
+    Agent["🤖 Agent<br/>Output"] --> Eval["📊 Evaluation<br/>Engine"]
+    Eval --> Report["📋 Quality Report<br/>- Accuracy: 92%<br/>- Relevance: 87%<br/>- Safety: 100%"]
 ```
 
 ### Analogy:
@@ -111,11 +111,11 @@ mindmap
 ```mermaid
 graph LR
     subgraph "Grounded ✅"
-        Context1["📄 Context:\n'Q3 Revenue: $5M'"] --> Answer1["🤖 'Q3 Revenue\nwas $5M'"]
+        Context1["📄 Context:<br/>'Q3 Revenue: $5M'"] --> Answer1["🤖 'Q3 Revenue<br/>was $5M'"]
     end
     
     subgraph "NOT Grounded ❌"
-        Context2["📄 Context:\n'Q3 Revenue: $5M'"] --> Answer2["🤖 'Q3 Revenue\nwas $8M' 🤥"]
+        Context2["📄 Context:<br/>'Q3 Revenue: $5M'"] --> Answer2["🤖 'Q3 Revenue<br/>was $8M' 🤥"]
     end
 ```
 
@@ -124,11 +124,11 @@ graph LR
 ```mermaid
 graph TD
     Answer["🤖 Agent Answer"] --> Extract["1️⃣ Extract Claims"]
-    Extract --> Claims["Claims:\n- 'Revenue was $5M'\n- 'Growth was 20%'\n- 'Best quarter ever'"]
-    Claims --> Check["2️⃣ Check Each Claim\nAgainst the Context"]
+    Extract --> Claims["Claims:<br/>- 'Revenue was $5M'<br/>- 'Growth was 20%'<br/>- 'Best quarter ever'"]
+    Claims --> Check["2️⃣ Check Each Claim<br/>Against the Context"]
     Check --> Supported["✅ Supported: 2"]
     Check --> NotSupported["❌ Not Supported: 1"]
-    Supported --> Score["3️⃣ Score\n2/3 = 0.67"]
+    Supported --> Score["3️⃣ Score<br/>2/3 = 0.67"]
 ```
 
 ### Hallucination Types:
@@ -153,7 +153,7 @@ graph LR
     end
     
     subgraph "Not Relevant ❌"
-        Q2["❓ 'What is the price?'"] --> A2["🤖 'The product comes\nin 3 colors'"]
+        Q2["❓ 'What is the price?'"] --> A2["🤖 'The product comes<br/>in 3 colors'"]
     end
 ```
 
@@ -163,11 +163,11 @@ How much the answer is **logical, clear, and well-structured**.
 ```mermaid
 graph LR
     subgraph "Coherent ✅"
-        A1["🤖 'First, I checked the data.\nSecond, I identified a trend.\nFinally, here is the conclusion.'"]
+        A1["🤖 'First, I checked the data.<br/>Second, I identified a trend.<br/>Finally, here is the conclusion.'"]
     end
     
     subgraph "Not Coherent ❌"
-        A2["🤖 'The price is because\nbut also the color\nthe product is good because...'"]
+        A2["🤖 'The price is because<br/>but also the color<br/>the product is good because...'"]
     end
 ```
 
@@ -191,10 +191,10 @@ graph LR
 graph TD
     Output["🤖 Output"] --> Classify["🔍 Classify"]
     
-    Classify --> Tox0["Score 0-1\n🟢 Safe"]
-    Classify --> Tox1["Score 2-3\n🟡 Mild"]
-    Classify --> Tox2["Score 4-5\n🟠 Moderate"]
-    Classify --> Tox3["Score 6-7\n🔴 Severe"]
+    Classify --> Tox0["Score 0-1<br/>🟢 Safe"]
+    Classify --> Tox1["Score 2-3<br/>🟡 Mild"]
+    Classify --> Tox2["Score 4-5<br/>🟠 Moderate"]
+    Classify --> Tox3["Score 6-7<br/>🔴 Severe"]
     
     Tox0 --> Allow["✅ Allow"]
     Tox1 --> Warn["⚠️ Warn + Log"]
@@ -221,7 +221,7 @@ graph TD
 
 ```mermaid
 graph TD
-    Task["📋 Task:\n'Find sales data,\ncreate chart,\nsend to manager'"]
+    Task["📋 Task:<br/>'Find sales data,<br/>create chart,<br/>send to manager'"]
     
     Task --> Step1{"1. Found data?"}
     Step1 -->|"✅"| Step2{"2. Created chart?"}
@@ -257,7 +257,7 @@ graph TB
     end
     
     subgraph "2. LLM-as-Judge"
-        Judge["🤖 Judge LLM\n(GPT-4)"]
+        Judge["🤖 Judge LLM<br/>(GPT-4)"]
         Judge --> Auto["Automated scoring"]
         Auto --> Scale["Scalable"]
     end
@@ -285,9 +285,9 @@ sequenceDiagram
     participant System as 📊 Eval System
     participant Judge as 🤖 Judge LLM
     
-    System->>Judge: "Score this answer:\nQuestion: {question}\nContext: {context}\nAnswer: {answer}\n\nScore 1-5 for:\n- Groundedness\n- Relevance\n- Coherence"
+    System->>Judge: "Score this answer:<br/>Question: {question}<br/>Context: {context}<br/>Answer: {answer}<br/><br/>Score 1-5 for:<br/>- Groundedness<br/>- Relevance<br/>- Coherence"
     
-    Judge-->>System: "Groundedness: 4\nRelevance: 5\nCoherence: 3\n\nExplanation: The answer is relevant\nbut coherence could improve..."
+    Judge-->>System: "Groundedness: 4<br/>Relevance: 5<br/>Coherence: 3<br/><br/>Explanation: The answer is relevant<br/>but coherence could improve..."
 ```
 
 ---
@@ -308,7 +308,7 @@ graph TB
     subgraph "2. Agent Execution"
         E1["🤖 Run Agent on test cases"]
         E2["📝 Capture outputs"]
-        E3["📊 Capture metadata\n(tokens, latency, tools)"]
+        E3["📊 Capture metadata<br/>(tokens, latency, tools)"]
         E1 --> E2 --> E3
     end
     
@@ -359,18 +359,18 @@ Comparing **two versions** of an Agent to see which one works better.
 
 ```mermaid
 graph TB
-    Traffic["📥 Incoming Requests\n100%"]
+    Traffic["📥 Incoming Requests<br/>100%"]
     
-    Traffic -->|"50%"| A["🤖 Agent A\n(Current)"]
-    Traffic -->|"50%"| B["🤖 Agent B\n(New prompt)"]
+    Traffic -->|"50%"| A["🤖 Agent A<br/>(Current)"]
+    Traffic -->|"50%"| B["🤖 Agent B<br/>(New prompt)"]
     
-    A --> MetricsA["📊 Metrics A\nGroundedness: 0.82\nLatency: 1.2s\nCost: $0.03"]
-    B --> MetricsB["📊 Metrics B\nGroundedness: 0.91\nLatency: 1.5s\nCost: $0.04"]
+    A --> MetricsA["📊 Metrics A<br/>Groundedness: 0.82<br/>Latency: 1.2s<br/>Cost: $0.03"]
+    B --> MetricsB["📊 Metrics B<br/>Groundedness: 0.91<br/>Latency: 1.5s<br/>Cost: $0.04"]
     
-    MetricsA --> Compare["📈 Compare\nStatistical significance?"]
+    MetricsA --> Compare["📈 Compare<br/>Statistical significance?"]
     MetricsB --> Compare
     
-    Compare --> Decision["🏆 Agent B wins\non quality"]
+    Compare --> Decision["🏆 Agent B wins<br/>on quality"]
 ```
 
 ### What Changes in an A/B Test?
@@ -392,16 +392,16 @@ graph TB
 
 ```mermaid
 graph TB
-    Dev["👨‍💻 Developer\nPush change"] --> CI["🔄 CI/CD Pipeline"]
+    Dev["👨‍💻 Developer<br/>Push change"] --> CI["🔄 CI/CD Pipeline"]
     
     CI --> EvalRun["📊 Run Eval Suite"]
-    EvalRun --> Check{"All metrics\nabove thresholds?"}
+    EvalRun --> Check{"All metrics<br/>above thresholds?"}
     
     Check -->|"✅ Yes"| Deploy["🚀 Deploy"]
-    Check -->|"❌ No"| Fail["⛔ Block Deploy\n📧 Notify team"]
+    Check -->|"❌ No"| Fail["⛔ Block Deploy<br/>📧 Notify team"]
     
     Deploy --> Monitor["📊 Live Monitoring"]
-    Monitor --> Alert{"Metric drops?\nAnomaly?"}
+    Monitor --> Alert{"Metric drops?<br/>Anomaly?"}
     Alert -->|"Yes"| Rollback["⏪ Auto Rollback"]
     Alert -->|"No"| Continue["✅ Continue"]
 ```

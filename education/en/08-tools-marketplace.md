@@ -82,7 +82,7 @@ The LLM sees the definition and **decides** if and when to use a tool.
 
 ```mermaid
 graph LR
-    LLM["🧠 LLM"] -->|"Returns JSON:\n{tool: 'search', args: {...}}"| App["🖥️ Application"]
+    LLM["🧠 LLM"] -->|"Returns JSON:<br/>{tool: 'search', args: {...}}"| App["🖥️ Application"]
     App -->|"Executes"| Tool["🔧 Tool"]
     Tool -->|"Result"| App
     App -->|"Returns result"| LLM
@@ -176,10 +176,10 @@ graph TB
 ```mermaid
 graph TB
     subgraph Registry["📋 Tool Registry"]
-        T1["🔍 web_search\nv2.1 | search | low-risk"]
-        T2["🗄️ sql_query\nv1.5 | data | medium-risk"]
-        T3["🐍 python_exec\nv3.0 | compute | high-risk"]
-        T4["📧 send_email\nv1.0 | comm | high-risk"]
+        T1["🔍 web_search<br/>v2.1 | search | low-risk"]
+        T2["🗄️ sql_query<br/>v1.5 | data | medium-risk"]
+        T3["🐍 python_exec<br/>v3.0 | compute | high-risk"]
+        T4["📧 send_email<br/>v1.0 | comm | high-risk"]
     end
     
     Agent1["🤖 Agent A"] -->|"has access to"| T1
@@ -290,8 +290,8 @@ graph TB
         Cat4 --> T6["invoice_gen ⭐4.3"]
     end
     
-    TeamA["👨‍💻 Team A\n(publishes)"] -->|"📤"| Cat1
-    TeamB["👩‍💻 Team B\n(uses)"] -->|"📥"| Cat2
+    TeamA["👨‍💻 Team A<br/>(publishes)"] -->|"📤"| Cat1
+    TeamB["👩‍💻 Team B<br/>(uses)"] -->|"📥"| Cat2
 ```
 
 ### Marketplace Features:
@@ -333,10 +333,10 @@ sequenceDiagram
 
 ```mermaid
 graph TD
-    Input["Input from LLM:\nsql_query('DROP TABLE users')"] --> Sanitize["🛡️ Sanitizer"]
+    Input["Input from LLM:<br/>sql_query('DROP TABLE users')"] --> Sanitize["🛡️ Sanitizer"]
     Sanitize -->|"❌ Blocked"| Reject["SQL Injection detected!"]
     
-    Input2["Input from LLM:\nsql_query('SELECT * FROM sales')"] --> Sanitize2["🛡️ Sanitizer"]
+    Input2["Input from LLM:<br/>sql_query('SELECT * FROM sales')"] --> Sanitize2["🛡️ Sanitizer"]
     Sanitize2 -->|"✅ Allowed"| Execute["Execute query"]
 ```
 
@@ -355,11 +355,11 @@ graph TD
 ```mermaid
 graph TB
     subgraph "❌ Over-privileged"
-        T1["SQL Tool"] --> Full["Full DB access\nREAD + WRITE + DELETE + ADMIN"]
+        T1["SQL Tool"] --> Full["Full DB access<br/>READ + WRITE + DELETE + ADMIN"]
     end
     
     subgraph "✅ Least Privilege"
-        T2["SQL Tool"] --> Limited["Read-only\nSpecific tables only\nMax 1000 rows"]
+        T2["SQL Tool"] --> Limited["Read-only<br/>Specific tables only<br/>Max 1000 rows"]
     end
 ```
 

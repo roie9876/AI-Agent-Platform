@@ -23,18 +23,18 @@ Each provider (OpenAI, Anthropic, Meta, Google) offers a different API:
 ```mermaid
 graph TB
     subgraph "❌ Without Abstraction"
-        Agent1["Agent"] --> OpenAI["OpenAI API\n(format A)"]
-        Agent2["Agent"] --> Anthropic["Anthropic API\n(format B)"]
-        Agent3["Agent"] --> Google["Google API\n(format C)"]
+        Agent1["Agent"] --> OpenAI["OpenAI API<br/>(format A)"]
+        Agent2["Agent"] --> Anthropic["Anthropic API<br/>(format B)"]
+        Agent3["Agent"] --> Google["Google API<br/>(format C)"]
         
-        Note1["Each Agent needs to know\nall the formats 😩"]
+        Note1["Each Agent needs to know<br/>all the formats 😩"]
     end
 ```
 
 ```mermaid
 graph TB
     subgraph "✅ With Abstraction"
-        Agent4["Agent"] --> Abstract["🧠 Abstraction Layer\n(unified API)"]
+        Agent4["Agent"] --> Abstract["🧠 Abstraction Layer<br/>(unified API)"]
         Abstract --> OpenAI2["OpenAI"]
         Abstract --> Anthropic2["Anthropic"]
         Abstract --> Google2["Google"]
@@ -139,10 +139,10 @@ classDiagram
 graph TB
     Request["📨 Request"] --> Router["🔀 Model Router"]
     
-    Router -->|"Simple task\n(summary, translation)"| Small["GPT-3.5 / Llama\n💰 $0.001"]
-    Router -->|"Complex task\n(reasoning, code)"| Large["GPT-4o\n💰 $0.01"]
-    Router -->|"Vision task\n(images)"| Vision["GPT-4o Vision\n💰 $0.02"]
-    Router -->|"Embedding\n(semantic search)"| Embed["Ada / text-embedding\n💰 $0.0001"]
+    Router -->|"Simple task<br/>(summary, translation)"| Small["GPT-3.5 / Llama<br/>💰 $0.001"]
+    Router -->|"Complex task<br/>(reasoning, code)"| Large["GPT-4o<br/>💰 $0.01"]
+    Router -->|"Vision task<br/>(images)"| Vision["GPT-4o Vision<br/>💰 $0.02"]
+    Router -->|"Embedding<br/>(semantic search)"| Embed["Ada / text-embedding<br/>💰 $0.0001"]
 ```
 
 ### Why Not Just Always Use the Best Model?
@@ -204,9 +204,9 @@ graph TD
 ```mermaid
 graph TD
     Request["📨 Request"] --> Check{"⏱️ Latency requirement?"}
-    Check -->|"<1 sec (real-time)"| Fast["GPT-3.5\n(fast)"]
+    Check -->|"<1 sec (real-time)"| Fast["GPT-3.5<br/>(fast)"]
     Check -->|"<5 sec (interactive)"| Medium["GPT-4o-mini"]
-    Check -->|"<30 sec (batch)"| Slow["GPT-4o\n(thorough)"]
+    Check -->|"<30 sec (batch)"| Slow["GPT-4o<br/>(thorough)"]
 ```
 
 ### 4. Capability-Based Routing (By Capabilities)
@@ -269,9 +269,9 @@ sequenceDiagram
 ```mermaid
 graph LR
     subgraph "Exponential Backoff"
-        R1["Attempt 1\n(wait 1s)"] --> R2["Attempt 2\n(wait 2s)"]
-        R2 --> R3["Attempt 3\n(wait 4s)"]
-        R3 --> R4["Attempt 4\n(wait 8s)"]
+        R1["Attempt 1<br/>(wait 1s)"] --> R2["Attempt 2<br/>(wait 2s)"]
+        R2 --> R3["Attempt 3<br/>(wait 4s)"]
+        R3 --> R4["Attempt 4<br/>(wait 8s)"]
         R4 --> Fail["❌ Give up"]
     end
 ```
@@ -307,9 +307,9 @@ When there are many deployments of the same model, the load needs to be **distri
 graph TB
     Router["🔀 Router"] --> LB["⚖️ Load Balancer"]
     
-    LB -->|"33%"| D1["GPT-4o\nDeployment 1\n(East US)"]
-    LB -->|"33%"| D2["GPT-4o\nDeployment 2\n(West EU)"]
-    LB -->|"34%"| D3["GPT-4o\nDeployment 3\n(Japan)"]
+    LB -->|"33%"| D1["GPT-4o<br/>Deployment 1<br/>(East US)"]
+    LB -->|"33%"| D2["GPT-4o<br/>Deployment 2<br/>(West EU)"]
+    LB -->|"34%"| D3["GPT-4o<br/>Deployment 3<br/>(Japan)"]
 ```
 
 ### Load Balancing Algorithms:
@@ -332,8 +332,8 @@ If the same question keeps coming up, why pay again for an LLM call?
 ```mermaid
 graph TD
     Request["📨 'What are the business hours?'"] --> Cache{"🔍 In Cache?"}
-    Cache -->|"Hit ✅"| Return["Return cached response\n⚡ 5ms | 💰 $0"]
-    Cache -->|"Miss ❌"| LLM["Call the LLM\n🐌 500ms | 💰 $0.01"]
+    Cache -->|"Hit ✅"| Return["Return cached response<br/>⚡ 5ms | 💰 $0"]
+    Cache -->|"Miss ❌"| LLM["Call the LLM<br/>🐌 500ms | 💰 $0.01"]
     LLM --> Save["Save to Cache"]
     Save --> Return2["Return response"]
 ```

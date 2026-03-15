@@ -20,7 +20,7 @@
 
 ```mermaid
 graph LR
-    System["🤖 Agent Platform\n(Black Box)"] --> Obs["📊 Observability"]
+    System["🤖 Agent Platform<br/>(Black Box)"] --> Obs["📊 Observability"]
     Obs --> Q1["❓ מה קורה עכשיו?"]
     Obs --> Q2["❓ למה זה איטי?"]
     Obs --> Q3["❓ למה זה נכשל?"]
@@ -43,9 +43,9 @@ graph LR
 ```mermaid
 graph TB
     subgraph "📊 Three Pillars of Observability"
-        M["📈 Metrics\nWhat happened?\n(numbers)"]
-        L["📝 Logs\nWhy it happened?\n(text)"]
-        T["🔗 Traces\nWhere it happened?\n(flow)"]
+        M["📈 Metrics<br/>What happened?<br/>(numbers)"]
+        L["📝 Logs<br/>Why it happened?<br/>(text)"]
+        T["🔗 Traces<br/>Where it happened?<br/>(flow)"]
     end
     
     M --> Dashboard["📊 Dashboard"]
@@ -65,9 +65,9 @@ graph TB
 ```mermaid
 graph TB
     subgraph "🔴 RED Metrics (לכל שירות)"
-        RED_R["📊 Rate\nבקשות/שנייה"]
-        RED_E["📊 Errors\n% שגיאות"]
-        RED_D["📊 Duration\nזמן תגובה"]
+        RED_R["📊 Rate<br/>בקשות/שנייה"]
+        RED_E["📊 Errors<br/>% שגיאות"]
+        RED_D["📊 Duration<br/>זמן תגובה"]
     end
     
     subgraph "🤖 Agent-Specific Metrics"
@@ -114,11 +114,11 @@ graph TB
 ```mermaid
 graph TD
     subgraph "📝 Log Categories"
-        SysLog["🖥️ System Logs\nInfra events"]
-        AgentLog["🤖 Agent Logs\nAgent lifecycle"]
-        LLMLog["🧠 LLM Logs\nModel interactions"]
-        ToolLog["🔧 Tool Logs\nTool executions"]
-        AuditLog["📋 Audit Logs\nSecurity events"]
+        SysLog["🖥️ System Logs<br/>Infra events"]
+        AgentLog["🤖 Agent Logs<br/>Agent lifecycle"]
+        LLMLog["🧠 LLM Logs<br/>Model interactions"]
+        ToolLog["🔧 Tool Logs<br/>Tool executions"]
+        AuditLog["📋 Audit Logs<br/>Security events"]
     end
 ```
 
@@ -201,10 +201,10 @@ Total tokens: 4,200  |  Cost: $0.042  |  Steps: 3  |  Tools: 2
 ```mermaid
 graph TB
     subgraph "Trace Concepts"
-        Trace["🔗 Trace\n= כל הבקשה מ-A עד ת"]
-        Span1["📦 Span 1\n= שלב בודד"]
-        Span2["📦 Span 2\n= שלב בודד"]
-        Span3["📦 Span 3\n= שלב בודד"]
+        Trace["🔗 Trace<br/>= כל הבקשה מ-A עד ת"]
+        Span1["📦 Span 1<br/>= שלב בודד"]
+        Span2["📦 Span 2<br/>= שלב בודד"]
+        Span3["📦 Span 3<br/>= שלב בודד"]
         
         Trace --> Span1
         Trace --> Span2
@@ -212,7 +212,7 @@ graph TB
     end
     
     subgraph "Span Details"
-        Details["Name: llm_call\nDuration: 1.2s\nModel: gpt-4o\nTokens: 1200\nStatus: OK"]
+        Details["Name: llm_call<br/>Duration: 1.2s<br/>Model: gpt-4o<br/>Tokens: 1200<br/>Status: OK"]
     end
 ```
 
@@ -234,9 +234,9 @@ graph TB
 ```mermaid
 graph TB
     subgraph "Token Flow per Request"
-        Input["📥 Input Tokens\n(system + user + context)"]
+        Input["📥 Input Tokens<br/>(system + user + context)"]
         Model["🧠 Model Processing"]
-        Output["📤 Output Tokens\n(agent response)"]
+        Output["📤 Output Tokens<br/>(agent response)"]
         
         Input -->|"Charged $$"| Model
         Model -->|"Charged $$$"| Output
@@ -256,9 +256,9 @@ graph TB
 
 ```mermaid
 graph TD
-    LLM_Call["🧠 LLM Call"] --> Intercept["📊 Token Counter\n(Middleware)"]
+    LLM_Call["🧠 LLM Call"] --> Intercept["📊 Token Counter<br/>(Middleware)"]
     
-    Intercept --> Record["📝 Record:\n- Model used\n- Input tokens\n- Output tokens\n- Estimated cost\n- Agent ID\n- Tenant ID"]
+    Intercept --> Record["📝 Record:<br/>- Model used<br/>- Input tokens<br/>- Output tokens<br/>- Estimated cost<br/>- Agent ID<br/>- Tenant ID"]
     
     Record --> Store["💾 Time-series DB"]
     Store --> Dashboard["📊 Dashboard"]
@@ -319,11 +319,11 @@ pie title "Token Distribution per Agent Request"
 graph TB
     Cost["💰 Total Cost"]
     
-    Cost --> ByTenant["🏢 By Tenant\nacme: $45\nbeta: $38"]
-    Cost --> ByAgent["🤖 By Agent\nanalyst: $30\nsupport: $25"]
-    Cost --> ByModel["🧠 By Model\ngpt-4o: $80\nmini: $20"]
-    Cost --> ByTool["🔧 By Tool\nsql: $15\nsearch: $10"]
-    Cost --> ByTime["📅 By Time\nPeak hours\nWeekday vs Weekend"]
+    Cost --> ByTenant["🏢 By Tenant<br/>acme: $45<br/>beta: $38"]
+    Cost --> ByAgent["🤖 By Agent<br/>analyst: $30<br/>support: $25"]
+    Cost --> ByModel["🧠 By Model<br/>gpt-4o: $80<br/>mini: $20"]
+    Cost --> ByTool["🔧 By Tool<br/>sql: $15<br/>search: $10"]
+    Cost --> ByTime["📅 By Time<br/>Peak hours<br/>Weekday vs Weekend"]
 ```
 
 ### Cost Attribution Model:
@@ -352,11 +352,11 @@ sequenceDiagram
 graph TD
     Metrics["📊 Metrics Stream"] --> Rules["📋 Alert Rules"]
     
-    Rules --> Budget["💰 Budget Alert\nTenant > 80% of daily budget"]
-    Rules --> Error["🔴 Error Alert\nError rate > 5% for 5 min"]
-    Rules --> Latency["⏱️ Latency Alert\nP99 > 10s for 5 min"]
-    Rules --> Anomaly["📈 Anomaly Alert\nCost spike > 200%"]
-    Rules --> Safety["🛡️ Safety Alert\nToxicity detected"]
+    Rules --> Budget["💰 Budget Alert<br/>Tenant > 80% of daily budget"]
+    Rules --> Error["🔴 Error Alert<br/>Error rate > 5% for 5 min"]
+    Rules --> Latency["⏱️ Latency Alert<br/>P99 > 10s for 5 min"]
+    Rules --> Anomaly["📈 Anomaly Alert<br/>Cost spike > 200%"]
+    Rules --> Safety["🛡️ Safety Alert<br/>Toxicity detected"]
     
     Budget --> Notify["📧 Notify"]
     Error --> Notify
@@ -396,10 +396,10 @@ graph TB
     end
     
     subgraph "Backends"
-        Prom["📊 Prometheus\n(Metrics)"]
-        Loki["📝 Loki / ELK\n(Logs)"]
-        Jaeger["🔗 Jaeger\n(Traces)"]
-        Grafana["📈 Grafana\n(Visualization)"]
+        Prom["📊 Prometheus<br/>(Metrics)"]
+        Loki["📝 Loki / ELK<br/>(Logs)"]
+        Jaeger["🔗 Jaeger<br/>(Traces)"]
+        Grafana["📈 Grafana<br/>(Visualization)"]
     end
     
     SDK -->|"OTLP"| Collector
