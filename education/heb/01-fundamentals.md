@@ -113,6 +113,72 @@ graph TD
 📤 Answer: "יש לך 142 עובדים בתל אביב, עם שכר ממוצע של 28,500 ₪"
 ```
 
+### דוגמה מקצה לקצה: מה באמת קורה בפנים
+
+בואו נעקוב אחרי בקשה אמיתית דרך הפלטפורמה כדי להבין כל שלב:
+
+```mermaid
+sequenceDiagram
+    participant User as 👤 משתמש
+    participant GW as 🚪 API Gateway
+    participant Orch as 🎭 Orchestrator
+    participant LLM as 🧠 LLM
+    participant Tool as 🔧 SQL Tool
+    participant Tool2 as 📊 Chart Tool
+    
+    User->>GW: "נתח מכירות Q3 לפי אזור"
+    GW->>GW: בדיקת Auth + Rate Limit
+    GW->>Orch: העברת בקשה
+    
+    Note over Orch: לולאת ReAct מתחילה
+    
+    Orch->>LLM: System prompt + הודעת משתמש
+    LLM-->>Orch: tool_call: sql_query("SELECT region, SUM(revenue)...")
+    Orch->>Tool: הרצת שאילתת SQL
+    Tool-->>Orch: [{North America: 5.2M}, {Europe: 3.1M}, {Asia: 2.8M}]
+    
+    Orch->>LLM: הקשר קודם + תוצאות כלי
+    LLM-->>Orch: tool_call: create_chart(type="bar", data=...)
+    Orch->>Tool2: יצירת תרשים
+    Tool2-->>Orch: chart_url: "https://..."
+    
+    Orch->>LLM: הקשר קודם + URL תרשים
+    LLM-->>Orch: "הנה הניתוח של Q3. צפון אמריקה מובילה..."
+    
+    Note over Orch: לולאת ReAct הושלמה (3 קריאות LLM)
+    
+    Orch-->>GW: תשובה סופית
+    GW-->>User: "הנה הניתוח של Q3..."
+```
+
+בקוד, זה מתורגם ל:
+
+```python
+# מה קורה בתוך הפלטפורמה לכל בקשה:
+
+# 1. המשתמש שולח בקשה
+response = platform.run(
+    agent="data-analyst",
+    message="Analyze Q3 sales by region",
+    user_id="roi@acme.com",
+    thread_id="thread-123"
+)
+
+# 2. ה-ORCHESTRATOR מנהל את לולאת ה-ReAct:
+# איטרציה 1: LLM מחליט לשאול את בסיס הנתונים
+#   → tool_call: sql_query("SELECT region, SUM(revenue) FROM sales WHERE quarter='Q3'")
+#   → result: [{"region": "North America", "total": 5200000}, ...]
+
+# איטרציה 2: LLM מחליט ליצור תרשים
+#   → tool_call: create_chart(type="bar", data=results)
+#   → result: "https://charts.platform.ai/abc123.png"
+
+# איטרציה 3: ל-LLM יש מספיק מידע → מייצר תשובה סופית
+#   → "Based on Q3 data, North America leads with $5.2M..."
+
+# 3. סה"כ: 3 קריאות LLM, 2 קריאות כלים, ~8 שניות, ~$0.05
+```
+
 ---
 
 ## ההבדל בין Chatbot ל-Agent

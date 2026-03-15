@@ -266,6 +266,104 @@ sequenceDiagram
 | **4. Execute** | Run in an isolated environment | Security + isolation |
 | **5. Output Validate** | Check that the result doesn't contain PII | Compliance |
 
+### Implementation Example
+
+```python
+from typing import Any
+from pydantic import ValidationError
+
+async def execute_tool_pipeline(
+    tool_call: ToolCall,
+    agent_context: AgentContext
+) -> ToolResult:
+    """The 5-step tool execution pipeline."""
+    
+    # Step 1: Validate - Does the tool exist?
+    tool = tool_registry.get(tool_call.name)
+    if not tool:
+        raise ToolNotFoundError(f"Tool '{tool_call.name}' not registered")
+    if not tool.is_active:
+        raise ToolDisabledError(f"Tool '{tool_call.name}' is disabled")
+    
+    # Step 2: Authorize - Can this agent use this tool?
+    if not policy_engine.check_tool_permission(
+        agent_id=agent_context.agent_id,
+        tool_name=tool_call.name,
+        user_role=agent_context.user_role
+    ):
+        raise ToolUnauthorizedError(
+            f"Agent '{agent_context.agent_id}' cannot use '{tool_call.name}'"
+        )
+    
+    # Step 3: Input Validation - Are parameters valid and safe?
+    try:
+        validated_params = tool.input_schema.validate(tool_call.arguments)
+    except ValidationError as e:
+        raise InvalidToolInputError(f"Invalid parameters: {e}")
+    
+    # Sanitize inputs (prevent SQL injection, command injection, etc.)
+    sanitized_params = input_sanitizer.sanitize(validated_params, tool.input_schema)
+    
+    # Step 4: Execute in Sandbox
+    result = await sandbox.execute(
+        tool=tool,
+        params=sanitized_params,
+        timeout=tool.limits.timeout,
+        resource_limits=tool.limits.resources
+    )
+    
+    # Step 5: Output Validation - Check for PII, sensitive data
+    scan_result = dlp_scanner.scan(result.data)
+    if scan_result.has_violations:
+        result.data = dlp_scanner.mask(result.data, scan_result.violations)
+    
+    # Log the execution
+    audit_logger.log_tool_execution(
+        tool=tool_call.name,
+        agent=agent_context.agent_id,
+        user=agent_context.user_id,
+        duration=result.duration,
+        status="success"
+    )
+    
+    return result
+```
+
+### Tool Definition Example
+
+```json
+{
+  "name": "sql_query",
+  "version": "1.5",
+  "description": "Execute read-only SQL queries on authorized databases",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "description": "SQL SELECT query to execute"
+      },
+      "database": {
+        "type": "string",
+        "enum": ["sales_db", "analytics_db"],
+        "description": "Target database"
+      }
+    },
+    "required": ["query", "database"]
+  },
+  "security": {
+    "requires_permissions": ["db-read-access"],
+    "allowed_operations": ["SELECT"],
+    "blocked_keywords": ["DROP", "DELETE", "UPDATE", "INSERT", "ALTER"]
+  },
+  "limits": {
+    "max_rows": 1000,
+    "timeout": "30s",
+    "rate_limit": "10/minute"
+  }
+}
+```
+
 ---
 
 ## Tool Marketplace

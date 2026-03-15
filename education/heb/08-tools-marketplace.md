@@ -266,6 +266,104 @@ sequenceDiagram
 | **4. Execute** | הרץ בסביבה מבודדת | אבטחה + isolation |
 | **5. Output Validate** | בדוק שהתוצאה לא מכילה PII | compliance |
 
+### דוגמת מימוש
+
+```python
+from typing import Any
+from pydantic import ValidationError
+
+async def execute_tool_pipeline(
+    tool_call: ToolCall,
+    agent_context: AgentContext
+) -> ToolResult:
+    """צינור 5-שלבי להרצת כלים."""
+    
+    # שלב 1: ולידציה - האם הכלי קיים?
+    tool = tool_registry.get(tool_call.name)
+    if not tool:
+        raise ToolNotFoundError(f"Tool '{tool_call.name}' not registered")
+    if not tool.is_active:
+        raise ToolDisabledError(f"Tool '{tool_call.name}' is disabled")
+    
+    # שלב 2: הרשאות - האם הסוכן רשאי להשתמש בכלי?
+    if not policy_engine.check_tool_permission(
+        agent_id=agent_context.agent_id,
+        tool_name=tool_call.name,
+        user_role=agent_context.user_role
+    ):
+        raise ToolUnauthorizedError(
+            f"Agent '{agent_context.agent_id}' cannot use '{tool_call.name}'"
+        )
+    
+    # שלב 3: ולידציית קלט - האם הפרמטרים תקינים ובטוחים?
+    try:
+        validated_params = tool.input_schema.validate(tool_call.arguments)
+    except ValidationError as e:
+        raise InvalidToolInputError(f"Invalid parameters: {e}")
+    
+    # סניטציית קלט (מניעת SQL injection, command injection וכו')
+    sanitized_params = input_sanitizer.sanitize(validated_params, tool.input_schema)
+    
+    # שלב 4: הרצה ב-Sandbox
+    result = await sandbox.execute(
+        tool=tool,
+        params=sanitized_params,
+        timeout=tool.limits.timeout,
+        resource_limits=tool.limits.resources
+    )
+    
+    # שלב 5: ולידציית פלט - בדיקת PII, מידע רגיש
+    scan_result = dlp_scanner.scan(result.data)
+    if scan_result.has_violations:
+        result.data = dlp_scanner.mask(result.data, scan_result.violations)
+    
+    # לוגינג
+    audit_logger.log_tool_execution(
+        tool=tool_call.name,
+        agent=agent_context.agent_id,
+        user=agent_context.user_id,
+        duration=result.duration,
+        status="success"
+    )
+    
+    return result
+```
+
+### דוגמת הגדרת כלי
+
+```json
+{
+  "name": "sql_query",
+  "version": "1.5",
+  "description": "Execute read-only SQL queries on authorized databases",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "description": "SQL SELECT query to execute"
+      },
+      "database": {
+        "type": "string",
+        "enum": ["sales_db", "analytics_db"],
+        "description": "Target database"
+      }
+    },
+    "required": ["query", "database"]
+  },
+  "security": {
+    "requires_permissions": ["db-read-access"],
+    "allowed_operations": ["SELECT"],
+    "blocked_keywords": ["DROP", "DELETE", "UPDATE", "INSERT", "ALTER"]
+  },
+  "limits": {
+    "max_rows": 1000,
+    "timeout": "30s",
+    "rate_limit": "10/minute"
+  }
+}
+```
+
 ---
 
 ## Tool Marketplace

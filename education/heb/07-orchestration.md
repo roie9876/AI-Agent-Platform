@@ -370,6 +370,51 @@ graph TB
 
 **מתאים ל:** סיכום מסמכים רבים, ניתוח datasets, aggregation
 
+#### דוגמת מימוש Map-Reduce
+
+```python
+import asyncio
+
+async def map_reduce_summarize(documents: list[str]) -> str:
+    """סיכום 100 מסמכים בתבנית Map-Reduce."""
+    
+    # שלב MAP: עיבוד כל מסמך במקביל
+    async def summarize_one(doc: str) -> str:
+        """סיכום מסמך בודד (קריאת LLM אחת)."""
+        return await llm.call(
+            f"Summarize this document in 2-3 sentences:\n\n{doc}"
+        )
+    
+    # הרצת 10 workers במקביל (לא 100 — כיבוד rate limits!)
+    semaphore = asyncio.Semaphore(10)
+    
+    async def limited_summarize(doc):
+        async with semaphore:
+            return await summarize_one(doc)
+    
+    summaries = await asyncio.gather(
+        *[limited_summarize(doc) for doc in documents]
+    )
+    # תוצאה: 100 סיכומים בודדים, ~10 שניות (במקביל)
+    
+    # שלב REDUCE: שילוב כל הסיכומים לאחד
+    combined = "\n".join(
+        f"[Doc {i+1}]: {s}" for i, s in enumerate(summaries)
+    )
+    
+    final_summary = await llm.call(
+        f"Synthesize these {len(summaries)} document summaries "
+        f"into one cohesive report:\n\n{combined}"
+    )
+    # תוצאה: סיכום מקיף אחד
+    
+    return final_summary
+
+# השוואת ביצועים:
+# סדרתי: 100 קריאות LLM × 3s = ~300 שניות
+# Map-Reduce: 10 batches × 3s + 1 reduce = ~33 שניות (פי 9 מהיר!)
+```
+
 ### 2. Supervisor Pattern
 
 ```mermaid

@@ -113,6 +113,72 @@ Suppose a user asks: *"How many employees do I have in Tel Aviv and what is thei
 📤 Answer: "You have 142 employees in Tel Aviv, with an average salary of 28,500 ₪"
 ```
 
+### End-to-End Example: What Really Happens Inside
+
+Let's trace a real request through the platform to understand every step:
+
+```mermaid
+sequenceDiagram
+    participant User as 👤 User
+    participant GW as 🚪 API Gateway
+    participant Orch as 🎭 Orchestrator
+    participant LLM as 🧠 LLM
+    participant Tool as 🔧 SQL Tool
+    participant Tool2 as 📊 Chart Tool
+    
+    User->>GW: "Analyze Q3 sales by region"
+    GW->>GW: Auth + Rate Limit check
+    GW->>Orch: Forward request
+    
+    Note over Orch: ReAct Loop Begins
+    
+    Orch->>LLM: System prompt + user message
+    LLM-->>Orch: tool_call: sql_query("SELECT region, SUM(revenue)...")
+    Orch->>Tool: Execute SQL query
+    Tool-->>Orch: [{North America: 5.2M}, {Europe: 3.1M}, {Asia: 2.8M}]
+    
+    Orch->>LLM: Previous context + tool results
+    LLM-->>Orch: tool_call: create_chart(type="bar", data=...)
+    Orch->>Tool2: Generate chart
+    Tool2-->>Orch: chart_url: "https://..."
+    
+    Orch->>LLM: Previous context + chart URL
+    LLM-->>Orch: "Here is the Q3 analysis. North America leads..."
+    
+    Note over Orch: ReAct Loop Complete (3 LLM calls)
+    
+    Orch-->>GW: Final response
+    GW-->>User: "Here is the Q3 analysis..."
+```
+
+In code, this translates to:
+
+```python
+# What happens inside the platform for each request:
+
+# 1. USER sends a request
+response = platform.run(
+    agent="data-analyst",
+    message="Analyze Q3 sales by region",
+    user_id="roi@acme.com",
+    thread_id="thread-123"
+)
+
+# 2. ORCHESTRATOR manages the ReAct loop:
+# Loop iteration 1: LLM decides to query the database
+#   → tool_call: sql_query("SELECT region, SUM(revenue) FROM sales WHERE quarter='Q3'")
+#   → result: [{"region": "North America", "total": 5200000}, ...]
+
+# Loop iteration 2: LLM decides to create a chart
+#   → tool_call: create_chart(type="bar", data=results)
+#   → result: "https://charts.platform.ai/abc123.png"
+
+# Loop iteration 3: LLM has enough information → generates final answer
+#   → "Based on Q3 data, North America leads with $5.2M..."
+
+# 3. Total: 3 LLM calls, 2 tool calls, ~8 seconds, ~$0.05
+```
+
 ---
 
 ## The Difference Between a Chatbot and an Agent

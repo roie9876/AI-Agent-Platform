@@ -409,6 +409,118 @@ graph TD
     Req --> Vendor["🏢 Vendor lock-in risk"]
 ```
 
+### How to Choose: Decision Flowcharts
+
+#### Choosing a Vector Database:
+
+```mermaid
+graph TD
+    Start["🤔 Choose Vector DB"] --> Q1{"Self-hosted or<br/>managed?"}
+    Q1 -->|"Self-hosted"| Q2{"Scale?"}
+    Q1 -->|"Managed"| Q3{"Budget?"}
+    
+    Q2 -->|"Small (< 1M vectors)"| Qdrant["✅ Qdrant<br/>Fast, simple, Rust-based"]
+    Q2 -->|"Large (> 10M vectors)"| Milvus["✅ Milvus<br/>Distributed, scalable"]
+    
+    Q3 -->|"High"| Pinecone["✅ Pinecone<br/>Zero-ops, serverless"]
+    Q3 -->|"Medium"| Weaviate["✅ Weaviate Cloud<br/>Hybrid search, GraphQL"]
+    
+    style Qdrant fill:#a8e6cf
+    style Milvus fill:#a8e6cf
+    style Pinecone fill:#dcedc1
+    style Weaviate fill:#dcedc1
+```
+
+#### Choosing a Message Queue:
+
+```mermaid
+graph TD
+    Start2["🤔 Choose Message Queue"] --> Q1{"Primary need?"}
+    
+    Q1 -->|"Simple task queue"| RabbitMQ["✅ RabbitMQ<br/>Mature, proven, easy"]
+    Q1 -->|"Event streaming<br/>+ replay"| Kafka["✅ Kafka<br/>High throughput,<br/>event sourcing"]
+    Q1 -->|"Ultra-low latency<br/>pub/sub"| NATS["✅ NATS<br/>Simple, fast,<br/>lightweight"]
+    
+    style RabbitMQ fill:#a8e6cf
+    style Kafka fill:#dcedc1
+    style NATS fill:#ffd3b6
+```
+
+### Deployment Example (Kubernetes)
+
+A minimal production deployment of the platform's runtime plane:
+
+```yaml
+# kubernetes/orchestrator-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orchestrator
+  namespace: agent-runtime
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: orchestrator
+  template:
+    metadata:
+      labels:
+        app: orchestrator
+    spec:
+      serviceAccountName: orchestrator-sa
+      containers:
+      - name: orchestrator
+        image: agent-platform/orchestrator:v2.1
+        ports:
+        - containerPort: 8080
+        env:
+        - name: LLM_ENDPOINT
+          valueFrom:
+            secretKeyRef:
+              name: llm-secrets
+              key: endpoint
+        - name: STATE_STORE_URL
+          value: "redis://redis.agent-data:6379"
+        - name: VECTOR_DB_URL
+          value: "http://qdrant.agent-data:6333"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: orchestrator-hpa
+  namespace: agent-runtime
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: orchestrator
+  minReplicas: 3
+  maxReplicas: 20
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+```
+
 ---
 
 ## Architecture Qualities

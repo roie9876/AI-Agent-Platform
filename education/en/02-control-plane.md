@@ -369,6 +369,86 @@ graph LR
     Vault --> Platform
 ```
 
+### Example: Agent Configuration File
+
+Here's what a real Agent configuration looks like in YAML:
+
+```yaml
+# agent-config.yaml - Example Agent Definition
+apiVersion: platform.ai/v1
+kind: AgentDefinition
+metadata:
+  name: data-analyst
+  namespace: team-analytics
+  version: "1.3"
+  labels:
+    owner: analytics-team
+    environment: production
+
+spec:
+  model:
+    provider: azure-openai
+    deployment: gpt-4o-main
+    temperature: 0.2
+    max_tokens: 50000
+
+  system_prompt: |
+    You are a data analyst specializing in sales data.
+    Always cite the data source. Format numbers with commas.
+    Never make up data - only use what tools return.
+
+  tools:
+    - name: sql_query
+      permissions:
+        read_only: true
+        allowed_tables: [sales, products, customers]
+    - name: chart_generator
+      permissions:
+        output_formats: [png, svg]
+
+  memory:
+    short_term:
+      max_messages: 20
+      ttl: "1h"
+    long_term:
+      type: vector_search
+      index: "rag-sales-docs"
+      top_k: 5
+
+  policies:
+    - no-pii-output        # DLP policy reference
+    - max-cost-daily-50     # Budget limit
+
+  limits:
+    max_steps: 10           # Max ReAct loop iterations
+    timeout_seconds: 120    # Max request duration
+    max_tokens_per_request: 100000
+```
+
+### Environment Overrides
+
+```yaml
+# overrides/production.yaml
+spec:
+  model:
+    deployment: gpt-4o-prod  # Different deployment in prod
+    temperature: 0.1          # More deterministic in prod
+  limits:
+    max_steps: 8              # Stricter in prod
+    timeout_seconds: 60
+```
+
+```yaml
+# overrides/development.yaml
+spec:
+  model:
+    deployment: gpt-4o-mini-dev  # Cheaper model for dev
+    temperature: 0.7              # More creative for testing
+  limits:
+    max_steps: 20                 # More lenient for dev
+    timeout_seconds: 300
+```
+
 ---
 
 ## Request Flow Through the Control Plane

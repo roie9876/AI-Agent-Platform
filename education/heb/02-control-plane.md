@@ -369,6 +369,86 @@ graph LR
     Vault --> Platform
 ```
 
+### דוגמה: קובץ הגדרות Agent
+
+הנה איך נראית הגדרת Agent אמיתית ב-YAML:
+
+```yaml
+# agent-config.yaml - הגדרת Agent לדוגמה
+apiVersion: platform.ai/v1
+kind: AgentDefinition
+metadata:
+  name: data-analyst
+  namespace: team-analytics
+  version: "1.3"
+  labels:
+    owner: analytics-team
+    environment: production
+
+spec:
+  model:
+    provider: azure-openai
+    deployment: gpt-4o-main
+    temperature: 0.2
+    max_tokens: 50000
+
+  system_prompt: |
+    You are a data analyst specializing in sales data.
+    Always cite the data source. Format numbers with commas.
+    Never make up data - only use what tools return.
+
+  tools:
+    - name: sql_query
+      permissions:
+        read_only: true
+        allowed_tables: [sales, products, customers]
+    - name: chart_generator
+      permissions:
+        output_formats: [png, svg]
+
+  memory:
+    short_term:
+      max_messages: 20
+      ttl: "1h"
+    long_term:
+      type: vector_search
+      index: "rag-sales-docs"
+      top_k: 5
+
+  policies:
+    - no-pii-output        # הפנייה למדיניות DLP
+    - max-cost-daily-50     # מגבלת תקציב
+
+  limits:
+    max_steps: 10           # מקסימום איטרציות ReAct
+    timeout_seconds: 120    # זמן מקסימלי לבקשה
+    max_tokens_per_request: 100000
+```
+
+### דריסות לפי סביבה
+
+```yaml
+# overrides/production.yaml
+spec:
+  model:
+    deployment: gpt-4o-prod  # deployment שונה בפרודקשן
+    temperature: 0.1          # יותר דטרמיניסטי בפרודקשן
+  limits:
+    max_steps: 8              # יותר מחמיר בפרודקשן
+    timeout_seconds: 60
+```
+
+```yaml
+# overrides/development.yaml
+spec:
+  model:
+    deployment: gpt-4o-mini-dev  # מודל זול יותר לפיתוח
+    temperature: 0.7              # יותר יצירתי לבדיקות
+  limits:
+    max_steps: 20                 # יותר מקל לפיתוח
+    timeout_seconds: 300
+```
+
 ---
 
 ## זרימת בקשה דרך ה-Control Plane

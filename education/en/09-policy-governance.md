@@ -321,6 +321,76 @@ graph TD
 | **Tokenize** | Replace with an encrypted token | Internal identifiers |
 | **Log & Alert** | Log and send an alert | Doesn't block, but alerts |
 
+### DLP Implementation Example
+
+```python
+import re
+from dataclasses import dataclass
+
+@dataclass
+class DLPRule:
+    name: str
+    pattern: str   # regex pattern
+    action: str    # "mask", "block", "log"
+    mask_format: str = None
+
+# Define PII detection rules
+DLP_RULES = [
+    DLPRule(
+        name="ssn",
+        pattern=r'\b\d{3}-\d{2}-\d{4}\b',
+        action="mask",
+        mask_format="XXX-XX-****"   # Keep last 4 digits
+    ),
+    DLPRule(
+        name="credit_card",
+        pattern=r'\b\d{4}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}\b',
+        action="block"              # Never allow credit cards through
+    ),
+    DLPRule(
+        name="email",
+        pattern=r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b',
+        action="mask",
+        mask_format="[EMAIL_REDACTED]"
+    ),
+    DLPRule(
+        name="phone",
+        pattern=r'\b\d{3}[-.]?\d{3}[-.]?\d{4}\b',
+        action="mask",
+        mask_format="[PHONE_REDACTED]"
+    ),
+]
+
+def scan_and_protect(text: str, rules: list[DLPRule]) -> dict:
+    """Scan text for PII and apply protection actions."""
+    violations = []
+    protected_text = text
+    
+    for rule in rules:
+        matches = re.findall(rule.pattern, protected_text)
+        if matches:
+            if rule.action == "block":
+                raise DLPBlockedException(
+                    f"Output blocked: contains {rule.name} "
+                    f"({len(matches)} occurrences)"
+                )
+            elif rule.action == "mask":
+                protected_text = re.sub(
+                    rule.pattern, rule.mask_format, protected_text
+                )
+            violations.append({
+                "rule": rule.name,
+                "count": len(matches),
+                "action": rule.action
+            })
+    
+    return {"text": protected_text, "violations": violations}
+
+# Example usage:
+# Input:  "Customer John, SSN: 123-45-6789, email: john@acme.com"
+# Output: "Customer John, SSN: XXX-XX-****,  email: [EMAIL_REDACTED]"
+```
+
 ---
 
 ## Audit & Compliance

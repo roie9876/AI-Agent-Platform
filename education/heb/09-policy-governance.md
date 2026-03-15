@@ -321,6 +321,76 @@ graph TD
 | **Tokenize** | החלף בטוקן מוצפן | מזהים פנימיים |
 | **Log & Alert** | תעד ושלח התראה | לא חוסם, אבל מתריע |
 
+### דוגמת מימוש DLP
+
+```python
+import re
+from dataclasses import dataclass
+
+@dataclass
+class DLPRule:
+    name: str
+    pattern: str   # תבנית regex
+    action: str    # "mask", "block", "log"
+    mask_format: str = None
+
+# הגדרת כללי זיהוי PII
+DLP_RULES = [
+    DLPRule(
+        name="ssn",
+        pattern=r'\b\d{3}-\d{2}-\d{4}\b',
+        action="mask",
+        mask_format="XXX-XX-****"   # שמור רק 4 ספרות אחרונות
+    ),
+    DLPRule(
+        name="credit_card",
+        pattern=r'\b\d{4}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}\b',
+        action="block"              # לעולם אל תעביר כרטיסי אשראי
+    ),
+    DLPRule(
+        name="email",
+        pattern=r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b',
+        action="mask",
+        mask_format="[EMAIL_REDACTED]"
+    ),
+    DLPRule(
+        name="phone",
+        pattern=r'\b\d{3}[-.]?\d{3}[-.]?\d{4}\b',
+        action="mask",
+        mask_format="[PHONE_REDACTED]"
+    ),
+]
+
+def scan_and_protect(text: str, rules: list[DLPRule]) -> dict:
+    """סריקת טקסט לאיתור PII והפעלת הגנות."""
+    violations = []
+    protected_text = text
+    
+    for rule in rules:
+        matches = re.findall(rule.pattern, protected_text)
+        if matches:
+            if rule.action == "block":
+                raise DLPBlockedException(
+                    f"Output blocked: contains {rule.name} "
+                    f"({len(matches)} occurrences)"
+                )
+            elif rule.action == "mask":
+                protected_text = re.sub(
+                    rule.pattern, rule.mask_format, protected_text
+                )
+            violations.append({
+                "rule": rule.name,
+                "count": len(matches),
+                "action": rule.action
+            })
+    
+    return {"text": protected_text, "violations": violations}
+
+# דוגמת שימוש:
+# קלט:  "Customer John, SSN: 123-45-6789, email: john@acme.com"
+# פלט:  "Customer John, SSN: XXX-XX-****, email: [EMAIL_REDACTED]"
+```
+
 ---
 
 ## Audit & Compliance
