@@ -70,8 +70,13 @@ graph TB
     end
     
     subgraph "🏢 אקוסיסטם מיקרוסופט"
+        MAF["🏗️ Microsoft Agent Framework<br/>מאוחד, production-grade"]
         SK["🔮 Semantic Kernel<br/>Enterprise, רב-שפתי"]
         AG["🤖 AutoGen / AG2<br/>שיחות ריבוי סוכנים"]
+    end
+    
+    subgraph "🦜 LangChain Extended"
+        DA["🔬 Deep Agents<br/>רתמת סוכן קוד אוטונומי"]
     end
     
     subgraph "🔌 פרוטוקולי תקשורת"
@@ -80,9 +85,11 @@ graph TB
     end
     
     LC -.->|"מרחיב"| LG
-    SK -.->|"משלים"| AG
-    MCP -.->|"מחבר"| LC & SK & AG
-    A2A -.->|"מחבר"| LC & SK & AG & CI
+    LC -.->|"מפעיל"| DA
+    SK -.->|"מתפתח ל"| MAF
+    AG -.->|"מתפתח ל"| MAF
+    MCP -.->|"מחבר"| LC & SK & MAF
+    A2A -.->|"מחבר"| LC & SK & MAF & CI
 ```
 
 ---
@@ -139,6 +146,46 @@ result = chain.invoke({"topic": "quantum computing"})
 - **LangSmith**: פלטפורמת observability והערכה מובנית
 - **קהילה**: הכי הרבה מדריכים, דוגמאות ותמיכה קהילתית
 - **LCEL**: הרכבה דקלרטיבית של שרשראות עם תמיכה ב-streaming
+
+### Deep Agents (של LangChain)
+
+**Deep Agents** הוא **רתמת סוכן קוד אוטונומי** של LangChain — SDK ו-CLI מוכנים לבניית סוכני קוד אינטראקטיביים וארוכי-טווח. חשבו על זה כ"shell סוכן" שעוטף מודל ונותן לו הכל כדי לעבוד על codebases אמיתיים.
+
+```mermaid
+graph TB
+    DA["🔬 Deep Agents"]
+    
+    DA --> Harness["🛡️ Agent Harness<br/>גישת shell, מערכת קבצים,<br/>זרימות אישור"]
+    DA --> Context["🧠 ניהול קונטקסט<br/>דחיסה אוטונומית,<br/>מערכת קבצים וירטואלית"]
+    DA --> Skills["📋 Skills<br/>חבילות מומחיות לשימוש חוזר<br/>(LangSmith, LangGraph, וכו')"]
+    DA --> CLI["💻 CLI<br/>סוכן טרמינל אינטראקטיבי<br/>למפתחים"]
+    DA --> SDK["📦 SDK<br/>ספריית Python לבניית<br/>רתמות סוכן מותאמות"]
+```
+
+**תכונות מרכזיות:**
+- **Agent Harness**: גישת shell ומערכת קבצים, זרימות אישור וניהול קונטקסט לסשנים ארוכים
+- **דחיסת קונטקסט אוטונומית**: הסוכן יכול לדחוס את חלון הקונטקסט שלו ברגעים מתאימים — בלי צורך בפקודה ידנית
+- **מערכת Skills**: חבילות מומחיות לשימוש חוזר שנותנות לסוכנים ידע תחומי
+- **מערכת קבצים וירטואלית**: שומרת היסטוריית שיחה מלאה גם אחרי דחיסה, מאפשרת שחזור קונטקסט
+- **CLI**: סוכן טרמינל אינטראקטיבי למשימות קוד (`deepagents` CLI)
+
+```python
+from deepagents import create_deep_agent
+from deepagents.backends import StateBackend
+from deepagents.middleware.summarization import (
+    create_summarization_tool_middleware,
+)
+
+model = "openai:gpt-4o"
+agent = create_deep_agent(
+    model=model,
+    middleware=[
+        create_summarization_tool_middleware(model, StateBackend),
+    ],
+)
+```
+
+**מתי להשתמש ב-Deep Agents:** כשצריכים לבנות סוכן קוד, עוזר מבוסס-טרמינל, או כל סוכן אינטראקטיבי ארוך-טווח שעובד עם קבצים וקוד.
 
 ---
 
@@ -384,6 +431,78 @@ user_proxy.initiate_chat(
 
 ---
 
+## Microsoft Agent Framework
+
+### מה זה Microsoft Agent Framework?
+**Microsoft Agent Framework** (MAF) הוא הפריימוורק הקוד-פתוח החדש ביותר של מיקרוסופט ש**מאחד** את Semantic Kernel ו-AutoGen לפלטפורמה אחת, מוכנת-לפרודקשן. הוכרז בסוף 2025 והגיע ל-Release Candidate בתחילת 2026, ומספק בסיס עקבי רב-שפתי (C#, Python) לבניית הכל — מסוכן בודד ועד תזמורי ריבוי-סוכנים מורכבים.
+
+> **חשוב:** Semantic Kernel ו-AutoGen מתפתחים כעת **לתוך** Microsoft Agent Framework. מיקרוסופט מספקת מדריכי מיגרציה לפרויקטי SK ו-AutoGen קיימים. מושגי היסוד משני הפריימוורקים נשמרים ומשופרים.
+
+### למה איחוד?
+
+```mermaid
+graph TB
+    subgraph "לפני: שני פריימוורקים נפרדים"
+        SK_Old["🔮 Semantic Kernel<br/>Plugins, Planners, Connectors"] 
+        AG_Old["🤖 AutoGen<br/>ריבוי-סוכנים, הרצת קוד"]
+    end
+    
+    subgraph "אחרי: פריימוורק מאוחד"
+        MAF["🏗️ Microsoft Agent Framework<br/>כל היכולות מאוחדות"]
+        MAF --> Agents["🤖 הפשטת סוכן<br/>עקבית חוצה-ספקים"]
+        MAF --> Skills["📋 Agent Skills<br/>מומחיות תחום לשימוש חוזר"]
+        MAF --> Harness["🛡️ Agent Harness<br/>Shell, מערכת קבצים, אישור"]
+        MAF --> Multi["👥 תזמור ריבוי-סוכנים<br/>Group chat, העברות, האצלה"]
+        MAF --> Providers["🔌 אגנוסטי-ספק<br/>OpenAI, Claude, Copilot, Ollama"]
+    end
+    
+    SK_Old -->|"מתפתח ל"| MAF
+    AG_Old -->|"מתפתח ל"| MAF
+```
+
+### מושגים מרכזיים
+
+| מושג | הסבר |
+|------|-------|
+| **Agent Abstraction** | ממשק סוכן עקבי שעובד חוצה-ספקים שונים (OpenAI, Claude, GitHub Copilot, Ollama) |
+| **Agent Skills** | חבילות מומחיות ניידות (מבוססות markdown) שסוכנים מגלים וטוענים בזמן ריצה |
+| **Agent Harness** | שכבת runtime שמחברת חשיבה לביצוע אמיתי: גישת shell, מערכת קבצים, זרימות אישור |
+| **תזמור ריבוי-סוכנים** | תיאום סוכנים מתמחים — group chat, העברות, תבניות האצלה |
+| **Provider SDKs** | אינטגרציות עם Claude Agent SDK, GitHub Copilot SDK, Azure OpenAI ועוד |
+| **OpenTelemetry** | Observability מובנה עם tracing סטנדרטי |
+| **תמיכת MCP** | תמיכה טבעית בשרתי Model Context Protocol |
+
+### דוגמת Microsoft Agent Framework
+
+```python
+from microsoft.agents import Agent, AgentRuntime
+from microsoft.agents.skills import SkillsProvider
+
+# יצירת סוכן עם skills
+agent = Agent(
+    name="analyst",
+    model="azure-openai:gpt-4o",
+    instructions="You are a data analyst with expertise in sales data.",
+    skills_provider=SkillsProvider(skills_dir="./skills"),
+)
+
+# הרצה עם ה-runtime המאוחד
+runtime = AgentRuntime()
+result = await runtime.run(agent, "Analyze Q4 sales trends")
+```
+
+### מתי להשתמש ב-Microsoft Agent Framework
+
+| ✅ מתאים ל | ❌ פחות מתאים ל |
+|-----------|----------------|
+| פרויקטים חדשים באקוסיסטם מיקרוסופט | צוותים שקועים עמוק באקוסיסטם LangChain |
+| מערכות ריבוי-סוכנים ארגוניות | צוותי Python בלבד שרוצים פרוטוטייפינג מהיר |
+| סוכני פרודקשן עם גמישות ספקים | אפליקציות RAG פשוטות חד-פעמיות |
+| צוותים שמהגרים מ-SK או AutoGen | פרויקטים שדורשים הערכת LangSmith |
+| פרויקטי .NET ו-Python | |
+
+---
+
 ## CrewAI
 
 ### מה זה CrewAI?
@@ -606,21 +725,21 @@ graph LR
 
 ### מטריצת תכונות
 
-| תכונה | LangChain | LangGraph | Semantic Kernel | AutoGen | CrewAI | LlamaIndex |
-|--------|-----------|-----------|-----------------|---------|--------|------------|
-| **מוקד עיקרי** | שרשראות & RAG | גרפים stateful | SDK ארגוני | צ'אט ריבוי-סוכנים | צוותים מבוססי תפקידים | נתונים & RAG |
-| **שפות** | Python, JS | Python, JS | C#, Python, Java | Python, .NET | Python | Python, TS |
-| **ספקי LLM** | 50+ | דרך LangChain | Azure OpenAI, OpenAI, Ollama, + עוד | OpenAI, Azure, + עוד | דרך LiteLLM | 20+ |
-| **ריבוי-סוכנים** | בסיסי | ✅ Subgraphs | ✅ Agent Framework | ✅ חוזקה מרכזית | ✅ חוזקה מרכזית | בסיסי |
-| **ניהול State** | בסיסי | ✅ מובנה + פרסיסטנטיות | ✅ Process Framework | דרך group chat | בסיסי | בסיסי |
-| **HITL** | ידני | ✅ מובנה | ✅ דרך Filters | ✅ דרך UserProxy | ⚠️ מוגבל | ⚠️ מוגבל |
-| **RAG** | ✅ חזק | דרך LangChain | ✅ דרך Memory | ⚠️ בסיסי | ⚠️ בסיסי | ✅ הטוב בקטגוריה |
-| **אקוסיסטם כלים** | 700+ אינטגרציות | דרך LangChain | דרך Plugins | דרך tools | דרך tools | 300+ מחברי נתונים |
-| **Observability** | LangSmith | LangSmith | Azure Monitor, Aspire | לוגינג מובנה | לוגינג מובנה | LlamaTrace |
-| **תמיכת MCP** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **מוכנות ארגונית** | ⚠️ בצמיחה | ✅ LangGraph Platform | ✅ חזק | ⚠️ בצמיחה | ⚠️ בצמיחה | ⚠️ בצמיחה |
-| **עקומת למידה** | בינונית | בינונית-גבוהה | בינונית | בינונית | נמוכה | בינונית |
-| **רישיון** | MIT | MIT | MIT | CC-BY-4.0 (AG2: Apache 2.0) | MIT | MIT |
+| תכונה | LangChain | LangGraph | MS Agent Framework | Semantic Kernel | AutoGen | CrewAI | LlamaIndex |
+|--------|-----------|-----------|-------------------|-----------------|---------|--------|------------|
+| **מוקד עיקרי** | שרשראות & RAG | גרפים stateful | פלטפורמת סוכנים מאוחדת | SDK ארגוני (כעת חלק מ-MAF) | צ'אט ריבוי-סוכנים (כעת חלק מ-MAF) | צוותים מבוססי תפקידים | נתונים & RAG |
+| **שפות** | Python, JS | Python, JS | C#, Python | C#, Python, Java | Python, .NET | Python | Python, TS |
+| **ספקי LLM** | 50+ | דרך LangChain | OpenAI, Claude, Copilot, Ollama, Azure | Azure OpenAI, OpenAI, Ollama, + עוד | OpenAI, Azure, + עוד | דרך LiteLLM | 20+ |
+| **ריבוי-סוכנים** | בסיסי | ✅ Subgraphs | ✅ חוזקה מרכזית | ✅ Agent Framework | ✅ חוזקה מרכזית | ✅ חוזקה מרכזית | בסיסי |
+| **ניהול State** | בסיסי | ✅ מובנה + פרסיסטנטיות | ✅ מובנה | ✅ Process Framework | דרך group chat | בסיסי | בסיסי |
+| **HITL** | ידני | ✅ מובנה | ✅ זרימות אישור | ✅ דרך Filters | ✅ דרך UserProxy | ⚠️ מוגבל | ⚠️ מוגבל |
+| **RAG** | ✅ חזק | דרך LangChain | ⚠️ דרך אינטגרציות | ✅ דרך Memory | ⚠️ בסיסי | ⚠️ בסיסי | ✅ הטוב בקטגוריה |
+| **אקוסיסטם כלים** | 700+ אינטגרציות | דרך LangChain | דרך Skills + MCP | דרך Plugins | דרך tools | דרך tools | 300+ מחברי נתונים |
+| **Observability** | LangSmith | LangSmith | OpenTelemetry | Azure Monitor, Aspire | לוגינג מובנה | לוגינג מובנה | LlamaTrace |
+| **תמיכת MCP** | ✅ | ✅ | ✅ טבעית | ✅ | ✅ | ✅ | ✅ |
+| **מוכנות ארגונית** | ⚠️ בצמיחה | ✅ LangGraph Platform | ✅ חזק | ✅ חזק | ⚠️ בצמיחה | ⚠️ בצמיחה | ⚠️ בצמיחה |
+| **עקומת למידה** | בינונית | בינונית-גבוהה | בינונית | בינונית | בינונית | נמוכה | בינונית |
+| **רישיון** | MIT | MIT | MIT | MIT | CC-BY-4.0 (AG2: Apache 2.0) | MIT | MIT |
 
 ### אימוץ וקהילה (2025–2026)
 
@@ -713,7 +832,7 @@ graph TD
 graph LR
     subgraph "שילובים נפוצים"
         C1["🦜 LangGraph<br/>+ 🦙 LlamaIndex<br/>(סוכן RAG סטייטפול)"]
-        C2["🔮 Semantic Kernel<br/>+ 🤖 AutoGen<br/>(ריבוי-סוכנים ארגוני)"]
+        C2["🏗️ MS Agent Framework<br/>+ Azure AI Foundry<br/>(ריבוי-סוכנים ארגוני)"]
         C3["🦜 LangChain<br/>+ 🔗 MCP<br/>(סוכן עם כלים סטנדרטיים)"]
         C4["👥 CrewAI<br/>+ 🤝 A2A<br/>(צוות חוצה-פריימוורקים)"]
     end
@@ -735,14 +854,21 @@ mindmap
         גרפים סטייטפול
         Checkpointing
         HITL
-      Semantic Kernel
-        ארגוני
+      MS Agent Framework
+        מאחד SK + AutoGen
         רב-שפתי
-        Azure native
+        אגנוסטי-ספק
+        Agent Skills
+      Semantic Kernel
+        SDK ארגוני
+        כעת חלק מ-MAF
       AutoGen
         צ'אט ריבוי-סוכנים
-        הרצת קוד
-        שיחות קבוצתיות
+        כעת חלק מ-MAF
+      Deep Agents
+        רתמת סוכן קוד
+        דחיסת קונטקסט
+        אקוסיסטם LangChain
       CrewAI
         צוותים מבוססי תפקידים
         API אינטואיטיבי
@@ -771,8 +897,10 @@ mindmap
 | **Agent Framework** | ספרייה שמספקת אבני בניין (זיכרון, כלים, תזמור) כדי שמפתחים יתמקדו בלוגיקה עסקית |
 | **LangChain** | הפריימוורק הפופולרי ביותר, כללי, עם האקוסיסטם הגדול ביותר |
 | **LangGraph** | Workflows סטייטפול מבוססי-גרף בנויים על LangChain — הטוב ביותר לסוכנים מורכבים |
-| **Semantic Kernel** | ה-SDK הרב-שפתי של מיקרוסופט — הטוב ביותר לצוותי .NET/Java ארגוניים |
-| **AutoGen** | פריימוורק שיחות ריבוי-סוכנים — הטוב ביותר כשסוכנים צריכים לשתף פעולה |
+| **MS Agent Framework** | הפריימוורק המאוחד של מיקרוסופט (יורש Semantic Kernel + AutoGen) — הבחירה המומלצת לפרויקטים חדשים באקוסיסטם מיקרוסופט |
+| **Semantic Kernel** | ה-SDK הרב-שפתי של מיקרוסופט — כעת מתפתח לתוך Microsoft Agent Framework |
+| **AutoGen** | פריימוורק שיחות ריבוי-סוכנים — כעת מתפתח לתוך Microsoft Agent Framework |
+| **Deep Agents** | רתמת סוכן קוד של LangChain — ניהול קונטקסט אוטונומי לסוכנים ארוכי-טווח |
 | **CrewAI** | פריימוורק צוותים מבוסס-תפקידים — ה-API הכי אינטואיטיבי לריבוי-סוכנים |
 | **LlamaIndex** | פריימוורק מוכוון-נתונים — הטוב ביותר ל-RAG ועיבוד מסמכים מורכב |
 | **MCP** | פרוטוקול סטנדרטי לחיבור סוכנים לכלים (של Anthropic) |

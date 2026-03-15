@@ -70,8 +70,13 @@ graph TB
     end
     
     subgraph "🏢 Microsoft Ecosystem"
+        MAF["🏗️ Microsoft Agent Framework<br/>Unified, production-grade"]
         SK["🔮 Semantic Kernel<br/>Enterprise, multi-language"]
         AG["🤖 AutoGen / AG2<br/>Multi-agent conversations"]
+    end
+    
+    subgraph "🦜 LangChain Extended"
+        DA["🔬 Deep Agents<br/>Autonomous coding agent harness"]
     end
     
     subgraph "🔌 Interop Protocols"
@@ -80,9 +85,11 @@ graph TB
     end
     
     LC -.->|"extends"| LG
-    SK -.->|"complements"| AG
-    MCP -.->|"connects"| LC & SK & AG
-    A2A -.->|"connects"| LC & SK & AG & CI
+    LC -.->|"powers"| DA
+    SK -.->|"evolves into"| MAF
+    AG -.->|"evolves into"| MAF
+    MCP -.->|"connects"| LC & SK & MAF
+    A2A -.->|"connects"| LC & SK & MAF & CI
 ```
 
 ---
@@ -139,6 +146,46 @@ result = chain.invoke({"topic": "quantum computing"})
 - **LangSmith**: Built-in observability and evaluation platform
 - **Community**: Most tutorials, examples, and community support
 - **LCEL**: Declarative chain composition with streaming support
+
+### Deep Agents (by LangChain)
+
+**Deep Agents** is LangChain's autonomous **coding agent harness** — a ready-made SDK and CLI for building long-running, interactive coding agents. Think of it as the "agent shell" that wraps around a model and gives it everything it needs to work on real codebases.
+
+```mermaid
+graph TB
+    DA["🔬 Deep Agents"]
+    
+    DA --> Harness["🛡️ Agent Harness<br/>Shell access, filesystem,<br/>approval flows"]
+    DA --> Context["🧠 Context Management<br/>Autonomous compression,<br/>virtual filesystem"]
+    DA --> Skills["📋 Skills<br/>Reusable expertise packages<br/>(LangSmith, LangGraph, etc.)"]
+    DA --> CLI["💻 CLI<br/>Interactive terminal agent<br/>for developers"]
+    DA --> SDK["📦 SDK<br/>Python library for building<br/>custom agent harnesses"]
+```
+
+**Key Features:**
+- **Agent Harness**: Shell and filesystem access, approval flows, and context management for long-running sessions
+- **Autonomous Context Compression**: The agent can compress its own context window at opportune times — no manual `/compact` needed
+- **Skills System**: Reusable expertise packages that give agents domain knowledge (e.g., LangSmith skills, LangChain skills)
+- **Virtual Filesystem**: Preserves full conversation history even after summarization, allowing context recovery
+- **CLI**: Interactive terminal agent for coding tasks (`deepagents` CLI)
+
+```python
+from deepagents import create_deep_agent
+from deepagents.backends import StateBackend
+from deepagents.middleware.summarization import (
+    create_summarization_tool_middleware,
+)
+
+model = "openai:gpt-4o"
+agent = create_deep_agent(
+    model=model,
+    middleware=[
+        create_summarization_tool_middleware(model, StateBackend),
+    ],
+)
+```
+
+**When to use Deep Agents:** When you need to build a coding agent, terminal-based assistant, or any long-running interactive agent that works with files and code.
 
 ---
 
@@ -384,6 +431,78 @@ user_proxy.initiate_chat(
 
 ---
 
+## Microsoft Agent Framework
+
+### What is Microsoft Agent Framework?
+**Microsoft Agent Framework** (MAF) is Microsoft's newest open-source framework that **unifies** Semantic Kernel and AutoGen into a single, production-grade platform. Announced in late 2025 and reaching Release Candidate in early 2026, it provides a consistent multi-language (C#, Python) foundation for building everything from single agents to complex multi-agent orchestrations.
+
+> **Important:** Semantic Kernel and AutoGen are now evolving **into** Microsoft Agent Framework. Microsoft provides migration guides for existing SK and AutoGen projects. The core concepts from both frameworks are preserved and enhanced.
+
+### Why Unification?
+
+```mermaid
+graph TB
+    subgraph "Before: Two Separate Frameworks"
+        SK_Old["🔮 Semantic Kernel<br/>Plugins, Planners, Connectors"] 
+        AG_Old["🤖 AutoGen<br/>Multi-agent, Code execution"]
+    end
+    
+    subgraph "After: Unified Framework"
+        MAF["🏗️ Microsoft Agent Framework<br/>All capabilities unified"]
+        MAF --> Agents["🤖 Agent Abstraction<br/>Consistent across providers"]
+        MAF --> Skills["📋 Agent Skills<br/>Reusable domain expertise"]
+        MAF --> Harness["🛡️ Agent Harness<br/>Shell, filesystem, approval"]
+        MAF --> Multi["👥 Multi-Agent Orchestration<br/>Group chat, handoffs, delegation"]
+        MAF --> Providers["🔌 Provider-Agnostic<br/>OpenAI, Claude, Copilot, Ollama"]
+    end
+    
+    SK_Old -->|"evolves into"| MAF
+    AG_Old -->|"evolves into"| MAF
+```
+
+### Key Concepts
+
+| Concept | Explanation |
+|---------|-------------|
+| **Agent Abstraction** | Consistent agent interface that works across different AI providers (OpenAI, Claude, GitHub Copilot, Ollama) |
+| **Agent Skills** | Portable, reusable expertise packages (markdown-based) that agents discover and load at runtime |
+| **Agent Harness** | Runtime layer connecting model reasoning to real execution: shell access, filesystem, approval flows |
+| **Multi-Agent Orchestration** | Coordination of specialized agents — group chat, handoffs, delegation patterns |
+| **Provider SDKs** | Integrations with Claude Agent SDK, GitHub Copilot SDK, Azure OpenAI, and more |
+| **OpenTelemetry** | Built-in observability with standardized tracing |
+| **MCP Integration** | Native support for Model Context Protocol servers |
+
+### Microsoft Agent Framework Example
+
+```python
+from microsoft.agents import Agent, AgentRuntime
+from microsoft.agents.skills import SkillsProvider
+
+# Create an agent with skills
+agent = Agent(
+    name="analyst",
+    model="azure-openai:gpt-4o",
+    instructions="You are a data analyst with expertise in sales data.",
+    skills_provider=SkillsProvider(skills_dir="./skills"),
+)
+
+# Run with the unified runtime
+runtime = AgentRuntime()
+result = await runtime.run(agent, "Analyze Q4 sales trends")
+```
+
+### When to Use Microsoft Agent Framework
+
+| ✅ Good For | ❌ Less Suitable For |
+|------------|---------------------|
+| New Microsoft-ecosystem projects | Teams deeply invested in LangChain ecosystem |
+| Multi-agent enterprise systems | Python-only teams wanting quick prototyping |
+| Production agents with provider flexibility | Simple one-shot RAG applications |
+| Teams migrating from SK or AutoGen | Projects requiring LangSmith evaluation |
+| .NET and Python projects | |
+
+---
+
 ## CrewAI
 
 ### What is CrewAI?
@@ -606,21 +725,21 @@ graph LR
 
 ### Feature Matrix
 
-| Feature | LangChain | LangGraph | Semantic Kernel | AutoGen | CrewAI | LlamaIndex |
-|---------|-----------|-----------|-----------------|---------|--------|------------|
-| **Primary Focus** | Chains & RAG | Stateful graphs | Enterprise SDK | Multi-agent chat | Role-based teams | Data & RAG |
-| **Languages** | Python, JS | Python, JS | C#, Python, Java | Python, .NET | Python | Python, TS |
-| **LLM Providers** | 50+ | Via LangChain | Azure OpenAI, OpenAI, Ollama, + more | OpenAI, Azure, + more | Via LiteLLM | 20+ |
-| **Multi-Agent** | Basic | ✅ Subgraphs | ✅ Agent Framework | ✅ Core strength | ✅ Core strength | Basic |
-| **State Management** | Basic | ✅ Built-in + persistence | ✅ Process Framework | Via group chat | Basic | Basic |
-| **HITL** | Manual | ✅ Built-in | ✅ via Filters | ✅ via UserProxy | ⚠️ Limited | ⚠️ Limited |
-| **RAG** | ✅ Strong | Via LangChain | ✅ via Memory | ⚠️ Basic | ⚠️ Basic | ✅ Best-in-class |
-| **Tool Ecosystem** | 700+ integrations | Via LangChain | Via Plugins | Via tools | Via tools | 300+ data connectors |
-| **Observability** | LangSmith | LangSmith | Azure Monitor, Aspire | Built-in logging | Built-in logging | LlamaTrace |
-| **MCP Support** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **Enterprise Ready** | ⚠️ Growing | ✅ LangGraph Platform | ✅ Strong | ⚠️ Growing | ⚠️ Growing | ⚠️ Growing |
-| **Learning Curve** | Medium | Medium-High | Medium | Medium | Low | Medium |
-| **License** | MIT | MIT | MIT | CC-BY-4.0 (AG2: Apache 2.0) | MIT | MIT |
+| Feature | LangChain | LangGraph | MS Agent Framework | Semantic Kernel | AutoGen | CrewAI | LlamaIndex |
+|---------|-----------|-----------|-------------------|-----------------|---------|--------|------------|
+| **Primary Focus** | Chains & RAG | Stateful graphs | Unified agent platform | Enterprise SDK (now part of MAF) | Multi-agent chat (now part of MAF) | Role-based teams | Data & RAG |
+| **Languages** | Python, JS | Python, JS | C#, Python | C#, Python, Java | Python, .NET | Python | Python, TS |
+| **LLM Providers** | 50+ | Via LangChain | OpenAI, Claude, Copilot, Ollama, Azure | Azure OpenAI, OpenAI, Ollama, + more | OpenAI, Azure, + more | Via LiteLLM | 20+ |
+| **Multi-Agent** | Basic | ✅ Subgraphs | ✅ Core strength | ✅ Agent Framework | ✅ Core strength | ✅ Core strength | Basic |
+| **State Management** | Basic | ✅ Built-in + persistence | ✅ Built-in | ✅ Process Framework | Via group chat | Basic | Basic |
+| **HITL** | Manual | ✅ Built-in | ✅ Approval flows | ✅ via Filters | ✅ via UserProxy | ⚠️ Limited | ⚠️ Limited |
+| **RAG** | ✅ Strong | Via LangChain | ⚠️ Via integrations | ✅ via Memory | ⚠️ Basic | ⚠️ Basic | ✅ Best-in-class |
+| **Tool Ecosystem** | 700+ integrations | Via LangChain | Via Skills + MCP | Via Plugins | Via tools | Via tools | 300+ data connectors |
+| **Observability** | LangSmith | LangSmith | OpenTelemetry | Azure Monitor, Aspire | Built-in logging | Built-in logging | LlamaTrace |
+| **MCP Support** | ✅ | ✅ | ✅ Native | ✅ | ✅ | ✅ | ✅ |
+| **Enterprise Ready** | ⚠️ Growing | ✅ LangGraph Platform | ✅ Strong | ✅ Strong | ⚠️ Growing | ⚠️ Growing | ⚠️ Growing |
+| **Learning Curve** | Medium | Medium-High | Medium | Medium | Medium | Low | Medium |
+| **License** | MIT | MIT | MIT | MIT | CC-BY-4.0 (AG2: Apache 2.0) | MIT | MIT |
 
 ### Adoption & Community (2025–2026)
 
@@ -713,7 +832,7 @@ graph TD
 graph LR
     subgraph "Common Combinations"
         C1["🦜 LangGraph<br/>+ 🦙 LlamaIndex<br/>(Stateful RAG agent)"]
-        C2["🔮 Semantic Kernel<br/>+ 🤖 AutoGen<br/>(Enterprise multi-agent)"]
+        C2["🏗️ MS Agent Framework<br/>+ Azure AI Foundry<br/>(Enterprise multi-agent)"]
         C3["🦜 LangChain<br/>+ 🔗 MCP<br/>(Agent with standard tools)"]
         C4["👥 CrewAI<br/>+ 🤝 A2A<br/>(Cross-framework crew)"]
     end
@@ -735,14 +854,21 @@ mindmap
         Stateful graphs
         Checkpointing
         HITL
-      Semantic Kernel
-        Enterprise
+      MS Agent Framework
+        Unifies SK + AutoGen
         Multi-language
-        Azure native
+        Provider-agnostic
+        Agent Skills
+      Semantic Kernel
+        Enterprise SDK
+        Now part of MAF
       AutoGen
         Multi-agent chat
-        Code execution
-        Group conversations
+        Now part of MAF
+      Deep Agents
+        Coding agent harness
+        Context compression
+        LangChain ecosystem
       CrewAI
         Role-based teams
         Intuitive API
@@ -771,8 +897,10 @@ mindmap
 | **Agent Framework** | A library that provides building blocks (memory, tools, orchestration) so developers focus on business logic |
 | **LangChain** | Most popular, general-purpose framework with the largest ecosystem |
 | **LangGraph** | Graph-based stateful workflows built on LangChain — best for complex agents |
-| **Semantic Kernel** | Microsoft's multi-language SDK — best for .NET/Java enterprise teams |
-| **AutoGen** | Multi-agent conversation framework — best when agents need to collaborate |
+| **MS Agent Framework** | Microsoft's unified framework (successor to Semantic Kernel + AutoGen) — the recommended choice for new Microsoft-ecosystem projects |
+| **Semantic Kernel** | Microsoft's multi-language SDK — now evolving into Microsoft Agent Framework |
+| **AutoGen** | Multi-agent conversation framework — now evolving into Microsoft Agent Framework |
+| **Deep Agents** | LangChain's coding agent harness — autonomous context management for long-running agents |
 | **CrewAI** | Role-based team framework — most intuitive API for multi-agent |
 | **LlamaIndex** | Data-first framework — best for RAG and complex document processing |
 | **MCP** | Standard protocol for connecting agents to tools (by Anthropic) |
