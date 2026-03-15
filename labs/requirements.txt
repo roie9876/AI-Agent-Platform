@@ -7,3 +7,7 @@ python-dotenv
 ipykernel
 rich
 tabulate
+azure-cosmos
+azure-identity
+azure-search-documents
+azure-storage-blob

@@ -82,11 +82,14 @@ flowchart TB
 | Requirement | Version | Why |
 |------------|---------|-----|
 | **Python** | 3.11+ | All labs |
-| **OpenAI API Key** | Any plan | LLM calls (Labs 1-7) |
+| **Azure Subscription** | Owner or Contributor | Deploy cloud resources |
+| **Azure CLI** | Latest | Deploy via Bicep |
 | **VS Code** | Latest | Recommended IDE |
 | **Jupyter Extension** | Latest | Run notebooks |
 
-> **Cost estimate:** Running all 7 labs costs approximately **$2-5** in OpenAI API calls (mostly GPT-4o-mini).
+> 🆕 **New to these tools?** See [lab-00-setup/PREREQUISITES.md](lab-00-setup/PREREQUISITES.md) for step-by-step installation.
+
+> 💡 **All AI models run in Azure** (Azure OpenAI with GPT-5.2). The notebooks run on your local machine.
 
 ### Quick Setup
 
@@ -103,9 +106,14 @@ source .venv/bin/activate  # macOS/Linux
 # Install dependencies
 pip install -r requirements.txt
 
-# Set your API key
-cp .env.template .env
-# Edit .env and add your OPENAI_API_KEY
+# Deploy Azure resources (~5-10 min)
+cd ../infra
+./deploy.sh
+# This auto-generates labs/.env with all connection strings!
+
+# Validate setup
+cd ../labs
+# Open lab-00-setup/health-check.ipynb and run all cells
 ```
 
 ---
@@ -114,9 +122,9 @@ cp .env.template .env
 
 | Path | Labs | Time |
 |------|------|------|
-| **Essential** (fundamentals) | Labs 01, 03, 05 | ~4 hours |
-| **Full Workshop** | Labs 01–07 | ~10 hours |
-| **Quick Taste** | Lab 01 only | ~1.5 hours |
+| **Essential** (fundamentals) | Labs 00, 01, 03, 05 | ~5 hours |
+| **Full Workshop** | Labs 00–07 | ~12 hours |
+| **Quick Taste** | Labs 00, 01 | ~2 hours |
 
 ---
 
@@ -138,4 +146,4 @@ lab-XX-topic/
 
 ---
 
-> **Ready?** Start with **[Lab 01 — Building a ReAct Agent from Scratch](lab-01-react-agent/README.md)**
+> **Ready?** Start with **[Lab 00 — Environment Setup](lab-00-setup/README.md)**

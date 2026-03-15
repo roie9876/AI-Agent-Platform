@@ -99,6 +99,7 @@ graph TB
 
 | Lab | What You Build | Time |
 |-----|---------------|------|
+| **[Lab 00](labs/lab-00-setup/README.md)** | Azure environment setup (one-click deploy) | ~20min |
 | **[Lab 01](labs/lab-01-react-agent/README.md)** | Build a ReAct Agent from scratch, then with LangGraph | ~1.5h |
 | **Lab 02** | Smart model routing (cheap vs expensive) | ~1h |
 | **Lab 03** | Memory & RAG integration | ~1.5h |
