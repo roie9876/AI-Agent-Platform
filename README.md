@@ -5,6 +5,9 @@
 ## Purpose
 This repository is a comprehensive educational resource designed to teach all the concepts, technologies, and architectures required to design and build an **AI Agent Platform as a Service (PaaS)**.
 
+- **📖 Education chapters** (1-16) — deep concept explanations with diagrams
+- **🧪 Hands-on labs** — build real agents with LangChain/LangGraph, step by step
+
 Each chapter is self-contained, but together they form a complete picture of a Production-grade system.
 
 ---
@@ -87,6 +90,24 @@ graph TB
     Sec --> Sandbox
     Scale --> Orch
 ```
+
+---
+
+## 🧪 Hands-On Labs
+
+> **Learn by building.** Each lab teaches one core concept by writing real code with LangChain/LangGraph.
+
+| Lab | What You Build | Time |
+|-----|---------------|------|
+| **[Lab 01](labs/lab-01-react-agent/README.md)** | Build a ReAct Agent from scratch, then with LangGraph | ~1.5h |
+| **Lab 02** | Smart model routing (cheap vs expensive) | ~1h |
+| **Lab 03** | Memory & RAG integration | ~1.5h |
+| **Lab 04** | Orchestration patterns (sequential, parallel, map-reduce) | ~1.5h |
+| **Lab 05** | Tool calling with safety guardrails | ~1h |
+| **Lab 06** | Agent evaluation pipeline | ~1h |
+| **Lab 07** | Framework deep dive (LangGraph vs Deep Agents) | ~1.5h |
+
+**[→ Get started with the labs](labs/README.md)**
 
 ---
 
