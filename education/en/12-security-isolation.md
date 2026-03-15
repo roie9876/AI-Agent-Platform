@@ -409,7 +409,7 @@ graph LR
 ```mermaid
 graph LR
     Attacker["😈 Attacker"] -->|"Send 1000 complex requests"| Platform["🤖 Platform"]
-    Platform -->|"$$$$$"| LLM["🧠 LLM<br/>$10,000 bill"]
+    Platform -->|"#36;#36;#36;#36;#36;"| LLM["🧠 LLM<br/>#36;10,000 bill"]
 ```
 
 **Mitigation**: Rate limiting, budget caps, anomaly detection

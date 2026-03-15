@@ -55,7 +55,7 @@ graph TB
     Agent --> Bad2["🗑️ Deleted a DB table"]
     Agent --> Bad3["💳 Exposed credit card numbers"]
     Agent --> Bad4["🤬 Wrote offensive content"]
-    Agent --> Bad5["💸 Consumed $10,000 in tokens"]
+    Agent --> Bad5["💸 Consumed #36;10,000 in tokens"]
     
     style Bad1 fill:#ff6b6b
     style Bad2 fill:#ff6b6b

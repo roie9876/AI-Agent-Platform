@@ -238,8 +238,8 @@ graph TB
         Model["🧠 Model Processing"]
         Output["📤 Output Tokens<br/>(agent response)"]
         
-        Input -->|"Charged $$"| Model
-        Model -->|"Charged $$$"| Output
+        Input -->|"Charged #36;#36;"| Model
+        Model -->|"Charged #36;#36;#36;"| Output
     end
 ```
 
@@ -319,10 +319,10 @@ pie title "Token Distribution per Agent Request"
 graph TB
     Cost["💰 Total Cost"]
     
-    Cost --> ByTenant["🏢 By Tenant<br/>acme: $45<br/>beta: $38"]
-    Cost --> ByAgent["🤖 By Agent<br/>analyst: $30<br/>support: $25"]
-    Cost --> ByModel["🧠 By Model<br/>gpt-4o: $80<br/>mini: $20"]
-    Cost --> ByTool["🔧 By Tool<br/>sql: $15<br/>search: $10"]
+    Cost --> ByTenant["🏢 By Tenant<br/>acme: #36;45<br/>beta: #36;38"]
+    Cost --> ByAgent["🤖 By Agent<br/>analyst: #36;30<br/>support: #36;25"]
+    Cost --> ByModel["🧠 By Model<br/>gpt-4o: #36;80<br/>mini: #36;20"]
+    Cost --> ByTool["🔧 By Tool<br/>sql: #36;15<br/>search: #36;10"]
     Cost --> ByTime["📅 By Time<br/>Peak hours<br/>Weekday vs Weekend"]
 ```
 
@@ -338,8 +338,8 @@ sequenceDiagram
     Agent->>LLM: Request (model=gpt-4o)
     LLM-->>Agent: Response + usage metadata
     Agent->>Counter: {input: 1200, output: 400, model: "gpt-4o"}
-    Counter->>Counter: Calculate: 1200*$2.50/1M + 400*$10/1M = $0.007
-    Counter->>DB: Store: {tenant, agent, cost: $0.007, timestamp}
+    Counter->>Counter: Calculate: 1200*#36;2.50/1M + 400*#36;10/1M = #36;0.007
+    Counter->>DB: Store: {tenant, agent, cost: #36;0.007, timestamp}
 ```
 
 ---

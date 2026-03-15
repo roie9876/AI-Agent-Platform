@@ -55,7 +55,7 @@ graph TB
     Agent --> Bad2["🗑️ מחק טבלה ב-DB"]
     Agent --> Bad3["💳 חשף מספרי כרטיסי אשראי"]
     Agent --> Bad4["🤬 כתב תוכן פוגעני"]
-    Agent --> Bad5["💸 צרך $10,000 ב-tokens"]
+    Agent --> Bad5["💸 צרך #36;10,000 ב-tokens"]
     
     style Bad1 fill:#ff6b6b
     style Bad2 fill:#ff6b6b

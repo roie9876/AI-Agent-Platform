@@ -111,11 +111,11 @@ mindmap
 ```mermaid
 graph LR
     subgraph "Grounded ✅"
-        Context1["📄 Context:<br/>'Q3 Revenue: $5M'"] --> Answer1["🤖 'Q3 Revenue<br/>was $5M'"]
+        Context1["📄 Context:<br/>'Q3 Revenue: #36;5M'"] --> Answer1["🤖 'Q3 Revenue<br/>was #36;5M'"]
     end
     
     subgraph "NOT Grounded ❌"
-        Context2["📄 Context:<br/>'Q3 Revenue: $5M'"] --> Answer2["🤖 'Q3 Revenue<br/>was $8M' 🤥"]
+        Context2["📄 Context:<br/>'Q3 Revenue: #36;5M'"] --> Answer2["🤖 'Q3 Revenue<br/>was #36;8M' 🤥"]
     end
 ```
 
@@ -124,7 +124,7 @@ graph LR
 ```mermaid
 graph TD
     Answer["🤖 Agent Answer"] --> Extract["1️⃣ Extract Claims"]
-    Extract --> Claims["Claims:<br/>- 'Revenue was $5M'<br/>- 'Growth was 20%'<br/>- 'Best quarter ever'"]
+    Extract --> Claims["Claims:<br/>- 'Revenue was #36;5M'<br/>- 'Growth was 20%'<br/>- 'Best quarter ever'"]
     Claims --> Check["2️⃣ Check Each Claim<br/>Against the Context"]
     Check --> Supported["✅ Supported: 2"]
     Check --> NotSupported["❌ Not Supported: 1"]
@@ -149,7 +149,7 @@ How much the answer **addresses what was asked**.
 ```mermaid
 graph LR
     subgraph "Relevant ✅"
-        Q1["❓ 'What is the price?'"] --> A1["🤖 'The price is $99'"]
+        Q1["❓ 'What is the price?'"] --> A1["🤖 'The price is #36;99'"]
     end
     
     subgraph "Not Relevant ❌"
@@ -364,8 +364,8 @@ graph TB
     Traffic -->|"50%"| A["🤖 Agent A<br/>(Current)"]
     Traffic -->|"50%"| B["🤖 Agent B<br/>(New prompt)"]
     
-    A --> MetricsA["📊 Metrics A<br/>Groundedness: 0.82<br/>Latency: 1.2s<br/>Cost: $0.03"]
-    B --> MetricsB["📊 Metrics B<br/>Groundedness: 0.91<br/>Latency: 1.5s<br/>Cost: $0.04"]
+    A --> MetricsA["📊 Metrics A<br/>Groundedness: 0.82<br/>Latency: 1.2s<br/>Cost: #36;0.03"]
+    B --> MetricsB["📊 Metrics B<br/>Groundedness: 0.91<br/>Latency: 1.5s<br/>Cost: #36;0.04"]
     
     MetricsA --> Compare["📈 Compare<br/>Statistical significance?"]
     MetricsB --> Compare

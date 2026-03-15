@@ -139,10 +139,10 @@ classDiagram
 graph TB
     Request["📨 Request"] --> Router["🔀 Model Router"]
     
-    Router -->|"Simple task<br/>(summary, translation)"| Small["GPT-3.5 / Llama<br/>💰 $0.001"]
-    Router -->|"Complex task<br/>(reasoning, code)"| Large["GPT-4o<br/>💰 $0.01"]
-    Router -->|"Vision task<br/>(images)"| Vision["GPT-4o Vision<br/>💰 $0.02"]
-    Router -->|"Embedding<br/>(semantic search)"| Embed["Ada / text-embedding<br/>💰 $0.0001"]
+    Router -->|"Simple task<br/>(summary, translation)"| Small["GPT-3.5 / Llama<br/>💰 #36;0.001"]
+    Router -->|"Complex task<br/>(reasoning, code)"| Large["GPT-4o<br/>💰 #36;0.01"]
+    Router -->|"Vision task<br/>(images)"| Vision["GPT-4o Vision<br/>💰 #36;0.02"]
+    Router -->|"Embedding<br/>(semantic search)"| Embed["Ada / text-embedding<br/>💰 #36;0.0001"]
 ```
 
 ### Why Not Just Always Use the Best Model?
@@ -188,10 +188,10 @@ graph TD
 ```mermaid
 graph TD
     Request["📨 Request"] --> Budget{"💰 Budget left?"}
-    Budget -->|"Yes, >$1"| Best["GPT-4o"]
-    Budget -->|"$0.10-$1"| Medium["GPT-4o-mini"]
-    Budget -->|"<$0.10"| Cheap["GPT-3.5"]
-    Budget -->|"$0"| Reject["❌ Budget exceeded"]
+    Budget -->|"Yes, >#36;1"| Best["GPT-4o"]
+    Budget -->|"#36;0.10-#36;1"| Medium["GPT-4o-mini"]
+    Budget -->|"<#36;0.10"| Cheap["GPT-3.5"]
+    Budget -->|"#36;0"| Reject["❌ Budget exceeded"]
 ```
 
 | Pros | Cons |
@@ -332,8 +332,8 @@ If the same question keeps coming up, why pay again for an LLM call?
 ```mermaid
 graph TD
     Request["📨 'What are the business hours?'"] --> Cache{"🔍 In Cache?"}
-    Cache -->|"Hit ✅"| Return["Return cached response<br/>⚡ 5ms | 💰 $0"]
-    Cache -->|"Miss ❌"| LLM["Call the LLM<br/>🐌 500ms | 💰 $0.01"]
+    Cache -->|"Hit ✅"| Return["Return cached response<br/>⚡ 5ms | 💰 #36;0"]
+    Cache -->|"Miss ❌"| LLM["Call the LLM<br/>🐌 500ms | 💰 #36;0.01"]
     LLM --> Save["Save to Cache"]
     Save --> Return2["Return response"]
 ```

@@ -139,10 +139,10 @@ classDiagram
 graph TB
     Request["📨 בקשה"] --> Router["🔀 Model Router"]
     
-    Router -->|"משימה פשוטה<br/>(סיכום, תרגום)"| Small["GPT-3.5 / Llama<br/>💰 $0.001"]
-    Router -->|"משימה מורכבת<br/>(reasoning, קוד)"| Large["GPT-4o<br/>💰 $0.01"]
-    Router -->|"משימת Vision<br/>(תמונות)"| Vision["GPT-4o Vision<br/>💰 $0.02"]
-    Router -->|"Embedding<br/>(חיפוש סמנטי)"| Embed["Ada / text-embedding<br/>💰 $0.0001"]
+    Router -->|"משימה פשוטה<br/>(סיכום, תרגום)"| Small["GPT-3.5 / Llama<br/>💰 #36;0.001"]
+    Router -->|"משימה מורכבת<br/>(reasoning, קוד)"| Large["GPT-4o<br/>💰 #36;0.01"]
+    Router -->|"משימת Vision<br/>(תמונות)"| Vision["GPT-4o Vision<br/>💰 #36;0.02"]
+    Router -->|"Embedding<br/>(חיפוש סמנטי)"| Embed["Ada / text-embedding<br/>💰 #36;0.0001"]
 ```
 
 ### למה לא פשוט להשתמש תמיד במודל הכי טוב?
@@ -188,10 +188,10 @@ graph TD
 ```mermaid
 graph TD
     Request["📨 Request"] --> Budget{"💰 Budget left?"}
-    Budget -->|"Yes, >$1"| Best["GPT-4o"]
-    Budget -->|"$0.10-$1"| Medium["GPT-4o-mini"]
-    Budget -->|"<$0.10"| Cheap["GPT-3.5"]
-    Budget -->|"$0"| Reject["❌ Budget exceeded"]
+    Budget -->|"Yes, >#36;1"| Best["GPT-4o"]
+    Budget -->|"#36;0.10-#36;1"| Medium["GPT-4o-mini"]
+    Budget -->|"<#36;0.10"| Cheap["GPT-3.5"]
+    Budget -->|"#36;0"| Reject["❌ Budget exceeded"]
 ```
 
 | בעד | נגד |
@@ -332,8 +332,8 @@ graph TB
 ```mermaid
 graph TD
     Request["📨 'מה שעות הפעילות?'"] --> Cache{"🔍 בCache?"}
-    Cache -->|"Hit ✅"| Return["החזר תשובה שמורה<br/>⚡ 5ms | 💰 $0"]
-    Cache -->|"Miss ❌"| LLM["קרא ל-LLM<br/>🐌 500ms | 💰 $0.01"]
+    Cache -->|"Hit ✅"| Return["החזר תשובה שמורה<br/>⚡ 5ms | 💰 #36;0"]
+    Cache -->|"Miss ❌"| LLM["קרא ל-LLM<br/>🐌 500ms | 💰 #36;0.01"]
     LLM --> Save["שמור ב-Cache"]
     Save --> Return2["החזר תשובה"]
 ```

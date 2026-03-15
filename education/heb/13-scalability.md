@@ -140,11 +140,11 @@ graph TD
 
 ```mermaid
 graph LR
-    Simple["📨 Simple query<br/>1 LLM call<br/>~2s, $0.01"] 
+    Simple["📨 Simple query<br/>1 LLM call<br/>~2s, #36;0.01"] 
     
-    Complex["📨 Complex task<br/>10 LLM calls<br/>5 tool calls<br/>~30s, $0.50"]
+    Complex["📨 Complex task<br/>10 LLM calls<br/>5 tool calls<br/>~30s, #36;0.50"]
     
-    HeavyAgent["📨 Research task<br/>20 LLM calls<br/>15 tool calls<br/>~120s, $2.00"]
+    HeavyAgent["📨 Research task<br/>20 LLM calls<br/>15 tool calls<br/>~120s, #36;2.00"]
 ```
 
 ---
