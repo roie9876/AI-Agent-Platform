@@ -46,11 +46,14 @@ var contentSafetyName = 'safety-${baseName}-${uniqueSuffix}'
 // AZURE OPENAI + AI SERVICES (Unified Resource)
 // ============================================================================
 
-resource aiServices 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = {
+resource aiServices 'Microsoft.CognitiveServices/accounts@2025-04-01-preview' = {
   name: aiServicesName
   location: location
   tags: tags
   kind: 'AIServices'
+  identity: {
+    type: 'SystemAssigned'
+  }
   sku: {
     name: 'S0'
   }
@@ -58,11 +61,12 @@ resource aiServices 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = 
     customSubDomainName: aiServicesName
     publicNetworkAccess: 'Enabled'
     disableLocalAuth: false
+    allowProjectManagement: true
   }
 }
 
 // GPT-4.1 deployment (primary model for labs)
-resource gpt41Deployment 'Microsoft.CognitiveServices/accounts/deployments@2023-10-01-preview' = {
+resource gpt41Deployment 'Microsoft.CognitiveServices/accounts/deployments@2024-04-01-preview' = {
   parent: aiServices
   name: 'gpt-41'
   sku: {
@@ -80,7 +84,7 @@ resource gpt41Deployment 'Microsoft.CognitiveServices/accounts/deployments@2023-
 }
 
 // GPT-4o-mini deployment (cheap model for routing lab)
-resource gpt4oMiniDeployment 'Microsoft.CognitiveServices/accounts/deployments@2023-10-01-preview' = {
+resource gpt4oMiniDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-04-01-preview' = {
   parent: aiServices
   name: 'gpt-4o-mini'
   sku: {
@@ -99,7 +103,7 @@ resource gpt4oMiniDeployment 'Microsoft.CognitiveServices/accounts/deployments@2
 }
 
 // Embedding deployment (for RAG lab)
-resource embeddingDeployment 'Microsoft.CognitiveServices/accounts/deployments@2023-10-01-preview' = {
+resource embeddingDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-04-01-preview' = {
   parent: aiServices
   name: 'text-embedding-3-large'
   sku: {
@@ -262,7 +266,11 @@ resource foundryProject 'Microsoft.CognitiveServices/accounts/projects@2025-04-0
   name: '${baseName}-project'
   location: location
   tags: tags
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {}
+  dependsOn: [embeddingDeployment]  // Wait for all model deployments to finish first
 }
 
 // ============================================================================
