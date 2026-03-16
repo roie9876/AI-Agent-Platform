@@ -40,6 +40,12 @@ graph TB
 
 ---
 
+
+### Real-World Scenario: The Internal Documentation Nightmare
+Consider a new developer at an enterprise who asks: "Where do I find the API docs for the billing service?"
+An LLM alone will answer with hallucinated links or say "I don't know."
+By attaching a `Confluence Search Tool` and a `Jira Tool`, the Agent can route the user's intent to the corporate Wiki, download the exact page, and provide a perfectly accurate, grounded answer with links. **Tools are the bridge between AI theory and Enterprise reality.**
+
 ## Function Calling
 
 ### What Is It?

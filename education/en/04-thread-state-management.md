@@ -14,6 +14,12 @@
 
 ---
 
+
+### Real-World Scenario: The Browser Crash
+Imagine your user is using your Agent to write a long piece of software. The Agent has generated 3 out of 5 Python files. Suddenly, the user's laptop runs out of battery, or the browser tab crashes.
+- **Without State/Thread Management:** The process stops. When the user logs back in, the AI says "Hello, how can I help you today?" The progress is entirely lost.
+- **With State Management & Checkpointing:** The user logs back in, pulls up `Thread 2`, and the Agent realizes it is exactly at `Step 3 (Generating tests)`. It resumes the workflow seamlessly.
+
 ## What is a Thread?
 
 **Thread** (conversation thread) is the basic unit of conversation. It contains all the messages exchanged between the user and the Agent in a specific context.

@@ -36,6 +36,17 @@ graph TB
     end
 ```
 
+
+### Real-World Scenario: The Weekly Marketing Brief
+Imagine a marketing team that wants a weekly brief every Monday. The raw tasks are:
+1. Extract last week's leads from Salesforce.
+2. Extract website traffic from Google Analytics.
+3. Write a summary email based on both.
+
+If you use a basic **ReAct Agent** (Autonomous), it might get stuck reading thousands of Salesforce rows and forget about Google Analytics. 
+Or, it might do them one by one (Sequential) taking 5 minutes.
+With an **Orchestrator** using a **DAG (Directed Acyclic Graph)**, the system explicitly fires the Salesforce and Google Analytics sub-agents *at the exact same time (Parallel)*. Only when *both* are done, it triggers the Summary Agent. The execution drops from 5 minutes to 30 seconds.
+
 ### Why do we need Orchestration?
 
 Simple tasks = one Agent is enough. Complex tasks = require **coordination**:

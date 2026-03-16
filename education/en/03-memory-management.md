@@ -34,6 +34,14 @@ graph LR
     end
 ```
 
+
+### The "Whiteboard" Analogy
+Think of the LLM's Context Window as a physical whiteboard in a meeting room. 
+- You can write your conversation history on it so the LLM remembers what was discussed.
+- But the whiteboard has a fixed size (e.g., 128K tokens).
+- When the whiteboard is full, you can't write anymore. You have to start erasing the oldest text (Sliding Window), or summarize the entire board into a single paragraph and erase the rest (Summary Memory).
+- **RAG** is like having an infinite filing cabinet next to the whiteboard. When someone asks a question, you open the cabinet, find the 2 relevant pages, and tape them to the whiteboard just for that question.
+
 ### Problems That Memory Solves:
 
 | Problem | Solution |
@@ -103,7 +111,26 @@ graph TB
 
 ### Strategies for Managing Short-Term Memory:
 
-#### 1. Sliding Window
+#
+#### Code Example: Building Short-Term Memory
+```python
+# The raw LLM way (Stateless)
+response1 = llm.chat([{"role": "user", "content": "I live in Paris."}])
+response2 = llm.chat([{"role": "user", "content": "Where do I live?"}]) 
+# Result: "I don't know."
+
+# The Agent way (Stateful / Short-Term Memory)
+memory = []
+memory.append({"role": "user", "content": "I live in Paris."})
+memory.append({"role": "assistant", "content": "Got it!"})
+
+memory.append({"role": "user", "content": "Where do I live?"})
+response = llm.chat(memory)
+# Result: "You live in Paris."
+```
+
+
+### 1. Sliding Window
 
 ```mermaid
 graph LR

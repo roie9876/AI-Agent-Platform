@@ -17,6 +17,12 @@
 
 ## Why Do We Need an Abstraction Layer?
 
+
+### Real-World Scenario: The Black Friday Outage
+Imagine your e-commerce application is heavily dependent on the OpenAI API. It's Black Friday, traffic is at an all-time high, and suddenly, the OpenAI API experiences a major outage. 
+If your code has `import openai` scattered across 50 different microservices, migrating to Anthropic's Claude to save the day would require weeks of code rewrites. 
+With a **Model Abstraction Layer**, you wouldn't rewrite any code. You would simply change one configuration variable in the control plane: `DEFAULT_MODEL="claude-3-5-sonnet"`, and your system is back online in seconds. This prevents **Vendor Lock-in**.
+
 ### The Problem: Every LLM Provider Is Different
 
 Each provider (OpenAI, Anthropic, Meta, Google) offers a different API:
