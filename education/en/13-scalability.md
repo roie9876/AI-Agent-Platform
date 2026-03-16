@@ -20,6 +20,8 @@
 
 ## What is Scalability?
 
+Scalability for agent platforms is especially challenging because LLM calls are **100-1000x slower** than typical API calls. A web server handles a request in 50ms. An agent conversation involves 3-10 LLM calls at 2-5 seconds each. This means you need far more concurrent capacity to serve the same number of users.
+
 **Scalability** = the ability of a system **to grow** to handle more load, without losing performance.
 
 ```mermaid
@@ -43,6 +45,8 @@ graph LR
 ---
 
 ## Horizontal vs Vertical Scaling
+
+For agent platforms, **horizontal scaling** (adding more instances) is almost always the right choice. Agent workloads are I/O-bound (waiting for LLM API responses), not CPU-bound. A bigger CPU doesn't make the API respond faster — but 10 parallel instances can handle 10 conversations simultaneously.
 
 ```mermaid
 graph TB
@@ -127,6 +131,8 @@ graph TB
 
 ### Why are Agents hard to Scale?
 
+The hardest challenge is **variable load**: one request might use 1 LLM call (simple question), while another uses 15 calls (complex research task). This makes capacity planning extremely difficult compared to traditional APIs where each request has roughly the same cost.
+
 ```mermaid
 graph TD
     C1["⏱️ Long-running<br/>Agent task = seconds-minutes<br/>(not milliseconds)"]
@@ -153,6 +159,8 @@ graph LR
 ## Load Balancing
 
 ### Load Balancing Strategies:
+
+Standard load balancing (Round Robin) doesn't work well for agents because requests have wildly different durations. A simple question takes 2 seconds, a research task takes 30 seconds. Use **Least Connections** to route new requests to the least busy instance, or **agent-aware** balancing that considers token budget and model rate limits.
 
 ```mermaid
 graph TB
@@ -204,6 +212,8 @@ graph LR
 ```
 
 ### Priority Queues:
+
+Not all agent requests are equal. A user waiting for a real-time chat response (sync) shouldn't be stuck behind a batch job that's summarizing 100 documents. Priority queues ensure interactive requests jump ahead of batch work.
 
 ```mermaid
 graph LR
@@ -339,6 +349,8 @@ stateDiagram-v2
 
 ### Why Multi-Region?
 
+Go multi-region when you have (1) **global users** who need low latency, (2) **compliance requirements** like GDPR that mandate data stays in a specific region, or (3) **uptime requirements** above 99.9% (a single region can't provide 99.99% — you need failover).
+
 ```mermaid
 graph TB
     subgraph "🌍 Multi-Region Benefits"
@@ -395,6 +407,8 @@ graph TD
 ```
 
 ### Semantic Cache:
+
+Semantic caching is the **#1 cost optimization** for agent platforms. Instead of only caching exact duplicate questions, it caches responses for questions that are **semantically similar**. "What's the refund policy?" and "How do I get a refund?" are different strings but the same question — a semantic cache serves the cached answer for both, saving an LLM call.
 
 ```mermaid
 graph LR

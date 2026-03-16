@@ -37,6 +37,8 @@ graph TB
 
 ## The Difference Between Control and Runtime
 
+Here's a simple test: if the Control Plane goes down, existing agents keep running (users won't notice immediately). If the Runtime Plane goes down, all conversations stop instantly. The Control Plane manages; the Runtime Plane executes.
+
 | Property | 🎛️ Control Plane | ⚙️ Runtime Plane |
 |--------|-----------------|-----------------|
 | **Purpose** | Management and configuration | Execution and processing |
@@ -287,6 +289,8 @@ sequenceDiagram
 
 ### 3. Streaming
 
+Streaming gives users the "typing" experience — tokens appear one by one as the LLM generates them. This is critical for UX: a 5-second wait with a blank screen feels broken, but the same 5 seconds with streaming text feels responsive. Most chat interfaces use this.
+
 ```mermaid
 sequenceDiagram
     User->>Agent: Request
@@ -368,6 +372,8 @@ graph TB
 | **Ephemeral Session** | Azure Dynamic Sessions | ✅✅ High | ⚡ Fast | 💰💰 Medium |
 
 ### Properties of a Good Sandbox:
+
+The most commonly overlooked property is **Ephemeral** — reusing a container between executions is a security risk because one execution might leave malicious artifacts (files, environment variables) that affect the next one. Always start from a clean state.
 
 | Property | Explanation |
 |--------|-------|

@@ -19,6 +19,8 @@
 
 ## What is Security in an Agent Platform?
 
+Agent platforms have a **larger attack surface** than traditional web applications. A web app processes HTTP requests and returns HTML. An agent processes natural language, makes autonomous decisions, calls external tools, generates code, and sends emails — all based on user input that the LLM interprets. Every one of these capabilities is a potential attack vector.
+
 In an Agent Platform, Security is composed of multiple layers - because Agents **operate autonomously** and have **access to tools and data**.
 
 ```mermaid
@@ -39,6 +41,8 @@ graph TB
 ## Attack Surface
 
 ### What can go wrong?
+
+The attack surface of an agent platform spans the entire request flow — from user input to tool execution to response generation. Attacks can enter at any point, and the most dangerous ones chain multiple steps together (e.g., prompt injection → tool abuse → data exfiltration).
 
 ```mermaid
 graph TD
@@ -94,6 +98,8 @@ graph TD
 ```
 
 ### RBAC Model:
+
+Role-based access control (RBAC) is essential at scale. Instead of managing permissions per-user (which doesn't scale past 50 users), you assign users to **roles** and grant permissions to roles. When a new developer joins, you add them to the "Developer" role — they instantly get the right permissions.
 
 | Role | Agents | Tools | Data | Admin |
 |------|--------|-------|------|-------|
@@ -156,6 +162,8 @@ sequenceDiagram
 ## Sandboxing & Isolation
 
 ### What are the Isolation levels?
+
+Isolation is a spectrum: more isolation means more security but also more overhead (latency, cost, complexity). The right level depends on your threat model. For most agent platforms, **container-level isolation** is the sweet spot — it provides strong isolation without the overhead of full VMs.
 
 ```mermaid
 graph TB
@@ -227,6 +235,8 @@ sandbox:
 ## Secure Execution Environments
 
 ### Tool Execution Security:
+
+Every tool call passes through 6 security gates before it executes. If ANY gate fails, the execution is blocked and logged. This defense-in-depth approach means a single vulnerability doesn't compromise the system — the attacker would need to bypass all 6 gates.
 
 ```mermaid
 graph TB
@@ -304,6 +314,8 @@ sequenceDiagram
 ```
 
 ### Best Practices:
+
+The number one cause of credential leaks is **hardcoded secrets** in source code. Even "temporary" hardcoded API keys end up in git history forever. Use a secrets manager (Azure Key Vault, HashiCorp Vault) from day one — retrofitting is much harder than doing it right from the start.
 
 | Practice | Explanation |
 |----------|-------------|

@@ -41,6 +41,8 @@ graph LR
 
 ## 3 Pillars of Observability
 
+Observability has three complementary pillars, each answering a different question. **Metrics** answer "how much?" (request rate, error rate, latency). **Logs** answer "what happened?" (the sequence of events). **Traces** answer "where in the flow?" (which step in the agent's multi-step process was slow or failed). You need all three to debug agent issues effectively.
+
 ```mermaid
 graph TB
     subgraph "📊 Three Pillars of Observability"
@@ -111,6 +113,8 @@ graph TB
 ## Logging
 
 ### What is logged in an Agent Platform?
+
+Agent logging is fundamentally different from traditional app logging. In a web app, you log HTTP requests and responses. In an agent platform, you must also log every **LLM interaction** (prompt, completion, tokens, latency), every **tool call** (name, arguments, result), and every **state transition** (which step the agent is on). Without this, debugging a failing agent conversation is nearly impossible.
 
 ```mermaid
 graph TD
@@ -268,6 +272,8 @@ graph TD
 
 ### Where are tokens consumed?
 
+Understanding token distribution is crucial for cost optimization. The pie chart below shows a typical breakdown. Notice that **RAG context (35%)** and **chat history (25%)** dominate — together they're 60% of your token spend. This means optimizing your chunking strategy and memory window gives you the biggest bang for your buck.
+
 ```mermaid
 pie title "Token Distribution per Agent Request"
     "System Prompt" : 15
@@ -282,6 +288,8 @@ pie title "Token Distribution per Agent Request"
 ## Cost Observability Dashboard
 
 ### Dashboard Layout:
+
+A good cost dashboard answers three questions at a glance: (1) How much are we spending right now? (2) Is it normal? (3) Who/what is driving the cost? The dashboard below shows real-time metrics that should be visible to the team managing the platform.
 
 ```
 ┌───────────────────────────────────────────────────┐
@@ -371,6 +379,8 @@ graph TD
 ```
 
 ### Alert Severity:
+
+Alert fatigue is real — if everything is P1, nothing is P1. Start with strict thresholds and **loosen** them based on false positive rate. A good rule: if an alert fires and the team ignores it 3 times in a row, either fix the alert threshold or remove it entirely.
 
 | Severity | Example | Action |
 |----------|---------|--------|

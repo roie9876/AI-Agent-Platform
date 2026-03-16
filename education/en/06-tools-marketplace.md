@@ -16,6 +16,8 @@
 
 ## What Are Tools?
 
+An agent without tools is just a chatbot — it can generate text but can't **do** anything. Tools are what transform an LLM from a text generator into an agent that can check databases, send emails, search the web, and execute code. This is the fundamental difference between a chatbot and an agent.
+
 **Tool** = A function/API that the Agent can invoke to **act in the real world**.
 
 The LLM knows how to generate text. Tools give it **hands**:
@@ -81,6 +83,8 @@ The LLM sees the definition and **decides** if and when to use a tool.
 
 ### Important Point: The LLM Doesn't Execute Anything!
 
+This is the most misunderstood part of agent architecture. The LLM **never** directly accesses your database, API, or filesystem. It outputs a JSON request saying "please call this function with these arguments." YOUR code decides whether to actually execute it. This separation is critical for security — the LLM is sandboxed, and your code is the gatekeeper.
+
 ```mermaid
 graph LR
     LLM["🧠 LLM"] -->|"Returns JSON:<br/>{tool: 'search', args: {...}}"| App["🖥️ Application"]
@@ -144,6 +148,8 @@ graph LR
 ```
 
 ### Classification by Risk Level:
+
+Risk classification drives a critical decision: which tools can the agent use **automatically**, and which require **human approval**? Read-only tools (search, lookup) are usually safe to auto-execute. But tools that modify data (send email, create ticket, transfer money) should require approval — especially in production.
 
 ```mermaid
 graph TB
@@ -407,6 +413,8 @@ graph TB
 
 ### Publishing Flow:
 
+Every tool in the marketplace goes through a security review before it's available. This is critical because tools run with the **agent's credentials and permissions**. A compromised or malicious tool could exfiltrate data from every agent that uses it.
+
 ```mermaid
 sequenceDiagram
     actor Dev as 👨‍💻 Developer
@@ -450,6 +458,8 @@ graph TD
 | **Excessive Permissions** | Tool with overly broad permissions | Least Privilege, scoped access |
 
 ### Principle of Least Privilege:
+
+This is the single most important security principle for tools. If your SQL tool only needs to SELECT data, give it a read-only database user. If it gets compromised, the blast radius is limited to reading data — not dropping tables. The less privilege each tool has, the less damage any single breach can cause.
 
 ```mermaid
 graph TB

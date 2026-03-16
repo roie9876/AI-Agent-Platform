@@ -74,6 +74,8 @@ Thread: thread-abc-123
 
 ### Thread Manager Roles:
 
+The Thread Manager handles every lifecycle operation for conversations. **Create** starts a new conversation. **Fork** creates a branch (useful for "what if?" explorations without losing the original). **Archive** moves old threads to cold storage. **Resume** brings an archived thread back to life.
+
 ```mermaid
 graph TB
     TM["🧵 Thread Manager"]
@@ -87,6 +89,8 @@ graph TB
 ```
 
 ### Thread Lifecycle:
+
+Every thread follows a predictable lifecycle. Understanding this prevents bugs like sending messages to archived threads, or forgetting to clean up expired conversations that consume storage.
 
 ```mermaid
 stateDiagram-v2
@@ -122,6 +126,8 @@ gitGraph
 ## State Management
 
 ### The Difference Between Thread and State
+
+This is one of the most common sources of confusion. Think of it this way: the **Thread** is the conversation (messages exchanged), while the **State** is the workflow progress (which step we're on, what's been approved, what's pending). A customer support thread might contain 20 messages, but the state simply says `waiting_for_manager_approval`.
 
 | Thread | State |
 |--------|-------|
@@ -330,6 +336,8 @@ graph TD
 ```
 
 ### Durable Execution Pattern
+
+Regular processes are **ephemeral** — if the server restarts, deploys, crashes, or scales down, the process is lost along with all its state. For a simple API call, this is fine (just retry). But for an agent that's been working on a 30-minute research task, losing progress is unacceptable. Durable execution solves this by persisting every step so the workflow can resume exactly where it left off.
 
 ```mermaid
 graph TB

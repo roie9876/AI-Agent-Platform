@@ -75,6 +75,8 @@ graph LR
 
 ### Benefits of Separation:
 
+The most immediate benefit you'll feel is **independent scaling**: on a busy Monday morning, you scale the Runtime Plane from 2 to 50 instances to handle traffic, while the Control Plane stays at 2 instances (it only handles admin operations). Without separation, you'd be scaling everything together — wasteful and expensive.
+
 | Benefit | Explanation |
 |---------|-------------|
 | **Independent Scaling** | Runtime needs more resources? Scale only that part |
@@ -94,6 +96,8 @@ graph LR
 ---
 
 ## Control Plane Components
+
+The Control Plane consists of several interconnected services. Each handles a specific management concern, and together they form the administrative backbone of the platform. The components below are covered in detail in the following sections. Not all are needed from day one — start with API Gateway + Identity + Agent Registry, and add others as you scale.
 
 ```mermaid
 graph TB
@@ -351,6 +355,8 @@ gitGraph
 Managing all platform settings in a centralized, consistent, and controlled manner.
 
 ### Important Principles:
+
+**Configuration as Code** is the most impactful principle here. When agent configs are stored as code (YAML/JSON in git), every change gets a code review, an audit trail, and the ability to rollback. This is critical for SOC2 compliance and for debugging "who changed what" when an agent starts misbehaving.
 
 | Principle | Explanation |
 |-----------|-------------|

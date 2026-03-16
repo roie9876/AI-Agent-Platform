@@ -29,6 +29,8 @@ graph LR
 
 ### Analogy:
 
+Think of the Policy Engine as the rules and regulations that every employee in a company must follow. Just as an employee's actions go through management, legal, and compliance review, every agent action passes through the Policy Engine before it's allowed to execute.
+
 ```mermaid
 graph TB
     subgraph "Real Company"
@@ -148,6 +150,8 @@ graph TB
 ## Policy Enforcement Points
 
 ### Where are Policies enforced?
+
+Policies aren't checked in just one place — they're enforced at **multiple points** throughout the request lifecycle. This is defense-in-depth: if one check fails to catch something, the next one might. No single enforcement point catches everything.
 
 ```mermaid
 graph TB
