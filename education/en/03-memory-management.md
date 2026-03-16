@@ -47,6 +47,8 @@ graph LR
 
 ## Types of Memory
 
+Agent memory isn't one thing — it's a spectrum from temporary to permanent, from conversation-specific to organization-wide. Understanding these types helps you decide what to store, where to store it, and for how long. Most agents need at least two types: short-term (conversation) and long-term (knowledge via RAG).
+
 ```mermaid
 graph TB
     Memory["💾 Agent Memory"]
@@ -76,6 +78,8 @@ graph TB
 ---
 
 ## Short-Term Memory
+
+Short-term memory is simple in concept (just send the conversation history with each LLM call) but tricky in practice. The problem: LLMs have a limited **context window**. A conversation with 200 messages doesn't fit. You need strategies to compress, summarize, or window the history — and each strategy trades off between remembering everything and staying within token limits.
 
 ### What Is It?
 The current conversation - all messages exchanged between the user and the Agent in the current Thread.
@@ -186,6 +190,9 @@ graph TB
 ## RAG - Retrieval Augmented Generation
 
 ### What Is RAG?
+
+RAG is arguably the most important pattern in production AI. It solves the fundamental problem: LLMs don't know YOUR data. They were trained on public internet data, not your company's internal policies, customer records, or product documentation. RAG bridges this gap by searching your documents and injecting relevant context into the LLM's prompt.
+
 RAG = **Retrieval + Generation**. Instead of relying on the LLM's knowledge (which may not be accurate), we **search for relevant information** and **inject** it into the prompt.
 
 ```mermaid
@@ -351,6 +358,8 @@ graph TB
 
 ### 1. Memory Scoping (Who Sees What)
 
+Memory scoping is critical for multi-tenant platforms. Without proper scoping, User A's conversation history might leak into User B's context. Or one agent's knowledge base might be accessible to another agent that shouldn't have it. Scoping defines clear boundaries: who can see what, and at which level.
+
 ```mermaid
 graph TB
     subgraph "Memory Scoping"
@@ -403,6 +412,8 @@ graph TB
 ---
 
 ## End-to-End RAG Flow - Full Example
+
+Let's trace through a complete RAG request from start to finish. Understanding this end-to-end flow helps you debug issues ("why did the agent get the wrong answer?") and optimize performance ("where is the bottleneck?").
 
 ```mermaid
 sequenceDiagram

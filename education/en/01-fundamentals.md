@@ -217,6 +217,8 @@ graph LR
 
 ## Why Do We Need a Platform?
 
+Imagine a company with 10 teams, each building their own AI agent. Without a platform, each team independently solves authentication, cost tracking, safety guardrails, and model access. That's 10 teams duplicating the same security code, 10 separate billing accounts to manage, and zero standardization. When a security vulnerability is found, 10 teams need to fix it independently. A platform solves this by providing shared infrastructure — security, observability, cost management, and model access — so teams focus on building agents, not plumbing.
+
 A large company doesn't want every team building an Agent from scratch. It wants a **platform** that provides:
 
 ```mermaid
@@ -279,6 +281,8 @@ graph TB
 
 ## Key Concepts
 
+These terms will appear throughout every chapter. You don't need to memorize them now — you'll learn each one deeply as we go. This table is a reference you can come back to.
+
 A glossary of terms that will recur throughout this learning material:
 
 ### Architecture
@@ -315,6 +319,8 @@ A glossary of terms that will recur throughout this learning material:
 ---
 
 ## Platform Structure - Initial Overview
+
+Don't worry if this diagram looks complex — each box is covered in its own chapter. For now, just understand the two main layers: the **Control Plane** (management — who can do what, how much can they spend) and the **Runtime Plane** (execution — actually running agents, calling LLMs, executing tools). Everything else plugs into these two layers.
 
 Before we dive into each component individually, here is an overall view of how the platform is built:
 

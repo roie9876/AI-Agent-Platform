@@ -18,6 +18,8 @@
 
 **Orchestration** = how the Agent (or multiple Agents) coordinate actions to complete a task.
 
+A single agent with a ReAct loop (Chapter 1) works great for simple questions. But complex tasks — "analyze our sales data, compare to competitors, and write a report" — require coordination between multiple steps, tools, or even multiple agents. Orchestration is how you structure that coordination. Choosing the wrong pattern leads to either wasted time (sequential when parallel is possible) or bugs (parallel when steps actually depend on each other).
+
 ```mermaid
 graph TB
     subgraph "Analogy"
@@ -50,7 +52,7 @@ Simple tasks = one Agent is enough. Complex tasks = require **coordination**:
 ## Sequential Execution
 
 ### What is it?
-Step after step - each step starts only after the previous one finishes.
+Step after step — each step starts only after the previous one finishes. This is the simplest and most common pattern. Use it whenever the output of one step is the input to the next step. Most document processing pipelines, approval workflows, and content creation flows are sequential.
 
 ```mermaid
 graph LR
@@ -85,7 +87,7 @@ graph LR
 ## Parallel Execution
 
 ### What is it?
-Multiple actions run **in parallel** - not dependent on each other.
+Multiple actions run **in parallel** — not dependent on each other. The classic example: searching 3 different sources for the same query. Since the searches don't depend on each other, running them simultaneously takes 1/3 the time. The key question to ask: "Does task B need the output of task A?" If not, they can run in parallel.
 
 ```mermaid
 graph TB
@@ -153,7 +155,7 @@ graph TB
 ## Autonomous Execution
 
 ### What is it?
-The Agent **decides on its own** what to do next. No predefined workflow - the Agent navigates as needed.
+The Agent **decides on its own** what to do next — no predefined workflow. No predefined workflow - the Agent navigates as needed.
 
 ```mermaid
 graph TD
@@ -221,7 +223,7 @@ graph TD
 ## Sub-Agent Orchestration
 
 ### What is it?
-A main Agent that delegates tasks to **specialist Agents**:
+A main Agent that delegates tasks to **specialist Agents**. This is how you handle tasks that require different types of expertise — you wouldn't ask a research specialist to write marketing copy, or a data analyst to handle customer support. Each sub-agent has its own system prompt, tools, and potentially even its own LLM model.
 
 ```mermaid
 graph TB
@@ -301,6 +303,8 @@ graph TB
 
 ### What is a DAG?
 **DAG = Directed Acyclic Graph** = a directed graph with no cycles.
+
+DAGs let you express workflows that are more complex than "all sequential" or "all parallel." In real tasks, some steps depend on each other while others are independent. A DAG captures exactly which steps can run in parallel and which must wait — giving you the speed of parallelism where possible and the correctness of sequencing where needed.
 
 Allows describing complex workflows with **dependencies** - "step X runs only after A and B finish":
 

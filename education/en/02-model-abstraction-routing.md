@@ -84,7 +84,7 @@ graph TB
 
 ### Adapter Pattern (Design Pattern)
 
-The Abstraction Layer uses the **Adapter** pattern:
+The Abstraction Layer uses the **Adapter** pattern — each LLM provider has a different API format, but the Adapter translates between your unified interface and the provider's specific format. This means your agent code doesn't change when you switch from OpenAI to Anthropic. Only the Adapter changes.
 
 ```mermaid
 classDiagram
@@ -241,6 +241,8 @@ graph TD
 
 ## Fallback & Retry
 
+In production, LLM APIs go down. Rate limits are hit. Network timeouts happen. If your agent crashes every time the primary model is unavailable, your users will have a terrible experience. Fallback and retry strategies ensure the agent keeps working even when things go wrong — by automatically trying alternative models or waiting and retrying.
+
 ### What Happens When a Model Is Unavailable?
 
 ```mermaid
@@ -302,6 +304,8 @@ Error: "Service temporarily unavailable"
 
 ## Load Balancing Between Models
 
+Azure OpenAI has rate limits per deployment (e.g., 100K tokens per minute). If you have one deployment and your traffic exceeds the limit, all requests fail. The solution: create multiple deployments of the same model and distribute traffic between them. This is load balancing — a critical pattern for any production agent platform.
+
 When there are many deployments of the same model, the load needs to be **distributed**:
 
 ```mermaid
@@ -326,6 +330,8 @@ graph TB
 ---
 
 ## Response Caching
+
+Every LLM call costs money and takes time. But many users ask similar questions — "What's the refund policy?" shows up 50 times a day. Without caching, you pay for 50 identical LLM calls. With caching, you pay for 1 call and serve the cached response for the other 49. This can reduce costs by 30-50% for platforms with repetitive queries.
 
 ### Why Caching?
 If the same question keeps coming up, why pay again for an LLM call?
@@ -366,6 +372,8 @@ Query 3: "What time do you close?"
 ---
 
 ## Model Comparison
+
+Understanding the strengths, weaknesses, and costs of different models is essential for building a routing strategy. Not every model is best at everything — GPT-4.1 excels at reasoning but costs 13x more than GPT-4o-mini. Claude has enormous context windows but different tool-calling behavior. The table below helps you match models to tasks.
 
 ### The Quality-Cost-Speed Axis:
 
