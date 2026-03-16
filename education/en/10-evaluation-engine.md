@@ -47,30 +47,86 @@ graph TB
 
 ## Why Do We Need Evaluation?
 
-```mermaid
-graph TD
-    subgraph "Without Evaluation"
-        A1["🤖 Agent deployed"] --> A2["🤷 Working? Don't know"]
-        A2 --> A3["😱 Customer complains"]
-        A3 --> A4["🔥 Firefighting"]
-    end
-    
-    subgraph "With Evaluation"
-        B1["🤖 Agent developed"] --> B2["📊 Evaluated"]
-        B2 --> B3["📈 Metrics tracked"]
-        B3 --> B4["✅ Confident deployment"]
-    end
+### The Core Problem: You Can't Trust Your Gut
+
+Traditional software is **deterministic** — the same input always produces the same output. You write unit tests, they pass, you ship with confidence.
+
+AI agents are **non-deterministic** — the same input can produce different outputs every time. A prompt change, a model update, or even a different time of day can change behavior. This means:
+
+- **Manual testing doesn't scale.** You tested 5 questions and they looked fine. But what about the 500 questions your users will ask tomorrow?
+- **"It feels right" is not a metric.** Your team thinks the answers are good. But are they grounded in facts? Or are they plausible-sounding hallucinations?
+- **You won't know when it breaks.** One morning your agent starts hallucinating. Users complain hours later. By then, hundreds of bad answers have been served.
+
+### Three Scenarios That Make Evaluation Essential
+
+#### Scenario 1: Catching Quality Degradation in Production
+
+Your agent has been running in production for 3 months. Everything is fine. Then one Monday morning, answer quality drops — but nobody notices because the answers still *sound* reasonable.
+
+```
+Without Evaluation:
+  Monday 9:00 AM    → Quality drops (model update? data change? prompt drift?)
+  Monday 2:00 PM    → Users start noticing weird answers
+  Monday 5:00 PM    → Support tickets pile up
+  Tuesday 10:00 AM  → Team investigates
+  Tuesday 3:00 PM   → Root cause found and fixed
+  → 24+ hours of bad answers served to users
+
+With Continuous Evaluation:
+  Monday 9:00 AM    → Quality drops
+  Monday 9:15 AM    → Eval pipeline detects groundedness dropped from 4.2 to 2.8
+  Monday 9:16 AM    → Alert sent to team + automatic rollback triggered
+  Monday 9:20 AM    → Previous version restored
+  → 20 minutes of impact, caught automatically
 ```
 
-### Scenarios That Evaluation Catches:
+This is why evaluation isn't just a one-time check — it's a **continuous monitoring system** that runs in production.
 
-| Problem | What Happened | Evaluation Would Detect |
-|---------|---------------|------------------------|
-| **Hallucination** | Agent made up facts | Groundedness score < 0.5 |
-| **Off-topic** | Irrelevant answer | Relevance score < 0.3 |
-| **Toxic** | Offensive answer | Toxicity score > 0.7 |
-| **Incomplete** | Agent didn't finish the task | Task completion = 0% |
-| **Regression** | An update broke something | Score dropped 20% |
+#### Scenario 2: Upgrading Your Model
+
+Azure releases GPT-5. Your team wants to upgrade from GPT-4.1. But how do you know if GPT-5 is actually better *for your use case*?
+
+- GPT-5 might be better at general reasoning but worse at following your specific system prompt
+- GPT-5 might hallucinate less on average but more on your domain-specific questions
+- GPT-5 might be faster but produce less coherent multi-step answers
+
+Without evaluation, upgrading is a gamble based on gut feeling and blog posts. With evaluation:
+
+```
+1. Run your eval dataset against GPT-4.1       → Groundedness: 4.2, Relevance: 4.5
+2. Run the SAME eval dataset against GPT-5     → Groundedness: 4.6, Relevance: 4.3
+3. Compare: GPT-5 is more grounded but slightly less relevant
+4. Decision: GPT-5 wins on the metric we care most about (groundedness)
+5. Deploy with confidence, backed by data
+```
+
+This is exactly what **A/B testing** enables (more on this below).
+
+#### Scenario 3: Prompt Engineering Isn't Science Without Eval
+
+You're iterating on your system prompt. Version 1 is short. Version 2 adds examples. Version 3 adds step-by-step instructions. Which is best?
+
+Without evaluation, you try each version on 3 questions and pick the one that "feels" best. With evaluation, you run all 3 versions against 50 test cases and get hard numbers:
+
+| Prompt Version | Groundedness | Relevance | Coherence | Cost/query |
+|---------------|-------------|-----------|-----------|------------|
+| V1 (short) | 3.8 | 4.0 | 3.5 | $0.02 |
+| V2 (examples) | 4.3 | 4.5 | 4.2 | $0.04 |
+| V3 (step-by-step) | 4.5 | 4.4 | 4.6 | $0.05 |
+
+Now you can make an informed trade-off: V3 is best quality but 2.5x the cost. V2 might be the sweet spot.
+
+### What Evaluation Catches:
+
+| Problem | What Happened | How Evaluation Detects It |
+|---------|---------------|---------------------------|
+| **Hallucination** | Agent made up facts | Groundedness score drops below threshold |
+| **Off-topic answers** | Irrelevant response | Relevance score drops |
+| **Toxic output** | Offensive or harmful response | Toxicity check flags it |
+| **Incomplete answers** | Agent didn't finish the task | Task completion rate drops |
+| **Quality regression** | A code/prompt change broke something | Scores drop compared to baseline |
+| **Model degradation** | Model update changed behavior | Continuous eval catches the shift |
+| **PII leak** | Agent exposed sensitive data | DLP check in eval pipeline |
 
 ---
 
@@ -354,8 +410,20 @@ evaluation_dataset:
 
 ## A/B Testing
 
-### What Is It?
-Comparing **two versions** of an Agent to see which one works better.
+### Why A/B Test?
+
+You want to change something about your agent — a new model, a different system prompt, a modified RAG pipeline. How do you know if the change is actually better?
+
+You could:
+1. **Test locally and hope for the best** — risky, doesn't capture real-world traffic patterns
+2. **Deploy and see what happens** — dangerous, if it's worse your users suffer
+3. **A/B test in production** — safe, data-driven, you KNOW which is better
+
+A/B testing means running both versions simultaneously on real traffic and comparing metrics.
+
+### How It Works
+
+Split incoming requests between the current version (A) and the new version (B):
 
 ```mermaid
 graph TB
@@ -364,31 +432,58 @@ graph TB
     Traffic -->|"50%"| A["🤖 Agent A<br/>(Current)"]
     Traffic -->|"50%"| B["🤖 Agent B<br/>(New prompt)"]
     
-    A --> MetricsA["📊 Metrics A<br/>Groundedness: 0.82<br/>Latency: 1.2s<br/>Cost: #36;0.03"]
-    B --> MetricsB["📊 Metrics B<br/>Groundedness: 0.91<br/>Latency: 1.5s<br/>Cost: #36;0.04"]
+    A --> MetricsA["📊 Metrics A<br/>Groundedness: 0.82<br/>Latency: 1.2s"]
+    B --> MetricsB["📊 Metrics B<br/>Groundedness: 0.91<br/>Latency: 1.5s"]
     
-    MetricsA --> Compare["📈 Compare<br/>Statistical significance?"]
+    MetricsA --> Compare["📈 Compare"]
     MetricsB --> Compare
     
     Compare --> Decision["🏆 Agent B wins<br/>on quality"]
 ```
 
-### What Changes in an A/B Test?
+### What Can You A/B Test?
 
-| Variable | Example A | Example B |
-|----------|-----------|-----------|
-| **Model** | GPT-4o | Claude Sonnet |
-| **System Prompt** | Short, concise | Detailed, with examples |
-| **Temperature** | 0.0 | 0.3 |
-| **Tools** | 5 tools | 3 tools (pruned) |
-| **Chunking** | 500 tokens | 1000 tokens |
-| **Memory** | Last 5 messages | Summarized |
+Almost any part of the agent stack:
+
+| Variable | Example A | Example B | What you learn |
+|----------|-----------|-----------|----------------|
+| **Model** | GPT-4.1 | GPT-5 | Is the new model better for YOUR use case? |
+| **System Prompt** | Short, concise | Detailed, with examples | Do examples improve answer quality? |
+| **Temperature** | 0.0 | 0.3 | Does some creativity improve or hurt? |
+| **RAG top-k** | Retrieve 3 chunks | Retrieve 5 chunks | More context = better answers? Or more noise? |
+| **Chunking strategy** | 500 tokens | 1000 tokens | Bigger chunks = more context per chunk? |
+| **Memory strategy** | Last 5 messages | Summarized history | Does summarization lose important context? |
+
+### A/B Testing Pitfalls
+
+| Pitfall | Why it matters | Fix |
+|---------|---------------|-----|
+| Not enough traffic | Results aren't statistically significant | Run longer or use more test data |
+| Testing too many variables | Can't attribute improvement to one change | Change one variable at a time |
+| Ignoring cost | B is better quality but 3x the cost | Always compare quality AND cost together |
+| Survivorship bias | Only measuring users who stayed | Track abandonment rate too |
 
 ---
 
 ## Continuous Evaluation
 
-### Ongoing Checks:
+### Why Continuous? Because Agents Drift.
+
+Unlike traditional software, AI agents can silently degrade:
+- The **model provider** updates the model (API-based models change without notice)
+- Your **data changes** (new documents indexed, old ones removed)
+- **Prompt drift** — small edits accumulate and change behavior
+- **Usage patterns shift** — users start asking questions you didn't test for
+
+You need a system that **continuously watches** agent quality and alerts you when something goes wrong — before your users notice.
+
+### How It Works
+
+Evaluation runs at two levels:
+
+**1. Pre-deployment (CI/CD gate):** Every code change triggers an eval run. If scores drop, the deploy is blocked.
+
+**2. Production monitoring:** A sample of live traffic is scored continuously. If quality drops, an alert fires.
 
 ```mermaid
 graph TB
@@ -405,6 +500,85 @@ graph TB
     Alert -->|"Yes"| Rollback["⏪ Auto Rollback"]
     Alert -->|"No"| Continue["✅ Continue"]
 ```
+
+### Real-World Example: The Monday Morning Alert
+
+```
+📧 Subject: [ALERT] Agent quality degradation detected
+
+Groundedness score dropped from 4.2 to 2.8 in the last 30 minutes.
+Affected category: financial queries
+Sample failing question: "What was Q3 revenue?"
+  Expected: Answer grounded in docs
+  Actual: Agent hallucinated revenue figures
+
+Possible cause: Azure OpenAI model was updated overnight.
+Action: Auto-rollback to previous version triggered.
+
+Dashboard: https://monitoring.acme.com/agents/eval
+```
+
+This alert fires at 9:15 AM. Without continuous evaluation, your team would hear about it from angry users at 2 PM.
+
+### What to Monitor Continuously
+
+| Metric | Threshold | Alert If |
+|--------|-----------|----------|
+| Groundedness | > 4.0 | Drops below 3.5 |
+| Relevance | > 4.0 | Drops below 3.5 |
+| Toxicity | 0% | Any toxic response detected |
+| PII leaks | 0% | Any PII found in response |
+| Latency (p95) | < 3s | Exceeds 5s |
+| Error rate | < 1% | Exceeds 5% |
+| Cost per query | < $0.05 | Exceeds $0.10 |
+
+---
+
+## Industry Tools & Frameworks
+
+The evaluation ecosystem is maturing rapidly. Here's what the industry uses:
+
+### Evaluation Frameworks
+
+| Tool | Creator | What It Does | Best For |
+|------|---------|-------------|----------|
+| **Azure AI Evaluation SDK** | Microsoft | Built-in evaluators for groundedness, relevance, coherence, safety | Azure-native, production agents |
+| **Ragas** | Open-source | RAG-specific evaluation (faithfulness, context relevance, answer relevance) | RAG pipelines, lightweight |
+| **DeepEval** | Confident AI | LLM-as-Judge framework with 14+ metrics, pytest-style tests | CI/CD integration, comprehensive |
+| **LangSmith** | LangChain | Tracing + evaluation + dataset management, integrated with LangGraph | LangChain/LangGraph users |
+| **Phoenix (Arize)** | Arize AI | Observability + evaluation, trace-level analysis | Production monitoring |
+| **PromptFoo** | Open-source | CLI tool for prompt testing, supports many LLM providers | Prompt engineering, CI/CD |
+| **Braintrust** | Braintrust | Evaluation + logging + prompt playground | Iterative prompt development |
+
+### Safety & Content Evaluation
+
+| Tool | What It Does | Best For |
+|------|-------------|----------|
+| **Azure AI Content Safety** | Built-in content classification (toxicity, hate, violence, jailbreak) | Azure-native safety |
+| **Presidio** (Microsoft) | PII detection and anonymization, open-source | DLP, regulatory compliance |
+| **Guardrails AI** | Input/output validation framework with pre-built validators | Custom safety rules |
+| **NeMo Guardrails** (NVIDIA) | Programmable guardrails for LLM conversations | Complex safety flows |
+
+### LLM-as-Judge Considerations
+
+| Approach | Who Uses It | Pros | Cons |
+|----------|------------|------|------|
+| **GPT-4.1 as judge** | Most common | High accuracy, good at nuance | Costs per evaluation |
+| **Claude as judge** | Some teams | Less position bias | Different evaluation style |
+| **Fine-tuned judge** | Large companies | Tailored to your domain | Requires training data |
+| **Multi-judge ensemble** | High-stakes apps | Reduces bias of any single model | 2-3x cost |
+
+### What We Use in This Course
+
+| Aspect | What We Build | Production Alternative |
+|--------|--------------|------------------------|
+| **Test dataset** | Manual JSON | LangSmith datasets, Braintrust |
+| **LLM-as-Judge** | Direct GPT-4.1 calls | Azure AI Evaluation SDK, Ragas, DeepEval |
+| **Safety checks** | Regex-based | Azure Content Safety, Presidio |
+| **Reporting** | Print output | LangSmith dashboard, Phoenix traces |
+| **CI/CD integration** | Manual run | DeepEval + pytest, PromptFoo CLI |
+
+> 💡 **Key insight:** The concepts are the same everywhere — only the implementation differs. Understanding groundedness, relevance, and LLM-as-Judge principles transfers to any framework.
 
 ---
 
