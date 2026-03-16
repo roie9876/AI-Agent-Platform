@@ -9,6 +9,7 @@
 - [DAG Workflows](#dag-workflows)
 - [Advanced Patterns](#advanced-patterns)
 - [Patterns Comparison](#patterns-comparison)
+- [Choosing the Right Pattern](#choosing-the-right-pattern)
 - [Summary and Questions](#summary-and-questions)
 
 ---
@@ -484,6 +485,94 @@ quadrantChart
 | **DAG** | Workflows with dependencies | ⭐⭐⭐ | 💰💰 |
 | **Map-Reduce** | Bulk processing | ⭐⭐ | 💰💰💰 |
 | **Supervisor** | Distributed systems | ⭐⭐⭐⭐ | 💰💰💰💰 |
+
+---
+
+## Choosing the Right Pattern
+
+With so many patterns, how do you decide which one to use? Start with these questions:
+
+### Decision Tree
+
+```
+📥 You have a task. Ask yourself:
+│
+├─ Is it a single step?
+│   └─ YES → No orchestration needed. Use a simple ReAct agent (Ch 1).
+│
+├─ Does it have multiple steps that DEPEND on each other?
+│   └─ YES → Sequential Pipeline
+│        Example: Research → Draft → Review → Publish
+│
+├─ Does it have multiple INDEPENDENT tasks?
+│   ├─ Are they all the SAME operation on different data?
+│   │   └─ YES → Map-Reduce
+│   │        Example: Summarize 50 documents → merge into one report
+│   └─ Are they DIFFERENT operations?
+│       └─ YES → Parallel (Fan-Out / Fan-In)
+│            Example: Search news + search DB + search docs → merge
+│
+├─ Does it have tasks with MIXED dependencies?
+│   └─ YES → DAG Workflow
+│        Example: A→(B,C parallel)→D→(E,F parallel)→G
+│
+├─ Does it need multiple types of EXPERTISE?
+│   └─ YES → Supervisor / Sub-Agent
+│        Example: Manager → Researcher, Analyst, Writer
+│
+├─ Is it OPEN-ENDED (you don't know the steps in advance)?
+│   ├─ Simple exploration → ReAct (reason + act loop)
+│   └─ Complex multi-step → Plan-and-Execute
+│
+└─ Does the output need to be HIGH QUALITY?
+    └─ YES → Add a Critic pattern (generate → review → refine loop)
+```
+
+### Real-World Scenarios
+
+| Scenario | Best Pattern | Why |
+|----------|-------------|-----|
+| "Summarize this email" | None (single LLM call) | Too simple for orchestration |
+| "Translate this document to 5 languages" | **Map-Reduce** | Same operation (translate) on the same input, then combine |
+| "Find the cheapest flight + hotel + car rental" | **Parallel** | 3 independent searches, then merge and compare |
+| "Analyze Q3 sales, compare to competitors, write report" | **Sequential** | Each step depends on the previous |
+| "Research AI trends, analyze implications, write CEO brief" | **Supervisor** | Needs different expertise per step |
+| "Summarize 100 support tickets and find trends" | **Map-Reduce** | Summarize each (Map), find patterns (Reduce) |
+| "Extract data → clean → validate → enrich → load" | **DAG** | Some steps can parallelize, others depend |
+| "Debug why the app is crashing" | **ReAct** | Open-ended, agent discovers next step |
+| "Plan a product launch (timeline, tasks, owners)" | **Plan-and-Execute** | Complex, needs upfront planning then execution |
+| "Write a blog post with high quality" | **Critic** | Generate draft → review → improve → repeat |
+
+### Common Mistakes
+
+| Mistake | Why It's Wrong | Fix |
+|---------|---------------|-----|
+| Using Sequential when tasks are independent | Wastes time — 3 independent calls take 3x longer | Use Parallel |
+| Using Parallel when tasks depend on each other | Results will be wrong — step 2 needs step 1's output | Use Sequential |
+| Using Supervisor for a 2-step pipeline | Over-engineering — adds LLM calls for the manager | Use Sequential |
+| Using Map-Reduce for 2 documents | Overhead isn't worth it for small N | Use Sequential |
+| Using ReAct for a fixed workflow | Unpredictable — the agent might take wrong paths | Use Sequential or DAG |
+| No rate-limit control in Parallel/Map-Reduce | Hits API rate limits with too many concurrent calls | Add a semaphore |
+
+### Combining Patterns
+
+In production, you often **combine** patterns:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  Real-World Example: Monthly Analytics Report           │
+│                                                         │
+│  1. Parallel: Fetch data from 4 sources simultaneously  │
+│         ↓                                               │
+│  2. Map-Reduce: Summarize each dataset in parallel      │
+│         ↓                                               │
+│  3. Sequential: Analyze → Draft report → Review         │
+│         ↓                                               │
+│  4. Critic: Check quality, refine if needed             │
+│                                                         │
+│  Total: 4 patterns combined into one workflow           │
+└─────────────────────────────────────────────────────────┘
+```
 
 ---
 
