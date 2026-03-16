@@ -9,6 +9,7 @@
 - [Vector Databases & Embeddings](#vector-databases--embeddings)
 - [Memory Strategies](#memory-strategies)
 - [Advantages and Disadvantages](#advantages-and-disadvantages)
+- [Industry Landscape: RAG & Memory in Production](#industry-landscape-rag--memory-in-production)
 - [Summary and Questions](#summary-and-questions)
 
 ---
@@ -454,6 +455,80 @@ sequenceDiagram
 | Reduces Hallucination | Chunking + Indexing cost money |
 | Unlimited in size | Additional latency (embedding + search) |
 | Can be updated | Quality depends on data quality |
+
+---
+
+## Industry Landscape: RAG & Memory in Production
+
+Before building RAG and memory systems, it's important to understand what the industry uses in production.
+
+### RAG Solutions in Production
+
+| Solution | Type | What It Does | Best For |
+|----------|------|-------------|----------|
+| **Azure AI Search** | Vector + Keyword DB | Hybrid search (vector + BM25 + semantic reranking) | Enterprise, Azure-native |
+| **Pinecone** | Managed Vector DB | Serverless vector search, zero-ops | Startups, fast prototyping |
+| **Qdrant** | Open-source Vector DB | Self-hosted, Rust-based, fast | Teams wanting full control |
+| **Weaviate** | Open-source Vector DB | GraphQL API, hybrid search, multi-modal | Complex RAG pipelines |
+| **ChromaDB** | Open-source Vector DB | Lightweight, Python-native, great for dev | Prototyping, small datasets |
+| **Milvus** | Open-source Vector DB | Distributed, handles billions of vectors | Large-scale production |
+| **LlamaIndex** | RAG Framework | Data connectors + indexing + query engines | RAG-heavy applications |
+| **LangChain Retrievers** | RAG Framework | Pluggable retrievers for any vector DB | LangGraph-based agents |
+
+### Memory Solutions in Production
+
+| Solution | Type | How It Works | Best For |
+|----------|------|-------------|----------|
+| **LangGraph MemorySaver** | Framework built-in | Full state checkpoint in RAM | Development, prototyping |
+| **LangGraph SqliteSaver** | Framework built-in | Checkpoint to SQLite file | Single-server production |
+| **LangGraph PostgresSaver** | Framework built-in | Checkpoint to PostgreSQL | Multi-server production |
+| **Azure Cosmos DB** | Cloud database | Serverless, global replication, partition by thread | Azure-native, enterprise |
+| **Mem0** | Smart memory platform | Extracts facts from conversations, not raw messages | User-level memory across sessions |
+| **Zep** | Memory platform | Conversation summarization + user facts + temporal awareness | Long-running agent sessions |
+| **LangMem** | LangChain memory | Long-term memory with LangGraph Store API | LangGraph-native apps |
+| **Redis** | In-memory cache | Fast read/write, TTL support | Recent context caching |
+| **MongoDB** | Document database | Flexible schema, conversation storage | General-purpose persistence |
+
+### The 4 Types of Agent Memory
+
+The industry recognizes four distinct types of memory:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                  │
+│  1. CONVERSATION MEMORY (Short-term)                            │
+│     What: Full message history of current conversation           │
+│     Tools: LangGraph Checkpointer, Redis                        │
+│                                                                  │
+│  2. USER MEMORY (Long-term, per user)                           │
+│     What: Facts about the user across ALL conversations          │
+│     Tools: Mem0, Zep, LangMem                                   │
+│     Example: "Roi prefers Hebrew", "works in analytics team"    │
+│                                                                  │
+│  3. SEMANTIC MEMORY (Knowledge)                                 │
+│     What: Documents, knowledge base, organizational info         │
+│     Tools: Azure AI Search, Pinecone, Qdrant, LlamaIndex        │
+│                                                                  │
+│  4. EPISODIC MEMORY (Past experiences)                          │
+│     What: Summaries of previous tasks and outcomes               │
+│     Tools: Zep, custom vector DB solutions                       │
+│     Example: "Last time, user needed the enterprise policy"     │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Open Source vs Azure
+
+| Aspect | Open Source (LangGraph) | Microsoft Azure |
+|--------|----------------------|-----------------|
+| **RAG search** | LangChain retriever with any vector DB | Azure AI Search (hybrid + semantic) |
+| **Embeddings** | Any embedding model | Azure OpenAI text-embedding-3-large |
+| **Conversation memory** | LangGraph `MemorySaver` / `SqliteSaver` | Azure Cosmos DB |
+| **User memory** | Mem0 (optional) | Cosmos DB with custom schema |
+| **Agent framework** | LangGraph `create_react_agent` | Azure AI Foundry Agents Service |
+
+> 💡 **Key insight:** The concepts are the same — only the implementation differs.
+> Understanding WHAT (RAG, memory types, chunking) matters more than WHERE (Azure vs self-hosted).
 
 ---
 

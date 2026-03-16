@@ -6,6 +6,7 @@
 - [The Difference Between a Chatbot and an Agent](#the-difference-between-a-chatbot-and-an-agent)
 - [Why Do We Need a Platform?](#why-do-we-need-a-platform)
 - [Key Concepts](#key-concepts)
+- [Industry Landscape: Agent Frameworks & LLM Providers](#industry-landscape-agent-frameworks--llm-providers)
 - [Summary and Questions](#summary-and-questions)
 
 ---
@@ -363,6 +364,45 @@ graph TB
         Cache["Cache"]
     end
 ```
+
+---
+
+## Industry Landscape: Agent Frameworks & LLM Providers
+
+Before building agents, it's important to understand what the industry uses in production.
+
+### Agent Frameworks
+
+| Framework | Creator | Language | Best For |
+|-----------|---------|----------|----------|
+| **LangGraph** | LangChain | Python, JS | Stateful graph workflows, production agents |
+| **LangChain** | LangChain | Python, JS | Simple chains, RAG, huge ecosystem |
+| **Microsoft Agent Framework** | Microsoft | C#, Python | Enterprise, Azure-native, multi-agent |
+| **CrewAI** | CrewAI | Python | Role-based multi-agent teams |
+| **AutoGen / AG2** | Microsoft | Python | Multi-agent conversations, code execution |
+| **Deep Agents** | LangChain | Python | Autonomous coding agents |
+
+### LLM Providers
+
+| Provider | Models | Access |
+|----------|--------|--------|
+| **Azure OpenAI** | GPT-4.1, GPT-4o, GPT-4o-mini | Enterprise, SLA, compliance ✅ |
+| **OpenAI** (direct) | Same models | Direct API, no enterprise controls |
+| **Anthropic** | Claude 4 | Strong reasoning, long context |
+| **Google** | Gemini 2.5 | Multi-modal, large context |
+| **Meta** | Llama 4 | Open-source, self-hosted |
+| **Mistral** | Mistral Large | European, open-weight options |
+
+### Open Source vs Azure (Production)
+
+| Layer | Open Source | Azure (Production) |
+|-------|-----------|-------------------|
+| **Agent framework** | LangGraph | Azure AI Foundry Agents |
+| **LLM** | Any (via LangChain) | Azure OpenAI GPT-4.1 |
+| **Agent loop** | Raw Python → LangGraph | Same pattern in all frameworks |
+
+> 💡 **Why LangGraph?** It's the most popular open-source agent framework, works with any LLM provider,
+> and the skills transfer to production (Azure, AWS, or self-hosted).
 
 ---
 
