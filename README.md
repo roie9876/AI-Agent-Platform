@@ -12,27 +12,48 @@ Each chapter is self-contained, but together they form a complete picture of a P
 
 ---
 
-## 🗺️ Complete Learning Path — Education + Labs
+## � Education Chapters
 
-| # | Education Chapter | Hands-On Lab | What You'll Learn |
-|---|-------------------|-------------|-------------------|
-| 1 | [Fundamentals — What is an AI Agent?](education/en/01-fundamentals.md) | [Lab 00: Setup](labs/lab-00-setup/README.md) | LLMs, Agents, ReAct loop, Azure environment deploy |
-| 2 | [Model Abstraction & Routing](education/en/02-model-abstraction-routing.md) | [Lab 01: ReAct Agent](labs/lab-01-react-agent/README.md) | Build an agent from scratch, then with LangGraph |
-| 3 | [Memory Management & RAG](education/en/03-memory-management.md) | [Lab 02: Smart Model Routing](labs/lab-02-model-routing/README.md) | Route cheap vs expensive models, measure savings |
-| 4 | [Thread & State Management](education/en/04-thread-state-management.md) | [Lab 03: Memory & RAG](labs/lab-03-memory-rag/README.md) | RAG pipeline, Cosmos DB memory, grounded answers |
-| 5 | [Orchestration Patterns](education/en/05-orchestration.md) | [Lab 04: Orchestration](labs/lab-04-orchestration/README.md) | Sequential, parallel, map-reduce, supervisor agents |
-| 6 | [Tools & Marketplace](education/en/06-tools-marketplace.md) | Lab 05: Tools & Safety | Custom tools, input validation, DLP, guardrails |
-| 7 | [Policy & Governance](education/en/07-policy-governance.md) | Lab 06: Evaluation | Quality metrics, groundedness, relevance, toxicity |
-| 8 | [Control Plane](education/en/08-control-plane.md) | Lab 07: Framework Deep Dive | LangGraph vs Deep Agents — compare approaches |
-| 9 | [Runtime Plane](education/en/09-runtime-plane.md) | Lab 08: Observability | OpenTelemetry, cost tracking, dashboards |
-| 10 | [Evaluation Engine](education/en/10-evaluation-engine.md) | Lab 09: Azure AI Foundry | Managed agents, built-in evals, tracing |
-| 11 | [Observability & Cost](education/en/11-observability-cost.md) | | Metrics, tracing, token tracking, cost dashboards |
-| 12 | [Security & Isolation](education/en/12-security-isolation.md) | | Sandboxing, zero trust, secrets management |
-| 13 | [Scalability Patterns](education/en/13-scalability.md) | | Horizontal scaling, multi-tenancy, partitioning |
-| 14 | [HLD — Full Architecture](education/en/14-hld-architecture.md) | | Complete architecture diagram |
-| 15 | [Microsoft Stack Mapping](education/en/15-microsoft-stack.md) | | Map components to specific Azure services |
-| 16 | [Agent Frameworks & Ecosystem](education/en/16-agent-frameworks.md) | | LangGraph, Semantic Kernel, AutoGen, CrewAI, MCP, A2A |
-| 17 | [Azure AI Foundry](education/en/17-azure-ai-foundry.md) | | Managed agent platform: Model Catalog, Agents Service |
+| # | Topic | Chapter |
+|---|-------|---------|
+| 1 | **Fundamentals — What is an AI Agent?** | [01-fundamentals.md](education/en/01-fundamentals.md) |
+| 2 | **Model Abstraction & Routing** | [02-model-abstraction-routing.md](education/en/02-model-abstraction-routing.md) |
+| 3 | **Memory Management & RAG** | [03-memory-management.md](education/en/03-memory-management.md) |
+| 4 | **Thread & State Management** | [04-thread-state-management.md](education/en/04-thread-state-management.md) |
+| 5 | **Orchestration Patterns** | [05-orchestration.md](education/en/05-orchestration.md) |
+| 6 | **Tools & Marketplace** | [06-tools-marketplace.md](education/en/06-tools-marketplace.md) |
+| 7 | **Policy & Governance** | [07-policy-governance.md](education/en/07-policy-governance.md) |
+| 8 | **Control Plane** | [08-control-plane.md](education/en/08-control-plane.md) |
+| 9 | **Runtime Plane** | [09-runtime-plane.md](education/en/09-runtime-plane.md) |
+| 10 | **Evaluation Engine** | [10-evaluation-engine.md](education/en/10-evaluation-engine.md) |
+| 11 | **Observability & Cost** | [11-observability-cost.md](education/en/11-observability-cost.md) |
+| 12 | **Security & Isolation** | [12-security-isolation.md](education/en/12-security-isolation.md) |
+| 13 | **Scalability Patterns** | [13-scalability.md](education/en/13-scalability.md) |
+| 14 | **HLD — Full Architecture** | [14-hld-architecture.md](education/en/14-hld-architecture.md) |
+| 15 | **Microsoft Stack Mapping** | [15-microsoft-stack.md](education/en/15-microsoft-stack.md) |
+| 16 | **Agent Frameworks & Ecosystem** | [16-agent-frameworks.md](education/en/16-agent-frameworks.md) |
+| 17 | **Azure AI Foundry** | [17-azure-ai-foundry.md](education/en/17-azure-ai-foundry.md) |
+
+---
+
+## 🧪 Hands-On Labs
+
+> **Learn by building.** Each lab teaches one core concept by writing real code with LangChain/LangGraph.
+
+| Lab | What You Build | Education Chapters |
+|-----|---------------|--------------------|
+| **[Lab 00](labs/lab-00-setup/README.md)** | Azure environment setup (one-click deploy) | — |
+| **[Lab 01](labs/lab-01-react-agent/README.md)** | Build a ReAct Agent from scratch, then with LangGraph | Ch 1 |
+| **[Lab 02](labs/lab-02-model-routing/README.md)** | Smart model routing (cheap vs expensive) | Ch 2 |
+| **[Lab 03](labs/lab-03-memory-rag/README.md)** | Memory & RAG integration | Ch 3, 4 |
+| **[Lab 04](labs/lab-04-orchestration/README.md)** | Orchestration patterns (sequential, parallel, map-reduce) | Ch 5 |
+| Lab 05 | Tool calling with safety guardrails | Ch 6, 7 |
+| Lab 06 | Agent evaluation pipeline | Ch 10 |
+| Lab 07 | Framework deep dive (LangGraph vs Deep Agents) | Ch 16 |
+| Lab 08 | Observability & Monitoring | Ch 11 |
+| Lab 09 | Azure AI Foundry | Ch 17 |
+
+**[→ Get started with the labs](labs/README.md)**
 
 ---
 
