@@ -494,38 +494,39 @@ With so many patterns, how do you decide which one to use? Start with these ques
 
 ### Decision Tree
 
-```
-📥 You have a task. Ask yourself:
-│
-├─ Is it a single step?
-│   └─ YES → No orchestration needed. Use a simple ReAct agent (Ch 1).
-│
-├─ Does it have multiple steps that DEPEND on each other?
-│   └─ YES → Sequential Pipeline
-│        Example: Research → Draft → Review → Publish
-│
-├─ Does it have multiple INDEPENDENT tasks?
-│   ├─ Are they all the SAME operation on different data?
-│   │   └─ YES → Map-Reduce
-│   │        Example: Summarize 50 documents → merge into one report
-│   └─ Are they DIFFERENT operations?
-│       └─ YES → Parallel (Fan-Out / Fan-In)
-│            Example: Search news + search DB + search docs → merge
-│
-├─ Does it have tasks with MIXED dependencies?
-│   └─ YES → DAG Workflow
-│        Example: A→(B,C parallel)→D→(E,F parallel)→G
-│
-├─ Does it need multiple types of EXPERTISE?
-│   └─ YES → Supervisor / Sub-Agent
-│        Example: Manager → Researcher, Analyst, Writer
-│
-├─ Is it OPEN-ENDED (you don't know the steps in advance)?
-│   ├─ Simple exploration → ReAct (reason + act loop)
-│   └─ Complex multi-step → Plan-and-Execute
-│
-└─ Does the output need to be HIGH QUALITY?
-    └─ YES → Add a Critic pattern (generate → review → refine loop)
+```mermaid
+graph TD
+    Start["📥 You have a task"] --> Q1{"Single step?"}
+    
+    Q1 -->|"Yes"| A1["✅ No orchestration needed<br/>Simple ReAct agent"]
+    Q1 -->|"No"| Q2{"Steps depend<br/>on each other?"}
+    
+    Q2 -->|"Yes, all sequential"| A2["📋 Sequential Pipeline<br/>Research → Draft → Review"]
+    Q2 -->|"Mixed dependencies"| A3["🔀 DAG Workflow<br/>A→(B,C)→D→(E,F)→G"]
+    Q2 -->|"No, independent"| Q3{"Same operation<br/>on many items?"}
+    
+    Q3 -->|"Yes"| A4["🗺️ Map-Reduce<br/>Summarize 50 docs → merge"]
+    Q3 -->|"No, different tasks"| A5["⚡ Parallel Fan-Out/Fan-In<br/>Search 3 sources → merge"]
+    
+    Q1 -->|"Not sure"| Q4{"Know the steps<br/>in advance?"}
+    
+    Q4 -->|"Yes, needs expertise"| A6["🎩 Supervisor<br/>Manager → specialists"]
+    Q4 -->|"No, open-ended"| Q5{"Complex?"}
+    
+    Q5 -->|"Simple"| A7["🔄 ReAct Loop<br/>Reason → Act → Observe"]
+    Q5 -->|"Complex"| A8["📋 Plan-and-Execute<br/>Plan first, then execute"]
+    
+    A2 --> Q6{"Need high quality?"}
+    A6 --> Q6
+    A8 --> Q6
+    Q6 -->|"Yes"| A9["➕ Add Critic pattern<br/>Generate → Review → Refine"]
+    Q6 -->|"Good enough"| Done["📤 Done"]
+    A1 --> Done
+    A3 --> Done
+    A4 --> Done
+    A5 --> Done
+    A7 --> Done
+    A9 --> Done
 ```
 
 ### Real-World Scenarios
