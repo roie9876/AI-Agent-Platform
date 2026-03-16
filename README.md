@@ -48,7 +48,7 @@ Each chapter is self-contained, but together they form a complete picture of a P
 | **[Lab 03](labs/lab-03-memory-rag/README.md)** | Memory & RAG integration | Ch 3, 4 |
 | **[Lab 04](labs/lab-04-orchestration/README.md)** | Orchestration patterns (sequential, parallel, map-reduce) | Ch 5 |
 | **[Lab 05](labs/lab-05-tools-safety/README.md)** | Tool calling with safety guardrails | Ch 6, 7 |
-| Lab 06 | Agent evaluation pipeline | Ch 10 |
+| **[Lab 06](labs/lab-06-evaluation/README.md)** | Agent evaluation pipeline | Ch 10 |
 | Lab 07 | Framework deep dive (LangGraph vs Deep Agents) | Ch 16 |
 | Lab 08 | Observability & Monitoring | Ch 11 |
 | Lab 09 | Azure AI Foundry | Ch 17 |
