@@ -130,7 +130,7 @@ resource searchService 'Microsoft.Search/searchServices@2023-11-01' = {
   location: location
   tags: tags
   sku: {
-    name: 'basic'  // Basic tier is sufficient for labs
+    name: 'standard'  // Standard tier required for Agentic Retrieval + semantic search
   }
   properties: {
     replicaCount: 1
