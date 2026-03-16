@@ -51,6 +51,51 @@ The key insight: **~70% of real-world requests are simple.** If you route them t
 
 ---
 
+## 🌍 Industry Landscape: Model Routing in Production
+
+Model routing isn't just a lab exercise — it's a critical pattern in production AI systems.
+
+### How Companies Route Models
+
+| Approach | Who Uses It | How It Works |
+|----------|------------|-------------|
+| **LLM-based classifier** | Most startups | Cheap model classifies complexity → routes to right model (what we build) |
+| **Azure API Management + policies** | Enterprise Azure | APIM policies route by URL, headers, or custom logic |
+| **Azure AI Foundry model catalog** | Azure users | Multiple models deployed, selected per request |
+| **Martian Model Router** | Production systems | Third-party routing service with automatic model selection |
+| **OpenRouter** | Multi-provider teams | API that routes across OpenAI, Anthropic, Google, etc. |
+| **Portkey AI Gateway** | Production teams | Gateway with automatic fallback, load balancing, cost tracking |
+
+### Model Providers & Pricing (2025-2026)
+
+| Provider | Cheap Model | Cost | Expensive Model | Cost | Ratio |
+|----------|------------|------|----------------|------|-------|
+| **Azure OpenAI** | GPT-4o-mini | ~$0.15/1M in | GPT-4.1 | ~$2.00/1M in | 13x |
+| **OpenAI** | GPT-4o-mini | ~$0.15/1M in | GPT-4.1 | ~$2.00/1M in | 13x |
+| **Anthropic** | Claude 3.5 Haiku | ~$0.80/1M in | Claude 4 Opus | ~$15/1M in | 19x |
+| **Google** | Gemini 2.0 Flash | ~$0.10/1M in | Gemini 2.5 Pro | ~$1.25/1M in | 12x |
+
+### Production Routing Patterns
+
+| Pattern | Description | When to Use |
+|---------|------------|------------|
+| **Complexity routing** | Simple→cheap, complex→expensive | General-purpose (what we build) |
+| **Fallback routing** | Try cheap first, escalate if quality is low | When quality is measurable |
+| **Latency routing** | Fast model for real-time, slow for batch | Mixed latency requirements |
+| **Cost budget routing** | Route to cheapest that fits remaining budget | Hard cost limits per user/tenant |
+| **A/B routing** | Split traffic to compare models | Model evaluation in production |
+
+### What We Build vs What Azure Provides
+
+| Layer | Open Source (LangGraph) | Azure Production |
+|-------|----------------------|-----------------|
+| **Classifier** | LLM-based prompt | Same (or Azure Content Safety classifier) |
+| **Routing logic** | LangGraph conditional edges | Azure APIM policies or custom middleware |
+| **Model deployment** | Any provider | Azure OpenAI multi-deployment |
+| **Cost tracking** | Manual (our `call_model` function) | Azure Monitor + Cost Management |
+
+---
+
 ## 🔀 Part 2: How Model Routing Works
 
 ### The Architecture
