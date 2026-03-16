@@ -1,4 +1,4 @@
-# 🧠 פרק 4: Model Abstraction & Multi-Model Routing
+# 🧠 פרק 2: Model Abstraction & Multi-Model Routing
 
 ## תוכן עניינים
 - [למה צריך שכבת הפשטה?](#למה-צריך-שכבת-הפשטה)
@@ -533,4 +533,4 @@ mindmap
 
 ---
 
-**[⬅️ חזרה לפרק 3: Runtime Plane](03-runtime-plane.md)** | **[➡️ המשך לפרק 5: Memory Management & RAG →](05-memory-management.md)**
+**[⬅️ חזרה לפרק 1: מושגי יסוד](01-fundamentals.md)** | **[➡️ המשך לפרק 3: Memory Management & RAG →](03-memory-management.md)**

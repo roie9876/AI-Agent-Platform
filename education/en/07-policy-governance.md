@@ -1,4 +1,4 @@
-# 🛡️ Chapter 9: Policy & Governance Engine
+# 🛡️ Chapter 7: Policy & Governance Engine
 
 ## Table of Contents
 - [What is a Policy Engine?](#what-is-a-policy-engine)
@@ -563,4 +563,4 @@ mindmap
 
 ---
 
-**[⬅️ Back to Chapter 8: Tools](08-tools-marketplace.md)** | **[➡️ Continue to Chapter 10: Evaluation Engine →](10-evaluation-engine.md)**
+**[⬅️ Back to Chapter 6: Tools](06-tools-marketplace.md)** | **[➡️ Continue to Chapter 8: Control Plane →](08-control-plane.md)**

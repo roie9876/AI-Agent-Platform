@@ -528,4 +528,4 @@ Because Agents are **non-deterministic** - a small prompt change can break every
 
 ---
 
-**[⬅️ Back to Chapter 9: Policy](09-policy-governance.md)** | **[➡️ Continue to Chapter 11: Observability & Cost →](11-observability-cost.md)**
+**[⬅️ Back to Chapter 9: Runtime Plane](09-runtime-plane.md)** | **[➡️ Continue to Chapter 11: Observability & Cost →](11-observability-cost.md)**

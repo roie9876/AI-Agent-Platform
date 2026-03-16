@@ -1,4 +1,4 @@
-# 🧵 פרק 6: Thread & State Management
+# 🧵 פרק 4: Thread & State Management
 
 ## תוכן עניינים
 - [מה זה Thread?](#מה-זה-thread)
@@ -531,4 +531,4 @@ mindmap
 
 ---
 
-**[⬅️ חזרה לפרק 5: Memory Management](05-memory-management.md)** | **[➡️ המשך לפרק 7: Orchestration Patterns →](07-orchestration.md)**
+**[⬅️ חזרה לפרק 3: Memory Management](03-memory-management.md)** | **[➡️ המשך לפרק 5: Orchestration Patterns →](05-orchestration.md)**

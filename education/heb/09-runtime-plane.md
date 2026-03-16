@@ -1,4 +1,4 @@
-# ⚙️ פרק 3: Runtime (Data) Plane
+# ⚙️ פרק 9: Runtime (Data) Plane
 
 ## תוכן עניינים
 - [מהו Runtime Plane?](#מהו-runtime-plane)
@@ -551,4 +551,4 @@ Stateful components (כמו Agent עם thread ב-memory) לא ניתנים ל-sc
 
 ---
 
-**[⬅️ חזרה לפרק 2: Control Plane](02-control-plane.md)** | **[➡️ המשך לפרק 4: Model Abstraction & Routing →](04-model-abstraction-routing.md)**
+**[⬅️ חזרה לפרק 8: Control Plane](08-control-plane.md)** | **[➡️ המשך לפרק 10: Evaluation Engine →](10-evaluation-engine.md)**

@@ -1,4 +1,4 @@
-# 🎛️ Chapter 2: Control Plane
+# 🎛️ Chapter 8: Control Plane
 
 ## Table of Contents
 - [What is a Control Plane?](#what-is-a-control-plane)
@@ -607,4 +607,4 @@ An API Gateway provides: rate limiting, authentication, routing, logging, TLS te
 
 ---
 
-**[⬅️ Back to Chapter 1: Fundamentals](01-fundamentals.md)** | **[➡️ Continue to Chapter 3: Runtime Plane →](03-runtime-plane.md)**
+**[⬅️ Back to Chapter 7: Policy & Governance](07-policy-governance.md)** | **[➡️ Continue to Chapter 9: Runtime Plane →](09-runtime-plane.md)**

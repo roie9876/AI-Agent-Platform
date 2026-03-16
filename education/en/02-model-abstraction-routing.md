@@ -1,4 +1,4 @@
-# 🧠 Chapter 4: Model Abstraction & Multi-Model Routing
+# 🧠 Chapter 2: Model Abstraction & Multi-Model Routing
 
 ## Table of Contents
 - [Why Do We Need an Abstraction Layer?](#why-do-we-need-an-abstraction-layer)
@@ -579,4 +579,4 @@ Without abstraction, the code is tightly coupled to a single provider (OpenAI/An
 
 ---
 
-**[⬅️ Back to Chapter 3: Runtime Plane](03-runtime-plane.md)** | **[➡️ Continue to Chapter 5: Memory Management & RAG →](05-memory-management.md)**
+**[⬅️ Back to Chapter 1: Fundamentals](01-fundamentals.md)** | **[➡️ Continue to Chapter 3: Memory Management & RAG →](03-memory-management.md)**

@@ -1,4 +1,4 @@
-# 🛡️ פרק 9: Policy & Governance Engine
+# 🛡️ פרק 7: Policy & Governance Engine
 
 ## תוכן עניינים
 - [מה זה Policy Engine?](#מה-זה-policy-engine)
@@ -563,4 +563,4 @@ mindmap
 
 ---
 
-**[⬅️ חזרה לפרק 8: Tools](08-tools-marketplace.md)** | **[➡️ המשך לפרק 10: Evaluation Engine →](10-evaluation-engine.md)**
+**[⬅️ חזרה לפרק 6: Tools](06-tools-marketplace.md)** | **[➡️ המשך לפרק 8: Control Plane →](08-control-plane.md)**

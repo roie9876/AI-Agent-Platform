@@ -9,24 +9,24 @@
 
 ## 🗂️ סדר הלימוד המומלץ
 
-| # | נושא | קובץ | מה תלמד |
-|---|-------|-------|---------|
-| 1 | **מושגי יסוד - מהו AI Agent?** | [01-fundamentals.md](01-fundamentals.md) | מה זה LLM, מה זה Agent, ההבדל בין Chatbot ל-Agent, מושגים בסיסיים |
-| 2 | **Control Plane** | [02-control-plane.md](02-control-plane.md) | מהו Control Plane, למה צריך אותו, רכיבים מרכזיים |
-| 3 | **Runtime (Data) Plane** | [03-runtime-plane.md](03-runtime-plane.md) | מהו Runtime Plane, איך Agent רץ, מחזור חיים של בקשה |
-| 4 | **Model Abstraction & Routing** | [04-model-abstraction-routing.md](04-model-abstraction-routing.md) | שכבת הפשטה ל-LLMs, ניתוב חכם בין מודלים, אסטרטגיות Routing |
-| 5 | **Memory Management & RAG** | [05-memory-management.md](05-memory-management.md) | זיכרון קצר וארוך טווח, RAG, Vector Databases, Embeddings |
-| 6 | **Thread & State Management** | [06-thread-state-management.md](06-thread-state-management.md) | ניהול שיחות, State Machines, Checkpointing, Human-in-the-Loop |
-| 7 | **Orchestration Patterns** | [07-orchestration.md](07-orchestration.md) | Sequential, Parallel, Autonomous, Sub-agents, DAG workflows |
-| 8 | **Tools & Marketplace** | [08-tools-marketplace.md](08-tools-marketplace.md) | Function Calling, Tool Integration, Tool Registry, Marketplace |
-| 9 | **Policy & Governance** | [09-policy-governance.md](09-policy-governance.md) | Content Safety, DLP, Rate Limiting, Guardrails |
-| 10 | **Evaluation Engine** | [10-evaluation-engine.md](10-evaluation-engine.md) | מדדי איכות, Groundedness, Relevance, בדיקות אוטומטיות |
-| 11 | **Observability & Cost** | [11-observability-cost.md](11-observability-cost.md) | Metrics, Tracing, Token Tracking, Cost Dashboards |
-| 12 | **Security & Isolation** | [12-security-isolation.md](12-security-isolation.md) | Sandboxing, Container Isolation, Zero Trust, Secrets Management |
-| 13 | **Scalability Patterns** | [13-scalability.md](13-scalability.md) | Horizontal Scaling, Multi-tenancy, Partitioning, Edge Cases |
-| 14 | **HLD - Full Architecture** | [14-hld-architecture.md](14-hld-architecture.md) | איך הכל מתחבר - תרשים ארכיטקטורה מלא |
-| 15 | **Microsoft Stack Mapping** | [15-microsoft-stack.md](15-microsoft-stack.md) | מיפוי כל רכיב לשירותי Azure ספציפיים |
-| 16 | **Agent Development Frameworks & Ecosystem** | [16-agent-frameworks.md](16-agent-frameworks.md) | LangChain, LangGraph, Semantic Kernel, AutoGen, CrewAI, MCP, פרוטוקולי A2A |
+| # | נושא | קובץ |
+|---|-------|-------|
+| 1 | **מושגי יסוד — מהו AI Agent?** | [01-fundamentals.md](01-fundamentals.md) |
+| 2 | **Model Abstraction & Routing** | [02-model-abstraction-routing.md](02-model-abstraction-routing.md) |
+| 3 | **Memory Management & RAG** | [03-memory-management.md](03-memory-management.md) |
+| 4 | **Thread & State Management** | [04-thread-state-management.md](04-thread-state-management.md) |
+| 5 | **Orchestration Patterns** | [05-orchestration.md](05-orchestration.md) |
+| 6 | **Tools & Marketplace** | [06-tools-marketplace.md](06-tools-marketplace.md) |
+| 7 | **Policy & Governance** | [07-policy-governance.md](07-policy-governance.md) |
+| 8 | **Control Plane** | [08-control-plane.md](08-control-plane.md) |
+| 9 | **Runtime Plane** | [09-runtime-plane.md](09-runtime-plane.md) |
+| 10 | **Evaluation Engine** | [10-evaluation-engine.md](10-evaluation-engine.md) |
+| 11 | **Observability & Cost** | [11-observability-cost.md](11-observability-cost.md) |
+| 12 | **Security & Isolation** | [12-security-isolation.md](12-security-isolation.md) |
+| 13 | **Scalability Patterns** | [13-scalability.md](13-scalability.md) |
+| 14 | **HLD — Full Architecture** | [14-hld-architecture.md](14-hld-architecture.md) |
+| 15 | **Microsoft Stack Mapping** | [15-microsoft-stack.md](15-microsoft-stack.md) |
+| 16 | **Agent Frameworks & Ecosystem** | [16-agent-frameworks.md](16-agent-frameworks.md) |
 
 ---
 

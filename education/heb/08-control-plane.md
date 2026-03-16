@@ -1,4 +1,4 @@
-# 🎛️ פרק 2: Control Plane
+# 🎛️ פרק 8: Control Plane
 
 ## תוכן עניינים
 - [מהו Control Plane?](#מהו-control-plane)
@@ -607,4 +607,4 @@ API Gateway מספק: rate limiting, authentication, routing, logging, TLS termi
 
 ---
 
-**[⬅️ חזרה לפרק 1: מושגי יסוד](01-fundamentals.md)** | **[➡️ המשך לפרק 3: Runtime Plane →](03-runtime-plane.md)**
+**[⬅️ חזרה לפרק 7: Policy & Governance](07-policy-governance.md)** | **[➡️ המשך לפרק 9: Runtime Plane →](09-runtime-plane.md)**

@@ -67,11 +67,11 @@ flowchart TB
 
 | Lab | What You Build | Education Chapter | What You Learn |
 |-----|---------------|-------------------|----------------|
-| **Lab 01** | [ReAct Agent from Scratch](lab-01-react-agent/README.md) | Ch 1, 3 | Build a working agent with NO framework first, then rebuild with LangGraph. Understand Think→Act→Observe. |
-| **Lab 02** | [Smart Model Routing](lab-02-model-routing/README.md) | Ch 4 | Route requests to cheap vs expensive models based on complexity. See the cost difference. |
-| **Lab 03** | [Memory & RAG](lab-03-memory-rag/README.md) | Ch 5 | Add short-term memory (conversation) and long-term memory (RAG) to your agent. |
-| **Lab 04** | [Orchestration Patterns](lab-04-orchestration/README.md) | Ch 7 | Build Sequential, Parallel, and Map-Reduce patterns. Measure the speedup. |
-| **Lab 05** | [Tools & Safety](lab-05-tools-safety/README.md) | Ch 8, 9 | Create custom tools, add input validation, DLP scanning, and budget guardrails. |
+| **Lab 01** | [ReAct Agent from Scratch](lab-01-react-agent/README.md) | Ch 1 | Build a working agent with NO framework first, then rebuild with LangGraph. Understand Think→Act→Observe. |
+| **Lab 02** | [Smart Model Routing](lab-02-model-routing/README.md) | Ch 2 | Route requests to cheap vs expensive models based on complexity. See the cost difference. |
+| **Lab 03** | [Memory & RAG](lab-03-memory-rag/README.md) | Ch 3 | Add short-term memory (conversation) and long-term memory (RAG) to your agent. |
+| **Lab 04** | [Orchestration Patterns](lab-04-orchestration/README.md) | Ch 5 | Build Sequential, Parallel, and Map-Reduce patterns. Measure the speedup. |
+| **Lab 05** | [Tools & Safety](lab-05-tools-safety/README.md) | Ch 6, 7 | Create custom tools, add input validation, DLP scanning, and budget guardrails. |
 | **Lab 06** | [Agent Evaluation](lab-06-evaluation/README.md) | Ch 10 | Build an eval pipeline that scores groundedness, relevance, and toxicity. |
 | **Lab 07** | [Framework Deep Dive](lab-07-frameworks/README.md) | Ch 16 | Build the same agent in LangChain, LangGraph, and Deep Agents. Compare approaches. |
 | **Lab 08** | [Observability & Monitoring](lab-08-observability/README.md) | Ch 11 | Instrument agents with OpenTelemetry, track costs, build dashboards. |

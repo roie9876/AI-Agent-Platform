@@ -1,4 +1,4 @@
-# 🎭 Chapter 7: Orchestration Patterns
+# 🎭 Chapter 5: Orchestration Patterns
 
 ## Table of Contents
 - [What is Orchestration?](#what-is-orchestration)
@@ -590,4 +590,4 @@ When the task **consists of multiple different domains** (search + writing + ana
 
 ---
 
-**[⬅️ Back to Chapter 6: Thread & State](06-thread-state-management.md)** | **[➡️ Continue to Chapter 8: Tools & Marketplace →](08-tools-marketplace.md)**
+**[⬅️ Back to Chapter 4: Thread & State](04-thread-state-management.md)** | **[➡️ Continue to Chapter 6: Tools & Marketplace →](06-tools-marketplace.md)**

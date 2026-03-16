@@ -528,4 +528,4 @@ mindmap
 
 ---
 
-**[⬅️ חזרה לפרק 9: Policy](09-policy-governance.md)** | **[➡️ המשך לפרק 11: Observability & Cost →](11-observability-cost.md)**
+**[⬅️ חזרה לפרק 9: Runtime Plane](09-runtime-plane.md)** | **[➡️ המשך לפרק 11: Observability & Cost →](11-observability-cost.md)**

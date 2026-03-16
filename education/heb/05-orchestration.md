@@ -1,4 +1,4 @@
-# 🎭 פרק 7: Orchestration Patterns
+# 🎭 פרק 5: Orchestration Patterns
 
 ## תוכן עניינים
 - [מה זה Orchestration?](#מה-זה-orchestration)
@@ -590,4 +590,4 @@ mindmap
 
 ---
 
-**[⬅️ חזרה לפרק 6: Thread & State](06-thread-state-management.md)** | **[➡️ המשך לפרק 8: Tools & Marketplace →](08-tools-marketplace.md)**
+**[⬅️ חזרה לפרק 4: Thread & State](04-thread-state-management.md)** | **[➡️ המשך לפרק 6: Tools & Marketplace →](06-tools-marketplace.md)**

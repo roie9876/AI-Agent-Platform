@@ -1,4 +1,4 @@
-# 🔧 פרק 8: Tools & Marketplace
+# 🔧 פרק 6: Tools & Marketplace
 
 ## תוכן עניינים
 - [מה הם Tools?](#מה-הם-tools)
@@ -597,4 +597,4 @@ LLM הוא **מודל שפה** - הוא מייצר טקסט, לא מריץ קו�
 
 ---
 
-**[⬅️ חזרה לפרק 7: Orchestration](07-orchestration.md)** | **[➡️ המשך לפרק 9: Policy & Governance →](09-policy-governance.md)**
+**[⬅️ חזרה לפרק 5: Orchestration](05-orchestration.md)** | **[➡️ המשך לפרק 7: Policy & Governance →](07-policy-governance.md)**

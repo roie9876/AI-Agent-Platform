@@ -431,4 +431,4 @@ graph TB
 
 ---
 
-**[➡️ המשך לפרק 2: Control Plane →](02-control-plane.md)**
+**[➡️ המשך לפרק 2: Model Abstraction & Routing →](02-model-abstraction-routing.md)**

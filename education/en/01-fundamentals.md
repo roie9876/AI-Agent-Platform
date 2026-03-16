@@ -471,4 +471,4 @@ Without a platform: each team builds everything from scratch → duplications, n
 
 ---
 
-**[➡️ Continue to Chapter 2: Control Plane →](02-control-plane.md)**
+**[➡️ Continue to Chapter 2: Model Abstraction & Routing →](02-model-abstraction-routing.md)**

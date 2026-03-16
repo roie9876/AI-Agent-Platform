@@ -1,4 +1,4 @@
-# 💾 Chapter 5: Memory Management & RAG
+# 💾 Chapter 3: Memory Management & RAG
 
 ## Table of Contents
 - [Why Does an Agent Need Memory?](#why-does-an-agent-need-memory)
@@ -645,4 +645,4 @@ The Context Window is limited (e.g., 128K tokens). A long conversation exceeds t
 
 ---
 
-**[⬅️ Back to Chapter 4: Model Abstraction](04-model-abstraction-routing.md)** | **[➡️ Continue to Chapter 6: Thread & State Management →](06-thread-state-management.md)**
+**[⬅️ Back to Chapter 2: Model Abstraction](02-model-abstraction-routing.md)** | **[➡️ Continue to Chapter 4: Thread & State Management →](04-thread-state-management.md)**

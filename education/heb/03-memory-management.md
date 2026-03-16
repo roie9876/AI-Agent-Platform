@@ -1,4 +1,4 @@
-# 💾 פרק 5: Memory Management & RAG
+# 💾 פרק 3: Memory Management & RAG
 
 ## תוכן עניינים
 - [למה Agent צריך זיכרון?](#למה-agent-צריך-זיכרון)
@@ -570,4 +570,4 @@ Context Window מוגבל (למשל 128K tokens). שיחה ארוכה חורגת
 
 ---
 
-**[⬅️ חזרה לפרק 4: Model Abstraction](04-model-abstraction-routing.md)** | **[➡️ המשך לפרק 6: Thread & State Management →](06-thread-state-management.md)**
+**[⬅️ חזרה לפרק 2: Model Abstraction](02-model-abstraction-routing.md)** | **[➡️ המשך לפרק 4: Thread & State Management →](04-thread-state-management.md)**

@@ -1,4 +1,4 @@
-# 🔧 Chapter 8: Tools & Marketplace
+# 🔧 Chapter 6: Tools & Marketplace
 
 ## Table of Contents
 - [What Are Tools?](#what-are-tools)
@@ -597,4 +597,4 @@ Give a tool only the **minimum** permissions it needs. For example: a tool that 
 
 ---
 
-**[⬅️ Back to Chapter 7: Orchestration](07-orchestration.md)** | **[➡️ Continue to Chapter 9: Policy & Governance →](09-policy-governance.md)**
+**[⬅️ Back to Chapter 5: Orchestration](05-orchestration.md)** | **[➡️ Continue to Chapter 7: Policy & Governance →](07-policy-governance.md)**

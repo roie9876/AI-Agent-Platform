@@ -9,24 +9,25 @@ Each chapter is self-contained, but together they form a complete picture of a P
 
 ## 🗂️ Recommended Learning Path
 
-| # | Topic | File | What You'll Learn |
-|---|-------|------|-------------------|
-| 1 | **Fundamentals - What is an AI Agent?** | [01-fundamentals.md](01-fundamentals.md) | What is an LLM, what is an Agent, the difference between a Chatbot and an Agent, basic concepts |
-| 2 | **Control Plane** | [02-control-plane.md](02-control-plane.md) | What is a Control Plane, why it's needed, key components |
-| 3 | **Runtime (Data) Plane** | [03-runtime-plane.md](03-runtime-plane.md) | What is a Runtime Plane, how an Agent runs, request lifecycle |
-| 4 | **Model Abstraction & Routing** | [04-model-abstraction-routing.md](04-model-abstraction-routing.md) | Abstraction layer for LLMs, smart routing between models, Routing strategies |
-| 5 | **Memory Management & RAG** | [05-memory-management.md](05-memory-management.md) | Short-term and long-term memory, RAG, Vector Databases, Embeddings |
-| 6 | **Thread & State Management** | [06-thread-state-management.md](06-thread-state-management.md) | Conversation management, State Machines, Checkpointing, Human-in-the-Loop |
-| 7 | **Orchestration Patterns** | [07-orchestration.md](07-orchestration.md) | Sequential, Parallel, Autonomous, Sub-agents, DAG workflows |
-| 8 | **Tools & Marketplace** | [08-tools-marketplace.md](08-tools-marketplace.md) | Function Calling, Tool Integration, Tool Registry, Marketplace |
-| 9 | **Policy & Governance** | [09-policy-governance.md](09-policy-governance.md) | Content Safety, DLP, Rate Limiting, Guardrails |
-| 10 | **Evaluation Engine** | [10-evaluation-engine.md](10-evaluation-engine.md) | Quality metrics, Groundedness, Relevance, automated testing |
-| 11 | **Observability & Cost** | [11-observability-cost.md](11-observability-cost.md) | Metrics, Tracing, Token Tracking, Cost Dashboards |
-| 12 | **Security & Isolation** | [12-security-isolation.md](12-security-isolation.md) | Sandboxing, Container Isolation, Zero Trust, Secrets Management |
-| 13 | **Scalability Patterns** | [13-scalability.md](13-scalability.md) | Horizontal Scaling, Multi-tenancy, Partitioning, Edge Cases |
-| 14 | **HLD - Full Architecture** | [14-hld-architecture.md](14-hld-architecture.md) | How everything connects - complete architecture diagram |
-| 15 | **Microsoft Stack Mapping** | [15-microsoft-stack.md](15-microsoft-stack.md) | Mapping each component to specific Azure services |
-| 16 | **Agent Development Frameworks & Ecosystem** | [16-agent-frameworks.md](16-agent-frameworks.md) | LangChain, LangGraph, Semantic Kernel, AutoGen, CrewAI, MCP, A2A protocols |\n| 17 | **Azure AI Foundry** | [17-azure-ai-foundry.md](17-azure-ai-foundry.md) | Managed agent platform: Model Catalog, Agents Service, Evaluations, Tracing, Content Safety |
+| # | Topic | File |
+|---|-------|------|
+| 1 | **Fundamentals — What is an AI Agent?** | [01-fundamentals.md](01-fundamentals.md) |
+| 2 | **Model Abstraction & Routing** | [02-model-abstraction-routing.md](02-model-abstraction-routing.md) |
+| 3 | **Memory Management & RAG** | [03-memory-management.md](03-memory-management.md) |
+| 4 | **Thread & State Management** | [04-thread-state-management.md](04-thread-state-management.md) |
+| 5 | **Orchestration Patterns** | [05-orchestration.md](05-orchestration.md) |
+| 6 | **Tools & Marketplace** | [06-tools-marketplace.md](06-tools-marketplace.md) |
+| 7 | **Policy & Governance** | [07-policy-governance.md](07-policy-governance.md) |
+| 8 | **Control Plane** | [08-control-plane.md](08-control-plane.md) |
+| 9 | **Runtime Plane** | [09-runtime-plane.md](09-runtime-plane.md) |
+| 10 | **Evaluation Engine** | [10-evaluation-engine.md](10-evaluation-engine.md) |
+| 11 | **Observability & Cost** | [11-observability-cost.md](11-observability-cost.md) |
+| 12 | **Security & Isolation** | [12-security-isolation.md](12-security-isolation.md) |
+| 13 | **Scalability Patterns** | [13-scalability.md](13-scalability.md) |
+| 14 | **HLD — Full Architecture** | [14-hld-architecture.md](14-hld-architecture.md) |
+| 15 | **Microsoft Stack Mapping** | [15-microsoft-stack.md](15-microsoft-stack.md) |
+| 16 | **Agent Frameworks & Ecosystem** | [16-agent-frameworks.md](16-agent-frameworks.md) |
+| 17 | **Azure AI Foundry** | [17-azure-ai-foundry.md](17-azure-ai-foundry.md) |
 
 ---
 

@@ -1,4 +1,4 @@
-# ⚙️ Chapter 3: Runtime (Data) Plane
+# ⚙️ Chapter 9: Runtime (Data) Plane
 
 ## Table of Contents
 - [What is the Runtime Plane?](#what-is-the-runtime-plane)
@@ -551,4 +551,4 @@ Stateful components (like an Agent with a thread in memory) cannot be easily sca
 
 ---
 
-**[⬅️ Back to Chapter 2: Control Plane](02-control-plane.md)** | **[➡️ Continue to Chapter 4: Model Abstraction & Routing →](04-model-abstraction-routing.md)**
+**[⬅️ Back to Chapter 8: Control Plane](08-control-plane.md)** | **[➡️ Continue to Chapter 10: Evaluation Engine →](10-evaluation-engine.md)**

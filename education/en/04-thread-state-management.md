@@ -1,4 +1,4 @@
-# 🧵 Chapter 6: Thread & State Management
+# 🧵 Chapter 4: Thread & State Management
 
 ## Table of Contents
 - [What is a Thread?](#what-is-a-thread)
@@ -531,4 +531,4 @@ This is **Concurrent Message Handling**. Options: (1) **Queue** - the message en
 
 ---
 
-**[⬅️ Back to Chapter 5: Memory Management](05-memory-management.md)** | **[➡️ Continue to Chapter 7: Orchestration Patterns →](07-orchestration.md)**
+**[⬅️ Back to Chapter 3: Memory Management](03-memory-management.md)** | **[➡️ Continue to Chapter 5: Orchestration Patterns →](05-orchestration.md)**
