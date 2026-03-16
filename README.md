@@ -45,52 +45,45 @@ Each chapter is self-contained, but together they form a complete picture of a P
 
 ---
 
-## 🧭 Topic Map - Bird's Eye View
+## 🧭 Platform Architecture — Bird's Eye View
 
-```mermaid
-graph TB
-    subgraph "🎛️ Control Plane"
-        API[API Gateway]
-        IAM[Identity & Access]
-        Registry[Agent Registry]
-        Policy[Policy Engine]
-        Eval[Evaluation Engine]
-        Cost[Cost Dashboard]
-        Marketplace[Tool Marketplace]
-    end
-
-    subgraph "⚙️ Runtime Plane"
-        Orch[Orchestrator]
-        Model[Model Layer]
-        Mem[Memory Manager]
-        Thread[Thread Manager]
-        State[State Manager]
-        Sandbox[Secure Sandbox]
-        Tools[Tool Executor]
-    end
-
-    subgraph "📊 Cross-Cutting"
-        Obs[Observability]
-        Sec[Security]
-        Scale[Scalability]
-    end
-
-    API --> Orch
-    IAM --> API
-    Registry --> Orch
-    Orch --> Model
-    Orch --> Mem
-    Orch --> Thread
-    Orch --> State
-    Orch --> Tools
-    Tools --> Sandbox
-    Policy --> Orch
-    Eval --> Orch
-    Cost --> Obs
-    Obs --> Orch
-    Sec --> Sandbox
-    Scale --> Orch
 ```
+┌──────────────────────────────────────────────────────────────────────────┐
+│                         🎛️  CONTROL PLANE                              │
+│                                                                          │
+│   API Gateway ─── Identity & Access ─── Agent Registry                  │
+│        │                                      │                          │
+│   Policy Engine ─── Evaluation Engine ─── Tool Marketplace              │
+│        │                  │                    │                          │
+│        └──────────────────┼────────────────────┘                         │
+│                           │                                              │
+│                    Cost Dashboard                                        │
+└──────────────────────────┬───────────────────────────────────────────────┘
+                           │
+                           ▼
+┌──────────────────────────────────────────────────────────────────────────┐
+│                         ⚙️  RUNTIME PLANE                               │
+│                                                                          │
+│                      ┌─────────────┐                                    │
+│                      │ Orchestrator│                                    │
+│                      └──────┬──────┘                                    │
+│            ┌────────────┬───┴───┬────────────┐                          │
+│            ▼            ▼       ▼            ▼                          │
+│      Model Layer   Memory   Thread &    Tool Executor                   │
+│      (Routing,     Manager  State       (Function Calling)              │
+│       Fallback)             Manager          │                          │
+│                                         Secure Sandbox                  │
+└──────────────────────────────────────────────────────────────────────────┘
+                           │
+┌──────────────────────────┴───────────────────────────────────────────────┐
+│                      📊  CROSS-CUTTING CONCERNS                         │
+│                                                                          │
+│          Observability  ───  Security & Isolation  ───  Scalability     │
+│          (Ch 11)             (Ch 12)                    (Ch 13)          │
+└──────────────────────────────────────────────────────────────────────────┘
+```
+
+Each box maps to an education chapter — read them in order to build the full picture.
 
 ---
 
@@ -102,9 +95,9 @@ graph TB
 |-----|---------------|------|
 | **[Lab 00](labs/lab-00-setup/README.md)** | Azure environment setup (one-click deploy) | ~20min |
 | **[Lab 01](labs/lab-01-react-agent/README.md)** | Build a ReAct Agent from scratch, then with LangGraph | ~1.5h |
-| **Lab 02** | Smart model routing (cheap vs expensive) | ~1h |
-| **Lab 03** | Memory & RAG integration | ~1.5h |
-| **Lab 04** | Orchestration patterns (sequential, parallel, map-reduce) | ~1.5h |
+| **[Lab 02](labs/lab-02-model-routing/README.md)** | Smart model routing (cheap vs expensive) | ~1h |
+| **[Lab 03](labs/lab-03-memory-rag/README.md)** | Memory & RAG integration | ~1.5h |
+| **[Lab 04](labs/lab-04-orchestration/README.md)** | Orchestration patterns (sequential, parallel, map-reduce) | ~1.5h |
 | **Lab 05** | Tool calling with safety guardrails | ~1h |
 | **Lab 06** | Agent evaluation pipeline | ~1h |
 | **Lab 07** | Framework deep dive (LangGraph vs Deep Agents) | ~1.5h |
