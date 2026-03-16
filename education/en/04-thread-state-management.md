@@ -8,6 +8,7 @@
 - [Checkpointing](#checkpointing)
 - [Human-in-the-Loop (HITL)](#human-in-the-loop-hitl)
 - [Long-Running Workflows](#long-running-workflows)
+- [Industry Tools & Frameworks](#industry-tools--frameworks)
 - [Advantages and Disadvantages](#advantages-and-disadvantages)
 - [Summary and Questions](#summary-and-questions)
 
@@ -404,6 +405,60 @@ sequenceDiagram
 | **Cancel & Replace** | New message cancels the current one |
 | **Parallel** | Both messages are processed in parallel (complex) |
 | **Lock** | Thread is locked during processing, new message waits |
+
+---
+
+## Industry Tools & Frameworks
+
+### State Management & Checkpointing
+
+| Tool | Creator | What It Does | Best For |
+|------|---------|-------------|----------|
+| **LangGraph Checkpointer** | LangChain | Built-in state persistence (MemorySaver, SqliteSaver, PostgresSaver) | LangGraph agents, conversation state |
+| **Azure Cosmos DB** | Microsoft | Globally distributed, partition by thread_id | Multi-region agent platforms |
+| **Redis** | Open-source | Fast in-memory state store with TTL | Short-lived session state, caching |
+| **PostgreSQL** | Open-source | Reliable relational storage for checkpoints | Production LangGraph deployments |
+
+### Long-Running Workflow Engines
+
+| Tool | What It Does | Best For |
+|------|-------------|----------|
+| **Azure Durable Functions** | Serverless stateful workflows with automatic checkpointing | Azure-native, event-driven workflows |
+| **Temporal** | Open-source workflow engine (used by Stripe, Netflix) | Complex multi-step agent workflows |
+| **Restate** | Lightweight durable execution engine | Low-latency stateful agents |
+| **Apache Airflow** | DAG-based workflow orchestration | Batch processing, data pipelines |
+
+### Human-in-the-Loop Platforms
+
+| Tool | What It Does | Best For |
+|------|-------------|----------|
+| **LangGraph Interrupt** | Built-in HITL with `interrupt()` function | LangGraph agents needing approval |
+| **Azure Logic Apps** | Visual workflow designer with approval steps | Enterprise approval chains |
+| **Retool** | Build internal tools with approval UIs | Custom approval dashboards |
+
+### Why This Matters — Real-World Scenario
+
+Imagine an agent that processes expense approvals. Without proper state management:
+
+```
+1. Employee submits $5,000 expense
+2. Agent starts processing, calls manager for approval
+3. Server restarts (deploy, crash, scale-down)
+4. State is LOST — the expense is stuck in limbo
+5. Employee waits forever, submits again → duplicate processing
+```
+
+With checkpointing (e.g., LangGraph + PostgreSQL):
+
+```
+1. Employee submits $5,000 expense
+2. Agent saves state → "waiting_for_approval"
+3. Server restarts
+4. Agent resumes from checkpoint → sends reminder to manager
+5. Manager approves → agent completes the flow
+```
+
+This is why thread and state management isn't optional in production — it's the difference between a demo and a reliable system.
 
 ---
 

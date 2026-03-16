@@ -8,6 +8,7 @@
 - [Identity & Access Management](#identity--access-management)
 - [Agent Registry](#agent-registry)
 - [Configuration Management](#configuration-management)
+- [Industry Tools & Frameworks](#industry-tools--frameworks)
 - [Pros and Cons](#pros-and-cons)
 - [Summary and Questions](#summary-and-questions)
 
@@ -475,6 +476,47 @@ sequenceDiagram
     GW-->>UI: 201 Created {agent_id: "agent-007"}
     UI-->>User: "Agent 'Data Analyst' created successfully!"
 ```
+
+---
+
+## Industry Tools & Frameworks
+
+### Control Plane Components — What the Industry Uses
+
+| Component | Azure | Open Source / Third-Party |
+|-----------|-------|--------------------------|
+| **API Gateway** | Azure API Management | Kong, Envoy, Traefik, NGINX |
+| **Identity & Access** | Microsoft Entra ID (Azure AD) | Keycloak, Auth0, Okta |
+| **Agent Registry** | Azure AI Foundry Model Catalog | Custom (DB + API), MLflow Model Registry |
+| **Configuration Mgmt** | Azure App Configuration | HashiCorp Consul, etcd, Spring Cloud Config |
+| **Cost Dashboard** | Azure Cost Management | Helicone, Portkey, custom Grafana dashboards |
+| **Policy Engine** | Azure API Management policies | OPA (Open Policy Agent), custom middleware |
+| **Secrets** | Azure Key Vault | HashiCorp Vault, AWS Secrets Manager |
+
+### Why Separate Control from Runtime? — Real-World Scenario
+
+Imagine your agent platform with 15 agents, 50 tools, and 200 users. Without a control plane:
+
+```
+Problem: You need to disable Agent X because it's hallucinating.
+
+Without Control Plane:
+  → SSH into each server
+  → Find the agent config file
+  → Comment it out
+  → Restart the service
+  → Hope you didn't break something
+  → Repeat for every server
+  → 45 minutes to disable one agent
+
+With Control Plane:
+  → Open the Agent Registry dashboard
+  → Toggle Agent X to "disabled"
+  → All servers pick up the change automatically
+  → 10 seconds, zero downtime
+```
+
+The Control Plane is the **management dashboard** for your entire platform. It's what makes the difference between "we can build agents" and "we can operate agents at scale."
 
 ---
 

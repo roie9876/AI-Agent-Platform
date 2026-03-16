@@ -9,6 +9,7 @@
 - [Token Tracking](#token-tracking)
 - [Cost Observability Dashboard](#cost-observability-dashboard)
 - [Alerting](#alerting)
+- [Industry Tools & Frameworks](#industry-tools--frameworks)
 - [Pros and Cons](#pros-and-cons)
 - [Summary and Questions](#summary-and-questions)
 
@@ -419,6 +420,67 @@ graph TB
 | **Standard** | Everyone speaks the same language |
 | **Auto-instrumentation** | Automatic SDK for most languages |
 | **Flexible backends** | Can switch backends without changing code |
+
+---
+
+## Industry Tools & Frameworks
+
+### Why Observability Is Different for Agents
+
+Traditional observability (metrics, logs, traces) works for web apps. But agents add unique challenges:
+
+- **Non-deterministic behavior** — the same input can produce different outputs, making debugging hard
+- **Multi-step chains** — a single user request triggers 5-15 LLM calls, tool executions, and memory lookups
+- **Token costs** — every LLM call costs money, and costs can spike unpredictably
+- **Quality degradation** — the agent might still "work" but produce worse answers (invisible without eval)
+
+You need tools that understand **LLM-specific** telemetry: token counts, prompt/completion content, model latency, tool call sequences.
+
+### Real-World Scenario: The $10,000 Weekend
+
+```
+Friday 5 PM:  Team deploys a prompt change and goes home
+Saturday:     A bug causes the agent to retry failed LLM calls in a loop
+Sunday:       The loop has made 500,000 API calls
+Monday 9 AM:  Team sees the Azure bill: $10,000 over the weekend
+
+With proper observability:
+Friday 6 PM:  Token usage alert fires (10x normal rate)
+Friday 6:01:  Auto-kill triggered (budget exceeded)
+Friday 6:02:  Team gets PagerDuty alert
+Total damage: $50 instead of $10,000
+```
+
+### Agent-Specific Observability Platforms
+
+| Tool | Creator | What It Does | Best For |
+|------|---------|-------------|----------|
+| **LangSmith** | LangChain | Tracing, evaluation, dataset management for LangGraph/LangChain | LangGraph agents, end-to-end visibility |
+| **Phoenix (Arize)** | Arize AI | LLM observability, trace analysis, evaluation | Multi-framework, open-source |
+| **Helicone** | Helicone | LLM proxy with usage tracking, cost analytics, caching | Cost optimization, any LLM provider |
+| **Portkey** | Portkey AI | AI gateway with observability, fallbacks, load balancing | Multi-provider LLM management |
+| **Weights & Biases** | W&B | Experiment tracking, prompt versioning, eval dashboards | ML teams, experiment comparison |
+| **Datadog LLM Observability** | Datadog | LLM traces integrated with existing infrastructure monitoring | Enterprise, existing Datadog users |
+
+### General Observability Stack
+
+| Tool | What It Does | Best For |
+|------|-------------|----------|
+| **Azure Monitor + App Insights** | Metrics, logs, traces, dashboards for Azure resources | Azure-native |
+| **OpenTelemetry** | Vendor-neutral instrumentation standard (traces, metrics, logs) | Multi-cloud, any stack |
+| **Grafana + Prometheus** | Metrics visualization + time-series database | Custom dashboards, open-source |
+| **Jaeger / Zipkin** | Distributed tracing | Trace visualization |
+
+### Cost Management
+
+| Tool | What It Does | Best For |
+|------|-------------|----------|
+| **Azure Cost Management** | Track Azure resource costs, set budgets and alerts | Azure-native |
+| **Helicone** | Per-request cost tracking with prompt-level detail | Cost optimization |
+| **Portkey** | Budget controls per user/team/agent with automatic cutoff | Multi-tenant cost limits |
+| **Custom token tracking** | Count tokens per conversation (what we built in Lab 05) | Full control |
+
+> 💡 **Key insight:** Observability for agents has two layers: (1) traditional infrastructure monitoring (CPU, memory, latency) and (2) LLM-specific monitoring (tokens, cost, quality, traces). You need both.
 
 ---
 

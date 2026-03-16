@@ -11,6 +11,7 @@
 - [Network Security](#network-security)
 - [Data Security](#data-security)
 - [Agent-Specific Threats](#agent-specific-threats)
+- [Industry Tools & Frameworks](#industry-tools--frameworks)
 - [Advantages and Disadvantages](#advantages-and-disadvantages)
 - [Summary and Questions](#summary-and-questions)
 
@@ -455,6 +456,56 @@ graph TB
 | **Database-level** | Separate DB per tenant | ⭐⭐⭐⭐ | ⭐⭐⭐ |
 | **Namespace-level** | K8s namespace per tenant | ⭐⭐⭐⭐ | ⭐⭐⭐ |
 | **Cluster-level** | Separate cluster per tenant | ⭐⭐⭐⭐⭐ | ⭐⭐ |
+
+---
+
+## Industry Tools & Frameworks
+
+### Why Agent Security Is Uniquely Challenging
+
+Traditional app security focuses on: Can the user access this endpoint? Is the input sanitized?
+
+Agent security adds entirely new attack surfaces:
+
+- **Prompt injection** — the user tricks the agent via its input ("ignore your instructions and...")
+- **Tool abuse** — the agent is tricked into calling tools with malicious parameters
+- **Data exfiltration** — the agent is manipulated into revealing confidential data through its responses
+- **Indirect injection** — malicious instructions hidden in documents the agent retrieves (via RAG)
+- **Multi-step attacks** — the attacker chains multiple benign-looking requests that together achieve a harmful goal
+
+These attacks don't exploit code bugs — they exploit the **LLM's willingness to follow instructions**. This is fundamentally different from traditional security.
+
+### Real-World Security Incidents
+
+| Incident | What Happened | Lesson |
+|----------|--------------|--------|
+| **Bing Chat jailbreak (2023)** | Users discovered the system prompt by asking the chatbot to "repeat the text above" | System prompts are not secrets — design accordingly |
+| **Chevrolet dealer chatbot (2023)** | A chatbot was tricked into offering a car for $1 | Agents that can make commitments need strict guardrails |
+| **Indirect prompt injection** | Researchers hid instructions in Google Docs that were retrieved by RAG agents | All retrieved content is untrusted input |
+
+### Security Tools
+
+| Tool | What It Does | Best For |
+|------|-------------|----------|
+| **Azure Key Vault** | Managed secrets storage (API keys, connection strings) | Azure-native secrets |
+| **HashiCorp Vault** | Open-source secrets management with dynamic credentials | Multi-cloud, advanced rotation |
+| **Microsoft Entra ID** | Identity, RBAC, conditional access, managed identities | Azure enterprise IAM |
+| **gVisor** | Container sandbox with reduced kernel attack surface | Secure tool execution |
+| **Firecracker** | Lightweight micro-VMs (used by AWS Lambda) | Ultra-fast isolated execution |
+| **E2B** | Cloud-based sandboxes for AI code execution | Safe code interpreter tools |
+| **Falco** | Runtime security monitoring for containers | Detecting anomalous behavior |
+| **Snyk** | Dependency vulnerability scanning | Supply chain security |
+
+### Agent-Specific Security
+
+| Tool | What It Does | Best For |
+|------|-------------|----------|
+| **Azure AI Content Safety** | Jailbreak detection, content classification | Azure-native input/output filtering |
+| **Rebuff** | Prompt injection detection (open-source) | Detecting injection attacks |
+| **LLM Guard** | Input/output scanning for common LLM attack patterns | Self-hosted security layer |
+| **Prompt Armor** | Commercial prompt injection detection | Enterprise security |
+
+> 💡 **Key insight:** Agent security is a defense-in-depth strategy. No single tool stops all attacks. You need layers: input validation + content safety + tool sandboxing + output scanning + monitoring.
 
 ---
 

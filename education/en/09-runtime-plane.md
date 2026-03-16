@@ -8,6 +8,7 @@
 - [The Orchestrator](#the-orchestrator)
 - [Execution Models](#execution-models)
 - [Secure Execution - Sandboxing](#secure-execution---sandboxing)
+- [Industry Tools & Frameworks](#industry-tools--frameworks)
 - [Advantages and Disadvantages](#advantages-and-disadvantages)
 - [Summary and Questions](#summary-and-questions)
 
@@ -421,6 +422,34 @@ graph TB
 **The solution:** externalize state
 
 All state is saved **outside** the instance (in Redis, DB, etc.), so that any instance can handle any request.
+
+---
+
+## Industry Tools & Frameworks
+
+### Runtime Components — What the Industry Uses
+
+| Component | Azure | Open Source / Third-Party |
+|-----------|-------|--------------------------|
+| **Orchestrator** | Azure AI Foundry Agents Service | LangGraph, Semantic Kernel, AutoGen |
+| **Model Layer** | Azure OpenAI Service | LiteLLM, Ollama, vLLM, OpenRouter |
+| **Memory Manager** | Azure Cosmos DB | Redis, PostgreSQL, Mem0, Zep |
+| **Tool Executor** | Azure Functions, Container Apps | LangChain Tools, Composio, MCP servers |
+| **Sandbox** | Azure Container Apps Dynamic Sessions | gVisor, Firecracker, E2B, Modal |
+| **Compute** | Azure Container Apps, AKS | Kubernetes, Docker, Fly.io |
+
+### Why a Separate Runtime Plane? — Real-World Scenario
+
+Think of the Runtime Plane as the **kitchen** of a restaurant. The Control Plane is the **front desk** (takes orders, manages reservations). You wouldn't want the kitchen staff handling reservations, and you wouldn't want the receptionist cooking food.
+
+In an agent platform:
+- The **Control Plane** manages WHAT agents exist, WHO can use them, and WHAT rules apply
+- The **Runtime Plane** actually RUNS the agents — processing requests, calling LLMs, executing tools
+
+Separating them means:
+- You can **scale** the runtime independently (more traffic → more runtime instances, control plane stays the same)
+- You can **update** policies without restarting agents
+- A **crash** in one agent doesn't take down the management dashboard
 
 ---
 

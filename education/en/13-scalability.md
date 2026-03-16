@@ -12,6 +12,7 @@
 - [Multi-Region](#multi-region)
 - [Caching Strategies](#caching-strategies)
 - [Partitioning & Sharding](#partitioning--sharding)
+- [Industry Tools & Frameworks](#industry-tools--frameworks)
 - [Pros and Cons](#pros-and-cons)
 - [Summary and Questions](#summary-and-questions)
 
@@ -434,6 +435,71 @@ graph TB
 | **By Agent Type** | Each agent type in a different partition | ⚠️ Some types may be hot |
 | **By Region** | By geographic region | ✅ Compliance + latency |
 | **By Time** | By date (logs, history) | ✅ For time-series data |
+
+---
+
+## Industry Tools & Frameworks
+
+### Why Scalability Is Critical for Agent Platforms
+
+Agent platforms face unique scaling challenges that traditional web apps don't:
+
+- **LLM calls take 1-30 seconds** — 100x slower than a database query, so you need many more concurrent workers
+- **Token costs scale with traffic** — more users = linearly more API spend (no caching benefit for unique questions)
+- **State is per-conversation** — each user has their own conversation thread that must be persisted
+- **Burst patterns are extreme** — Monday morning has 10x the traffic of Sunday night
+
+### Real-World Scenario: The Product Launch Spike
+
+```
+Normal day:    100 requests/hour  → 2 instances handle it fine
+Product launch: 10,000 requests/hour → 200 instances needed in minutes
+
+Without auto-scaling:
+  9:00 AM  Launch announced → traffic spikes
+  9:05 AM  All instances saturated, requests queuing
+  9:15 AM  Timeouts start, users see errors
+  9:30 AM  Manual intervention to add servers
+  10:00 AM Finally stable
+  → 1 hour of poor experience during the most important hour
+
+With KEDA auto-scaling:
+  9:00 AM  Launch announced → traffic spikes
+  9:01 AM  KEDA detects queue depth increase
+  9:02 AM  20 new instances spinning up
+  9:05 AM  All instances warm, traffic handled smoothly
+  → No user impact
+```
+
+### Compute & Orchestration
+
+| Tool | What It Does | Best For |
+|------|-------------|----------|
+| **Azure Container Apps** | Managed containers with built-in auto-scaling, scale-to-zero | Azure-native agent hosting |
+| **Azure Kubernetes Service (AKS)** | Full K8s with KEDA support | Complex multi-service deployments |
+| **KEDA** | Event-driven auto-scaler for Kubernetes | Scaling based on queue depth, HTTP traffic |
+| **Azure Functions** | Serverless compute, automatic scaling | Event-driven agent triggers |
+| **Fly.io** | Edge compute, global distribution | Low-latency global agents |
+
+### Message Queues & Load Leveling
+
+| Tool | What It Does | Best For |
+|------|-------------|----------|
+| **Azure Service Bus** | Enterprise message broker with sessions, dead-letter queues | Reliable agent task queuing |
+| **Azure Event Hubs** | High-throughput event streaming | Event-driven agent architectures |
+| **Redis Streams** | Lightweight message streaming with consumer groups | Low-latency task distribution |
+| **RabbitMQ** | Open-source message broker | Self-hosted deployments |
+
+### Caching & State
+
+| Tool | What It Does | Best For |
+|------|-------------|----------|
+| **Azure Cache for Redis** | Managed Redis for caching and session state | LLM response caching, rate limiting |
+| **GPTCache** | Semantic caching for LLM responses (cache similar questions) | Reducing LLM API costs |
+| **Azure Cosmos DB** | Globally distributed database for conversation state | Multi-region state persistence |
+| **Azure Blob Storage** | Cheap storage for large RAG document collections | Document storage for RAG |
+
+> 💡 **Key insight:** The biggest scalability win for agent platforms is **caching** — if 30% of questions are similar, semantic caching can reduce LLM costs by 30% and improve latency by 10x for cached responses.
 
 ---
 

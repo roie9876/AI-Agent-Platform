@@ -9,6 +9,7 @@
 - [Content Safety](#content-safety)
 - [Data Loss Prevention (DLP)](#data-loss-prevention-dlp)
 - [Audit & Compliance](#audit--compliance)
+- [Industry Tools & Frameworks](#industry-tools--frameworks)
 - [Pros and Cons](#pros-and-cons)
 - [Summary and Questions](#summary-and-questions)
 
@@ -443,6 +444,50 @@ policy:
       condition: "contains_pii(output)"
       action: MASK
 ```
+
+---
+
+## Industry Tools & Frameworks
+
+### Why Governance Matters — Real-World Failures
+
+Without governance, agents can cause real damage:
+
+- **Samsung (2023):** Engineers pasted proprietary source code into ChatGPT for debugging. The code became part of the training data. Samsung banned AI tools company-wide.
+- **Air Canada (2024):** A customer support chatbot made up a refund policy that didn't exist. Air Canada was legally obligated to honor it.
+- **Healthcare chatbots:** Multiple cases of medical chatbots giving dangerous advice when jailbroken with simple prompts.
+
+These incidents show why governance isn't bureaucratic overhead — it's **risk management** for AI systems.
+
+### Governance & Safety Platforms
+
+| Tool | Creator | What It Does | Best For |
+|------|---------|-------------|----------|
+| **Azure AI Content Safety** | Microsoft | Real-time content classification (hate, violence, sexual, self-harm, jailbreak) | Azure-native, production safety |
+| **Guardrails AI** | Open-source | Input/output validation framework with 50+ pre-built validators | Custom safety rules, any LLM |
+| **NeMo Guardrails** | NVIDIA | Programmable conversation guardrails with Colang language | Complex safety flows |
+| **LlamaGuard** | Meta | Open-source safety classifier fine-tuned on safety categories | Self-hosted safety classification |
+| **Presidio** | Microsoft | PII detection and anonymization (emails, credit cards, SSNs, etc.) | DLP, GDPR compliance |
+
+### Policy Engines & Rate Limiting
+
+| Tool | What It Does | Best For |
+|------|-------------|----------|
+| **Azure API Management** | Rate limiting, quotas, policies for API traffic | Enterprise API governance |
+| **OPA (Open Policy Agent)** | General-purpose policy engine (used by K8s, Envoy) | Fine-grained access control |
+| **Kong Gateway** | API gateway with rate limiting and authentication plugins | Multi-cloud API management |
+| **Portkey AI Gateway** | LLM-specific gateway with budget controls, fallbacks, caching | LLM cost management |
+
+### Compliance Frameworks
+
+| Framework | What It Covers | Who Needs It |
+|-----------|---------------|-------------|
+| **EU AI Act** | Risk classification, transparency requirements for AI systems | Any company serving EU users |
+| **SOC 2 Type II** | Security controls audit (access, encryption, monitoring) | Enterprise B2B SaaS |
+| **GDPR** | Personal data protection, right to deletion | Any company handling EU personal data |
+| **HIPAA** | Healthcare data protection | Healthcare AI applications |
+
+> 💡 **Key insight:** Governance is not one tool — it's a **stack** of policies, tools, and processes. You need content safety + DLP + rate limiting + audit logging + compliance, all working together.
 
 ---
 
