@@ -382,9 +382,9 @@ quadrantChart
     title Model Comparison: Quality vs Cost
     x-axis Low Cost --> High Cost
     y-axis Low Quality --> High Quality
-    quadrant-1 Best (but expensive)
-    quadrant-2 Ideal
-    quadrant-3 Budget
+    quadrant-1 Best but expensive
+    quadrant-2 Ideal sweet spot
+    quadrant-3 Budget option
     quadrant-4 Avoid
     GPT-4o: [0.8, 0.9]
     GPT-4o-mini: [0.3, 0.75]
