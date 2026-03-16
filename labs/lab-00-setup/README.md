@@ -48,15 +48,16 @@ One Bicep template deploys everything all labs need:
 
 ### Which Lab Uses Which Resource?
 
-| Resource | Lab 01 | Lab 02 | Lab 03 | Lab 04 | Lab 05 | Lab 06 | Lab 07 |
-|----------|--------|--------|--------|--------|--------|--------|--------|
-| Azure OpenAI GPT-4.1 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Azure OpenAI GPT-4o-mini | | ✅ | | ✅ | | | |
-| Azure OpenAI Embeddings | | | ✅ | | | | |
-| Azure AI Search | | | ✅ | | | | |
-| Azure Cosmos DB | | | ✅ | | | | |
-| Azure Content Safety | | | | | ✅ | | |
-| Storage Account | | | ✅ | | | | |
+| Resource | Lab 01 | Lab 02 | Lab 03 | Lab 04 | Lab 05 | Lab 06 | Lab 07 | Lab 09 |
+|----------|--------|--------|--------|--------|--------|--------|--------|--------|
+| Azure OpenAI GPT-4.1 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Azure OpenAI GPT-4o-mini | | ✅ | | ✅ | | | | |
+| Azure OpenAI Embeddings | | | ✅ | | | | | |
+| Azure AI Search | | | ✅ | | | | | |
+| Azure Cosmos DB | | | ✅ | | | | | |
+| Azure Content Safety | | | | | ✅ | | | |
+| Storage Account | | | ✅ | | | | | |
+| AI Foundry Project | | | | | | | | ✅ |
 
 ### 💰 Cost Estimate
 

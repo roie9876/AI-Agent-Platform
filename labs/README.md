@@ -50,7 +50,11 @@ flowchart TB
         S7["🧩 Framework<br/>Deep Dive"]
     end
     
-    L1 --> L2 --> L3 --> L4 --> L5 --> L6 --> L7
+    subgraph L9["Lab 09"]
+        S9["🏗️ Azure AI<br/>Foundry"]
+    end
+    
+    L1 --> L2 --> L3 --> L4 --> L5 --> L6 --> L7 --> L9
     
     style L1 fill:#e3f2fd
     style L2 fill:#fff3e0
@@ -59,6 +63,7 @@ flowchart TB
     style L5 fill:#f3e5f5
     style L6 fill:#fff8e1
     style L7 fill:#e0f7fa
+    style L9 fill:#e8eaf6
 ```
 
 ---
@@ -75,7 +80,7 @@ flowchart TB
 | **Lab 06** | [Agent Evaluation](lab-06-evaluation/README.md) | Ch 10 | Build an eval pipeline that scores groundedness, relevance, and toxicity. |
 | **Lab 07** | [Framework Deep Dive](lab-07-frameworks/README.md) | Ch 16 | Build the same agent in LangChain, LangGraph, and Deep Agents. Compare approaches. |
 | **Lab 08** | [Observability & Monitoring](lab-08-observability/README.md) | Ch 11 | Instrument agents with OpenTelemetry, track costs, build dashboards. |
-| **Lab 09** | [Azure AI Foundry](lab-09-foundry/README.md) | Ch 17 | Build agents with Foundry Agents Service, built-in evals and tracing. |
+| **Lab 09** | [Azure AI Foundry](lab-09-foundry/README.md) | Ch 17 | See how Foundry gives you everything from Labs 01-07 out of the box: Agents Service, built-in evaluations, and OpenTelemetry tracing. |
 
 ---
 
