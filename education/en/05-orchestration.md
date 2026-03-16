@@ -494,40 +494,37 @@ With so many patterns, how do you decide which one to use? Start with these ques
 
 ### Decision Tree
 
+#### Step 1: Do your tasks depend on each other?
+
 ```mermaid
-graph TD
-    Start["📥 You have a task"] --> Q1{"Single step?"}
-    
-    Q1 -->|"Yes"| A1["✅ No orchestration needed<br/>Simple ReAct agent"]
-    Q1 -->|"No"| Q2{"Steps depend<br/>on each other?"}
-    
-    Q2 -->|"Yes, all sequential"| A2["📋 Sequential Pipeline<br/>Research → Draft → Review"]
-    Q2 -->|"Mixed dependencies"| A3["🔀 DAG Workflow<br/>A→(B,C)→D→(E,F)→G"]
-    Q2 -->|"No, independent"| Q3{"Same operation<br/>on many items?"}
-    
-    Q3 -->|"Yes"| A4["🗺️ Map-Reduce<br/>Summarize 50 docs → merge"]
-    Q3 -->|"No, different tasks"| A5["⚡ Parallel Fan-Out/Fan-In<br/>Search 3 sources → merge"]
-    
-    Q1 -->|"Not sure"| Q4{"Know the steps<br/>in advance?"}
-    
-    Q4 -->|"Yes, needs expertise"| A6["🎩 Supervisor<br/>Manager → specialists"]
-    Q4 -->|"No, open-ended"| Q5{"Complex?"}
-    
-    Q5 -->|"Simple"| A7["🔄 ReAct Loop<br/>Reason → Act → Observe"]
-    Q5 -->|"Complex"| A8["📋 Plan-and-Execute<br/>Plan first, then execute"]
-    
-    A2 --> Q6{"Need high quality?"}
-    A6 --> Q6
-    A8 --> Q6
-    Q6 -->|"Yes"| A9["➕ Add Critic pattern<br/>Generate → Review → Refine"]
-    Q6 -->|"Good enough"| Done["📤 Done"]
-    A1 --> Done
-    A3 --> Done
-    A4 --> Done
-    A5 --> Done
-    A7 --> Done
-    A9 --> Done
+graph LR
+    Q{"Do steps depend<br/>on each other?"}
+    Q -->|"Yes, each needs<br/>the previous output"| A["📋 Sequential"]
+    Q -->|"No, they are<br/>independent"| B["⚡ Go to Step 2"]
+    Q -->|"Some do,<br/>some don't"| C["🔀 DAG Workflow"]
 ```
+
+#### Step 2: Are the independent tasks the same or different?
+
+```mermaid
+graph LR
+    Q{"Same operation on<br/>many items?"}
+    Q -->|"Yes — same task,<br/>different data"| A["🗺️ Map-Reduce<br/>e.g. Summarize 50 docs"]
+    Q -->|"No — different tasks,<br/>same goal"| B["⚡ Parallel Fan-Out/Fan-In<br/>e.g. Search 3 sources"]
+```
+
+#### Step 3: Does the task need expertise or is it open-ended?
+
+```mermaid
+graph LR
+    Q{"Do you know the<br/>steps in advance?"}
+    Q -->|"Yes, and it needs<br/>different expertise"| A["🎩 Supervisor<br/>Manager → Specialists"]
+    Q -->|"No, it's<br/>open-ended"| B{"How complex?"}
+    B -->|"Simple"| C["🔄 ReAct Loop"]
+    B -->|"Complex"| D["📋 Plan-and-Execute"]
+```
+
+> **Bonus:** For any pattern, if the output needs to be **high quality**, add a **Critic** loop at the end: Generate → Review → Refine → repeat until good enough.
 
 ### Real-World Scenarios
 
