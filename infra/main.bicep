@@ -282,6 +282,7 @@ output aiServicesKey string = aiServices.listKeys().key1
 output aiServicesName string = aiServices.name
 
 output foundryProjectName string = foundryProject.name
+output foundryProjectEndpoint string = foundryProject.properties.endpoints['AI Foundry API']
 
 output searchServiceEndpoint string = 'https://${searchService.name}.search.windows.net'
 output searchServiceAdminKey string = searchService.listAdminKeys().primaryKey

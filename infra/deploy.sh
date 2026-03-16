@@ -85,6 +85,7 @@ AZURE_OPENAI_DEPLOYMENT_EMBEDDING=text-embedding-3-large
 # ── Azure AI Foundry (Agents, Evaluations, Tracing) ──
 AZURE_AI_FOUNDRY_PROJECT=$(echo $DEPLOYMENT_OUTPUT | jq -r '.foundryProjectName.value')
 AZURE_AI_FOUNDRY_RESOURCE=$(echo $DEPLOYMENT_OUTPUT | jq -r '.aiServicesName.value')
+AZURE_AI_FOUNDRY_ENDPOINT=$(echo $DEPLOYMENT_OUTPUT | jq -r '.foundryProjectEndpoint.value')
 
 # ── Azure AI Search (Lab 03 - RAG) ───────────────────
 AZURE_SEARCH_ENDPOINT=$(echo $DEPLOYMENT_OUTPUT | jq -r '.searchServiceEndpoint.value')
