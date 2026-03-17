@@ -16,25 +16,27 @@ Each chapter is self-contained, but together they form a complete picture of a P
 
 ## 📖 Education Chapters
 
-| # | Topic | What You'll Learn |
-|---|-------|-------------------|
-| 1 | [**Fundamentals — What is an AI Agent?**](education/en/01-fundamentals.md) | What is an LLM, what is an Agent, ReAct loop, the difference between a Chatbot and an Agent |
-| 2 | [**Model Abstraction & Routing**](education/en/02-model-abstraction-routing.md) | Unified interface for LLMs, smart routing between models, fallback & retry, caching strategies |
-| 3 | [**Memory Management & RAG**](education/en/03-memory-management.md) | Short-term & long-term memory, RAG pipeline, embeddings, vector databases, hybrid search |
-| 4 | [**Thread & State Management**](education/en/04-thread-state-management.md) | Conversation management, state machines, checkpointing, human-in-the-loop patterns |
-| 5 | [**Orchestration Patterns**](education/en/05-orchestration.md) | Sequential, parallel, autonomous, sub-agents, DAG workflows, map-reduce, supervisor |
-| 6 | [**Tools & Marketplace**](education/en/06-tools-marketplace.md) | Function calling, tool integration, tool registry, marketplace, MCP protocol |
-| 7 | [**Policy & Governance**](education/en/07-policy-governance.md) | Content safety, DLP, rate limiting, guardrails, budget controls |
-| 8 | [**Control Plane**](education/en/08-control-plane.md) | API gateway, agent registry, identity & access, policy engine, cost dashboard |
-| 9 | [**Runtime Plane**](education/en/09-runtime-plane.md) | Request lifecycle, orchestrator, model layer, tool executor, secure sandbox |
-| 10 | [**Evaluation Engine**](education/en/10-evaluation-engine.md) | Quality metrics, groundedness, relevance, toxicity, automated testing pipelines |
-| 11 | [**Observability & Cost**](education/en/11-observability-cost.md) | Metrics, distributed tracing, token tracking, cost dashboards, alerting |
-| 12 | [**Security & Isolation**](education/en/12-security-isolation.md) | Sandboxing, container isolation, zero trust, secrets management, RBAC |
-| 13 | [**Scalability Patterns**](education/en/13-scalability.md) | Horizontal scaling, multi-tenancy, partitioning, queue-based load leveling |
-| 14 | [**HLD — Full Architecture**](education/en/14-hld-architecture.md) | Complete architecture diagram — how all components connect end-to-end |
-| 15 | [**Microsoft Stack Mapping**](education/en/15-microsoft-stack.md) | Mapping each platform component to specific Azure services |
-| 16 | [**Agent Frameworks & Ecosystem**](education/en/16-agent-frameworks.md) | LangGraph, Semantic Kernel, AutoGen, CrewAI, MCP protocol, A2A protocol |
-| 17 | [**Azure AI Foundry**](education/en/17-azure-ai-foundry.md) | Managed agent platform: Model Catalog, Agents Service, evaluations, tracing |
+> 🎬 **[Watch the full video playlist on YouTube](https://youtu.be/VaETDxa4GyA?list=PLamHD1dse8erLNzka2iK2nS3zg9nDmbMe)**
+
+| # | Topic | What You'll Learn | Video |
+|---|-------|-------------------|-------|
+| 1 | [**Fundamentals — What is an AI Agent?**](education/en/01-fundamentals.md) | What is an LLM, what is an Agent, ReAct loop, the difference between a Chatbot and an Agent | [▶️](https://youtu.be/usKAmjDLZzA?list=PLamHD1dse8erLNzka2iK2nS3zg9nDmbMe) |
+| 2 | [**Model Abstraction & Routing**](education/en/02-model-abstraction-routing.md) | Unified interface for LLMs, smart routing between models, fallback & retry, caching strategies | [▶️](https://youtu.be/Pc7b5su_gSg?list=PLamHD1dse8erLNzka2iK2nS3zg9nDmbMe) |
+| 3 | [**Memory Management & RAG**](education/en/03-memory-management.md) | Short-term & long-term memory, RAG pipeline, embeddings, vector databases, hybrid search | |
+| 4 | [**Thread & State Management**](education/en/04-thread-state-management.md) | Conversation management, state machines, checkpointing, human-in-the-loop patterns | |
+| 5 | [**Orchestration Patterns**](education/en/05-orchestration.md) | Sequential, parallel, autonomous, sub-agents, DAG workflows, map-reduce, supervisor | |
+| 6 | [**Tools & Marketplace**](education/en/06-tools-marketplace.md) | Function calling, tool integration, tool registry, marketplace, MCP protocol | |
+| 7 | [**Policy & Governance**](education/en/07-policy-governance.md) | Content safety, DLP, rate limiting, guardrails, budget controls | |
+| 8 | [**Control Plane**](education/en/08-control-plane.md) | API gateway, agent registry, identity & access, policy engine, cost dashboard | |
+| 9 | [**Runtime Plane**](education/en/09-runtime-plane.md) | Request lifecycle, orchestrator, model layer, tool executor, secure sandbox | |
+| 10 | [**Evaluation Engine**](education/en/10-evaluation-engine.md) | Quality metrics, groundedness, relevance, toxicity, automated testing pipelines | |
+| 11 | [**Observability & Cost**](education/en/11-observability-cost.md) | Metrics, distributed tracing, token tracking, cost dashboards, alerting | |
+| 12 | [**Security & Isolation**](education/en/12-security-isolation.md) | Sandboxing, container isolation, zero trust, secrets management, RBAC | |
+| 13 | [**Scalability Patterns**](education/en/13-scalability.md) | Horizontal scaling, multi-tenancy, partitioning, queue-based load leveling | |
+| 14 | [**HLD — Full Architecture**](education/en/14-hld-architecture.md) | Complete architecture diagram — how all components connect end-to-end | |
+| 15 | [**Microsoft Stack Mapping**](education/en/15-microsoft-stack.md) | Mapping each platform component to specific Azure services | |
+| 16 | [**Agent Frameworks & Ecosystem**](education/en/16-agent-frameworks.md) | LangGraph, Semantic Kernel, AutoGen, CrewAI, MCP protocol, A2A protocol | |
+| 17 | [**Azure AI Foundry**](education/en/17-azure-ai-foundry.md) | Managed agent platform: Model Catalog, Agents Service, evaluations, tracing | |
 
 ---
 
