@@ -22,7 +22,7 @@ Each chapter is self-contained, but together they form a complete picture of a P
 |---|-------|-------------------|-------|
 | 1 | [**Fundamentals — What is an AI Agent?**](education/en/01-fundamentals.md) | What is an LLM, what is an Agent, ReAct loop, the difference between a Chatbot and an Agent | [▶️](https://youtu.be/usKAmjDLZzA?list=PLamHD1dse8erLNzka2iK2nS3zg9nDmbMe) |
 | 2 | [**Model Abstraction & Routing**](education/en/02-model-abstraction-routing.md) | Unified interface for LLMs, smart routing between models, fallback & retry, caching strategies | [▶️](https://youtu.be/Pc7b5su_gSg?list=PLamHD1dse8erLNzka2iK2nS3zg9nDmbMe) |
-| 3 | [**Memory Management & RAG**](education/en/03-memory-management.md) | Short-term & long-term memory, RAG pipeline, embeddings, vector databases, hybrid search | |
+| 3 | [**Memory Management & RAG**](education/en/03-memory-management.md) | Short-term & long-term memory, RAG pipeline, embeddings, vector databases, hybrid search | [▶️](https://www.youtube.com/watch?v=vHVEYZ36ypQ) |
 | 4 | [**Thread & State Management**](education/en/04-thread-state-management.md) | Conversation management, state machines, checkpointing, human-in-the-loop patterns | |
 | 5 | [**Orchestration Patterns**](education/en/05-orchestration.md) | Sequential, parallel, autonomous, sub-agents, DAG workflows, map-reduce, supervisor | |
 | 6 | [**Tools & Marketplace**](education/en/06-tools-marketplace.md) | Function calling, tool integration, tool registry, marketplace, MCP protocol | |
