@@ -1,5 +1,7 @@
 # 📚 AI Agent Platform - Education Hub
 
+![AI Agent Platform](aiagentplatorm.png)
+
 > **[🇮🇱 גרסה בעברית](education/heb/README.md)**
 
 ## Purpose

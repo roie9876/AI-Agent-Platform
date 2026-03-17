@@ -78,7 +78,8 @@ graph LR
     
     subgraph "2024: AI Studio (Classic)"
         Hub["AI Hub + Project"]
-        Hub --> S1 & S2
+        Hub --> S1
+    Hub --> S2
     end
     
     subgraph "2025-2026: AI Foundry (New)"
@@ -126,13 +127,20 @@ graph TB
             Indexes["📦 Indexes<br/>Managed RAG,<br/>vector search"]
         end
         
-        P1 --> Models & Agents & Evals & Tracing
-        P2 --> Models & Agents & Evals & Tracing
+        P1 --> Models
+        P1 --> Agents
+        P1 --> Evals
+        P1 --> Tracing
+        P2 --> Models
+        P2 --> Agents
+        P2 --> Evals
+        P2 --> Tracing
     end
     
     SDK["📦 Azure AI Foundry SDK<br/>(Python, .NET)"] --> P1
 
-    Portal["🌐 ai.azure.com<br/>(Foundry Portal)"] --> P1 & P2
+    Portal["🌐 ai.azure.com<br/>(Foundry Portal)"] --> P1
+    Portal --> P2
 ```
 
 ---
@@ -305,34 +313,34 @@ graph TD
 ## Summary
 
 ```mermaid
-mindmap
-  root((Azure AI Foundry))
-    What It Is
-      Managed Agent Platform
-      Unifies Azure AI services
-      Portal + SDK + Runtime
-    Key Capabilities
-      Model Catalog
-        OpenAI, Meta, Mistral, Microsoft
-        Unified inference API
-      Agents Service  
-        Managed runtime
-        Built-in tools
-        Thread/state management
-      Evaluations
-        Groundedness, Relevance
-        Safety metrics
-        Custom evaluators
-      Tracing
-        OpenTelemetry
-        Every step traced
-      Content Safety
-        Input/output filters
-        Groundedness detection
-    When To Use
-      Azure-first teams
-      Fast time to production
-      Managed operations
+graph TD
+    Root["Azure AI Foundry"]
+    Root --> WhatItIs["What It Is"]
+    WhatItIs --> W1["Managed Agent Platform"]
+    WhatItIs --> W2["Unifies Azure AI services"]
+    WhatItIs --> W3["Portal + SDK + Runtime"]
+    Root --> KeyCap["Key Capabilities"]
+    KeyCap --> MC["Model Catalog"]
+    MC --> MC1["OpenAI, Meta, Mistral, Microsoft"]
+    MC --> MC2["Unified inference API"]
+    KeyCap --> AS["Agents Service"]
+    AS --> AS1["Managed runtime"]
+    AS --> AS2["Built-in tools"]
+    AS --> AS3["Thread/state management"]
+    KeyCap --> Ev["Evaluations"]
+    Ev --> Ev1["Groundedness, Relevance"]
+    Ev --> Ev2["Safety metrics"]
+    Ev --> Ev3["Custom evaluators"]
+    KeyCap --> Tr["Tracing"]
+    Tr --> Tr1["OpenTelemetry"]
+    Tr --> Tr2["Every step traced"]
+    KeyCap --> CS["Content Safety"]
+    CS --> CS1["Input/output filters"]
+    CS --> CS2["Groundedness detection"]
+    Root --> WhenToUse["When To Use"]
+    WhenToUse --> U1["Azure-first teams"]
+    WhenToUse --> U2["Fast time to production"]
+    WhenToUse --> U3["Managed operations"]
 ```
 
 | What We Learned | Key Point |
