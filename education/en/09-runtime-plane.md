@@ -1,5 +1,7 @@
 # ⚙️ Chapter 9: Runtime (Data) Plane
 
+> 🔗 **See it in production:** [Runtime Plane — Deep Dive (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#3-runtime-plane--deep-dive)
+
 ## Table of Contents
 - [What is the Runtime Plane?](#what-is-the-runtime-plane)
 - [The Difference Between Control and Runtime](#the-difference-between-control-and-runtime)

@@ -1,5 +1,7 @@
 # 🤖 Chapter 1: Fundamentals - What is an AI Agent?
 
+> 🔗 **See it in production:** [Agent Execution Lifecycle — ReAct Loop (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#32-agent-execution-lifecycle-react-loop)
+
 ## Table of Contents
 - [What is an LLM?](#what-is-an-llm)
 - [What is an AI Agent?](#what-is-an-ai-agent)

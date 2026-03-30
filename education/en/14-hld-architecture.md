@@ -1,5 +1,7 @@
 # 🏗️ Chapter 14: HLD Architecture - Vendor Agnostic
 
+> 🔗 **See it in production:** [High-Level Architecture (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#1-high-level-architecture)
+
 ## Table of Contents
 - [What is HLD?](#what-is-hld)
 - [System Context](#system-context)

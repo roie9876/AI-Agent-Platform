@@ -1,5 +1,7 @@
 # 📈 Chapter 13: Scalability & High Availability
 
+> 🔗 **See it in production:** [Scalability & Fault Tolerance (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#5-scalability--fault-tolerance)
+
 ## Table of Contents
 - [What is Scalability?](#what-is-scalability)
 - [Horizontal vs Vertical Scaling](#horizontal-vs-vertical-scaling)

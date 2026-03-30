@@ -1,5 +1,7 @@
 # 🏗️ Chapter 17: Azure AI Foundry — The Managed Agent Platform
 
+> 🔗 **See it in production:** [Full AI Platform System (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System)
+
 ## Table of Contents
 - [What is Azure AI Foundry?](#what-is-azure-ai-foundry)
 - [From Components to Platform](#from-components-to-platform)

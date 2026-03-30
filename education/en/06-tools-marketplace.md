@@ -1,5 +1,7 @@
 # 🔧 Chapter 6: Tools & Marketplace
 
+> 🔗 **See it in production:** [Tool Executor](https://github.com/roie9876/AI-Platform-System#36-tool-executor-pod) · [MCP Proxy](https://github.com/roie9876/AI-Platform-System#38-mcp-proxy-pod) · [Marketplace](https://github.com/roie9876/AI-Platform-System#27-tool--agent-marketplace)
+
 ## Table of Contents
 - [What Are Tools?](#what-are-tools)
 - [Function Calling](#function-calling)

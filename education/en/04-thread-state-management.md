@@ -1,5 +1,7 @@
 # 🧵 Chapter 4: Thread & State Management
 
+> 🔗 **See it in production:** [Thread & State Management (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#35-thread--state-management)
+
 ## Table of Contents
 - [What is a Thread?](#what-is-a-thread)
 - [Thread Management](#thread-management)

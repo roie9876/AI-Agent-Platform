@@ -1,5 +1,7 @@
 # 🧠 Chapter 2: Model Abstraction & Multi-Model Routing
 
+> 🔗 **See it in production:** [Model Abstraction Layer & Multi-Model Routing (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#33-model-abstraction-layer--multi-model-routing)
+
 ## Table of Contents
 - [Why Do We Need an Abstraction Layer?](#why-do-we-need-an-abstraction-layer)
 - [Model Abstraction Layer](#model-abstraction-layer)

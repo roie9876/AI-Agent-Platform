@@ -1,5 +1,7 @@
 # 🎛️ Chapter 8: Control Plane
 
+> 🔗 **See it in production:** [Control Plane — Deep Dive (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#2-control-plane--deep-dive)
+
 ## Table of Contents
 - [What is a Control Plane?](#what-is-a-control-plane)
 - [Why Separate Control from Runtime?](#why-separate-control-from-runtime)

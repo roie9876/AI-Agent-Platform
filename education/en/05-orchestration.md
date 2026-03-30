@@ -1,5 +1,7 @@
 # 🎭 Chapter 5: Orchestration Patterns
 
+> 🔗 **See it in production:** [Workflow Engine Pod — Multi-Agent Orchestration (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#39-workflow-engine-pod)
+
 ## Table of Contents
 - [What is Orchestration?](#what-is-orchestration)
 - [Sequential Execution](#sequential-execution)

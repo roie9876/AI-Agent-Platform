@@ -1,5 +1,7 @@
 # ☁️ Chapter 15: Microsoft / Azure Stack
 
+> 🔗 **See it in production:** [Microsoft Product Architecture Mapping (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#7-microsoft-product-architecture-mapping)
+
 ## Table of Contents
 - [Mapping HLD to Azure](#mapping-hld-to-azure)
 - [Azure Full Architecture](#azure-full-architecture)

@@ -1,5 +1,7 @@
 # 🧩 Chapter 16: Agent Development Frameworks & Ecosystem
 
+> 🔗 **See it in production:** [MCP Proxy Pod (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#38-mcp-proxy-pod)
+
 ## Table of Contents
 - [Why Do You Need an Agent Framework?](#why-do-you-need-an-agent-framework)
 - [The Landscape](#the-landscape)

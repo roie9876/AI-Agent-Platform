@@ -1,5 +1,7 @@
 # 🛡️ Chapter 7: Policy & Governance Engine
 
+> 🔗 **See it in production:** [Policy Engine & Governance (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#25-policy-engine--governance)
+
 ## Table of Contents
 - [What is a Policy Engine?](#what-is-a-policy-engine)
 - [Why Do We Need Governance?](#why-do-we-need-governance)

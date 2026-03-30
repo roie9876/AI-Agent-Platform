@@ -1,5 +1,7 @@
 # 📈 Chapter 11: Observability & Cost Dashboard
 
+> 🔗 **See it in production:** [Cost Observability Dashboard](https://github.com/roie9876/AI-Platform-System#28-cost-observability-dashboard) · [Observability Stack](https://github.com/roie9876/AI-Platform-System#6-observability)
+
 ## Table of Contents
 - [What is Observability?](#what-is-observability)
 - [3 Pillars of Observability](#3-pillars-of-observability)

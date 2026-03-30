@@ -1,5 +1,7 @@
 # 🔐 Chapter 12: Security & Isolation
 
+> 🔗 **See it in production:** [Security Architecture (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#4-security-architecture)
+
 ## Table of Contents
 - [What is Security in an Agent Platform?](#what-is-security-in-an-agent-platform)
 - [Attack Surface](#attack-surface)

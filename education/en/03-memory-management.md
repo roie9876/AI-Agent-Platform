@@ -1,5 +1,7 @@
 # 💾 Chapter 3: Memory Management & RAG
 
+> 🔗 **See it in production:** [Memory Management](https://github.com/roie9876/AI-Platform-System#34-memory-management-short-term--long-term) · [RAG System](https://github.com/roie9876/AI-Platform-System#37-rag-system-retrieval-augmented-generation)
+
 ## Table of Contents
 - [Why Does an Agent Need Memory?](#why-does-an-agent-need-memory)
 - [Types of Memory](#types-of-memory)
