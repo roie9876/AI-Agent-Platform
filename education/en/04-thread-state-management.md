@@ -600,4 +600,6 @@ This is **Concurrent Message Handling**. Options: (1) **Queue** - the message en
 
 ---
 
+> 🔗 **See it in production:** [Thread & State Management (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#35-thread--state-management)
+
 **[⬅️ Back to Chapter 3: Memory Management](03-memory-management.md)** | **[➡️ Continue to Chapter 5: Orchestration Patterns →](05-orchestration.md)**

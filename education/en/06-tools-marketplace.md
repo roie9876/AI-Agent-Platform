@@ -657,4 +657,6 @@ Give a tool only the **minimum** permissions it needs. For example: a tool that 
 
 ---
 
+> 🔗 **See it in production:** [Tool Executor](https://github.com/roie9876/AI-Platform-System#36-tool-executor-pod) · [MCP Proxy](https://github.com/roie9876/AI-Platform-System#38-mcp-proxy-pod) · [Tool & Agent Marketplace](https://github.com/roie9876/AI-Platform-System#27-tool--agent-marketplace)
+
 **[⬅️ Back to Chapter 5: Orchestration](05-orchestration.md)** | **[➡️ Continue to Chapter 7: Policy & Governance →](07-policy-governance.md)**

@@ -406,4 +406,6 @@ Use Foundry when you're Azure-first, need fast time to production, and want mana
 
 ---
 
+> 🔗 **See it in production:** [Full AI Platform System (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System)
+
 **[⬅️ Back to Chapter 16: Agent Frameworks](16-agent-frameworks.md)** | **[🏠 Back to README](README.md)**

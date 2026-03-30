@@ -593,4 +593,6 @@ Without abstraction, the code is tightly coupled to a single provider (OpenAI/An
 
 ---
 
+> 🔗 **See it in production:** [Model Abstraction Layer & Multi-Model Routing (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#33-model-abstraction-layer--multi-model-routing)
+
 **[⬅️ Back to Chapter 1: Fundamentals](01-fundamentals.md)** | **[➡️ Continue to Chapter 3: Memory Management & RAG →](03-memory-management.md)**

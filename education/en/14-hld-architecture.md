@@ -665,4 +665,6 @@ The Orchestrator manages the ReAct loop and the transitions between steps. State
 
 ---
 
+> 🔗 **See it in production:** [High-Level Architecture (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#1-high-level-architecture)
+
 **[⬅️ Back to Chapter 13: Scalability](13-scalability.md)** | **[➡️ Continue to Chapter 15: Microsoft Stack →](15-microsoft-stack.md)**

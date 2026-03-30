@@ -653,4 +653,6 @@ Instead of requests going directly to the Agent, they enter a **queue**. Advanta
 
 ---
 
+> 🔗 **See it in production:** [Scalability & Fault Tolerance (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#5-scalability--fault-tolerance)
+
 **[⬅️ Back to Chapter 12: Security](12-security-isolation.md)** | **[➡️ Continue to Chapter 14: HLD Architecture →](14-hld-architecture.md)**

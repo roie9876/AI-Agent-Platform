@@ -61,6 +61,31 @@ Each chapter is self-contained, but together they form a complete picture of a P
 
 ---
 
+## 🔗 Live Implementation — AI Platform System
+
+> **See these concepts in production code.** The **[AI-Platform-System](https://github.com/roie9876/AI-Platform-System)** repository is the real, deployed platform built on top of the concepts taught here. Each education chapter maps to a concrete implementation section.
+
+| Education Chapter | Live Implementation |
+|---|---|
+| [Ch 01 — Fundamentals](education/en/01-fundamentals.md) | [ReAct Loop Implementation](https://github.com/roie9876/AI-Platform-System#32-agent-execution-lifecycle-react-loop) |
+| [Ch 02 — Model Abstraction](education/en/02-model-abstraction-routing.md) | [Model Abstraction Layer](https://github.com/roie9876/AI-Platform-System#33-model-abstraction-layer--multi-model-routing) |
+| [Ch 03 — Memory & RAG](education/en/03-memory-management.md) | [Memory Management](https://github.com/roie9876/AI-Platform-System#34-memory-management-short-term--long-term) · [RAG System](https://github.com/roie9876/AI-Platform-System#37-rag-system-retrieval-augmented-generation) |
+| [Ch 04 — Thread & State](education/en/04-thread-state-management.md) | [Thread & State Management](https://github.com/roie9876/AI-Platform-System#35-thread--state-management) |
+| [Ch 05 — Orchestration](education/en/05-orchestration.md) | [Workflow Engine Pod](https://github.com/roie9876/AI-Platform-System#39-workflow-engine-pod) |
+| [Ch 06 — Tools & Marketplace](education/en/06-tools-marketplace.md) | [Tool Executor](https://github.com/roie9876/AI-Platform-System#36-tool-executor-pod) · [MCP Proxy](https://github.com/roie9876/AI-Platform-System#38-mcp-proxy-pod) · [Marketplace](https://github.com/roie9876/AI-Platform-System#27-tool--agent-marketplace) |
+| [Ch 07 — Policy & Governance](education/en/07-policy-governance.md) | [Policy Engine](https://github.com/roie9876/AI-Platform-System#25-policy-engine--governance) |
+| [Ch 08 — Control Plane](education/en/08-control-plane.md) | [Control Plane Deep Dive](https://github.com/roie9876/AI-Platform-System#2-control-plane--deep-dive) |
+| [Ch 09 — Runtime Plane](education/en/09-runtime-plane.md) | [Runtime Plane Deep Dive](https://github.com/roie9876/AI-Platform-System#3-runtime-plane--deep-dive) |
+| [Ch 10 — Evaluation Engine](education/en/10-evaluation-engine.md) | [Evaluation Engine](https://github.com/roie9876/AI-Platform-System#26-evaluation-engine) |
+| [Ch 11 — Observability & Cost](education/en/11-observability-cost.md) | [Cost Dashboard](https://github.com/roie9876/AI-Platform-System#28-cost-observability-dashboard) · [Observability](https://github.com/roie9876/AI-Platform-System#6-observability) |
+| [Ch 12 — Security & Isolation](education/en/12-security-isolation.md) | [Security Architecture](https://github.com/roie9876/AI-Platform-System#4-security-architecture) |
+| [Ch 13 — Scalability](education/en/13-scalability.md) | [Scalability & Fault Tolerance](https://github.com/roie9876/AI-Platform-System#5-scalability--fault-tolerance) |
+| [Ch 14 — HLD Architecture](education/en/14-hld-architecture.md) | [High-Level Architecture](https://github.com/roie9876/AI-Platform-System#1-high-level-architecture) |
+| [Ch 15 — Microsoft Stack](education/en/15-microsoft-stack.md) | [Microsoft Product Architecture](https://github.com/roie9876/AI-Platform-System#7-microsoft-product-architecture-mapping) |
+| [Ch 16 — Agent Frameworks](education/en/16-agent-frameworks.md) | [MCP Proxy Pod](https://github.com/roie9876/AI-Platform-System#38-mcp-proxy-pod) |
+
+---
+
 ## 🎯 How to Use This Material
 
 1. **Read in order** — chapters are structured from basics to advanced

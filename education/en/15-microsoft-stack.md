@@ -685,4 +685,6 @@ LLM Gateway → **Azure OpenAI**, Vector DB → **Azure AI Search**, State Store
 
 ---
 
+> 🔗 **See it in production:** [Microsoft Product Architecture Mapping (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#7-microsoft-product-architecture-mapping)
+
 **[⬅️ Back to Chapter 14: HLD Architecture](14-hld-architecture.md)** | **[➡️ Continue to Chapter 16: Agent Frameworks →](16-agent-frameworks.md)**

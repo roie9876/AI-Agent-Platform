@@ -477,4 +477,6 @@ Without a platform: each team builds everything from scratch → duplications, n
 
 ---
 
+> 🔗 **See it in production:** [Agent Execution Lifecycle — ReAct Loop (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#32-agent-execution-lifecycle-react-loop)
+
 **[➡️ Continue to Chapter 2: Model Abstraction & Routing →](02-model-abstraction-routing.md)**

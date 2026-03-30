@@ -612,4 +612,6 @@ mindmap
 
 ---
 
+> 🔗 **See it in production:** [Policy Engine & Governance (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#25-policy-engine--governance)
+
 **[⬅️ Back to Chapter 6: Tools](06-tools-marketplace.md)** | **[➡️ Continue to Chapter 8: Control Plane →](08-control-plane.md)**

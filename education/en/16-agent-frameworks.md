@@ -1262,4 +1262,6 @@ For a RAG-heavy application with complex document processing, the best choice is
 
 ---
 
+> 🔗 **See it in production:** [MCP Proxy Pod (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#38-mcp-proxy-pod)
+
 **[⬅️ Back to Chapter 15: Microsoft Stack Mapping](15-microsoft-stack.md)** | **[➡️ Continue to Chapter 17: Azure AI Foundry →](17-azure-ai-foundry.md)**

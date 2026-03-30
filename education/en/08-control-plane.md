@@ -655,4 +655,6 @@ An API Gateway provides: rate limiting, authentication, routing, logging, TLS te
 
 ---
 
+> 🔗 **See it in production:** [Control Plane — Deep Dive (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#2-control-plane--deep-dive)
+
 **[⬅️ Back to Chapter 7: Policy & Governance](07-policy-governance.md)** | **[➡️ Continue to Chapter 9: Runtime Plane →](09-runtime-plane.md)**

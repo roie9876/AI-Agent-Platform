@@ -683,4 +683,6 @@ The Context Window is limited (e.g., 128K tokens). A long conversation exceeds t
 
 ---
 
+> 🔗 **See it in production:** [Memory Management](https://github.com/roie9876/AI-Platform-System#34-memory-management-short-term--long-term) · [RAG System](https://github.com/roie9876/AI-Platform-System#37-rag-system-retrieval-augmented-generation)
+
 **[⬅️ Back to Chapter 2: Model Abstraction](02-model-abstraction-routing.md)** | **[➡️ Continue to Chapter 4: Thread & State Management →](04-thread-state-management.md)**

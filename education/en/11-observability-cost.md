@@ -616,4 +616,6 @@ The Cost Dashboard shows costs broken down by: (1) **Per Agent** - which agent c
 
 ---
 
+> 🔗 **See it in production:** [Cost Observability Dashboard](https://github.com/roie9876/AI-Platform-System#28-cost-observability-dashboard) · [Observability Stack](https://github.com/roie9876/AI-Platform-System#6-observability)
+
 **[⬅️ Back to Chapter 10: Evaluation](10-evaluation-engine.md)** | **[➡️ Continue to Chapter 12: Security & Isolation →](12-security-isolation.md)**

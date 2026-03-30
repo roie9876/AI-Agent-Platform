@@ -702,4 +702,6 @@ Because Agents are **non-deterministic** - a small prompt change can break every
 
 ---
 
+> 🔗 **See it in production:** [Evaluation Engine (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#26-evaluation-engine)
+
 **[⬅️ Back to Chapter 9: Runtime Plane](09-runtime-plane.md)** | **[➡️ Continue to Chapter 11: Observability & Cost →](11-observability-cost.md)**

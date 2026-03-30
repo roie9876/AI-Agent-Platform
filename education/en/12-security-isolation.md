@@ -689,4 +689,6 @@ Important because Agents use API keys, DB passwords, tokens - a leak = access to
 
 ---
 
+> 🔗 **See it in production:** [Security Architecture (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#4-security-architecture)
+
 **[⬅️ Back to Chapter 11: Observability](11-observability-cost.md)** | **[➡️ Continue to Chapter 13: Scalability →](13-scalability.md)**

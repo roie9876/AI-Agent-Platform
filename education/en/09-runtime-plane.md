@@ -586,4 +586,6 @@ Stateful components (like an Agent with a thread in memory) cannot be easily sca
 
 ---
 
+> 🔗 **See it in production:** [Runtime Plane — Deep Dive (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#3-runtime-plane--deep-dive)
+
 **[⬅️ Back to Chapter 8: Control Plane](08-control-plane.md)** | **[➡️ Continue to Chapter 10: Evaluation Engine →](10-evaluation-engine.md)**

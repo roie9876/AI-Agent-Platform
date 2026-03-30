@@ -692,4 +692,6 @@ When the task **consists of multiple different domains** (search + writing + ana
 
 ---
 
+> 🔗 **See it in production:** [Workflow Engine Pod — Multi-Agent Orchestration (AI-Platform-System)](https://github.com/roie9876/AI-Platform-System#39-workflow-engine-pod)
+
 **[⬅️ Back to Chapter 4: Thread & State](04-thread-state-management.md)** | **[➡️ Continue to Chapter 6: Tools & Marketplace →](06-tools-marketplace.md)**
